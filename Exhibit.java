@@ -43,7 +43,12 @@ public class Exhibit
    public Exhibit(String exhName, int idNum, String desc)
    {
       name = exhName;
-      id = idNum;
+      
+      if (idNum > 999 && ((idNum+"").length() == 4))
+         id= idNum;
+      else
+         throw new InputMismatchException();
+         
       description = desc;
       onDisplay = false;
       numCurrentVisitors = 0;
@@ -57,7 +62,12 @@ public class Exhibit
    public Exhibit(String exhName, int idNum, String desc, boolean displayed, int visitorCount, int artifactCount, double price, double reqSpace, ArrayList<Artifact> artifacts, ArrayList<Visitor> visitors)
    {
       name = exhName;
-      id = idNum;
+      
+      if (idNum > 999 && ((idNum+"").length() == 4))
+         id= idNum;
+      else
+         throw new InputMismatchException();
+         
       description = desc;
       onDisplay = displayed;
       numCurrentVisitors = visitorCount;
@@ -74,7 +84,12 @@ public class Exhibit
    public Exhibit(String exhName, int idNum, String desc, boolean displayed, double price, double reqSpace, ArrayList<Artifact> artifacts, ArrayList<Visitor> visitors)
    {
       name = exhName;
-      id = idNum;
+      
+      if (idNum > 999 && ((idNum+"").length() == 4))
+         id= idNum;
+      else
+         throw new InputMismatchException();
+         
       description = desc;
       onDisplay = displayed;
       value = price;
@@ -145,9 +160,10 @@ public class Exhibit
    
    public void setId(int idNum)
    {
-      idNum = Math.abs(idNum);
-      if (((idNum+"").length() == 4))
+      if (idNum > 999 && ((idNum+"").length() == 4))
          id = idNum;
+      else
+         throw new InputMismatchException();
    }
    
    public void setDescription(String desc)
@@ -230,7 +246,7 @@ public class Exhibit
    public String toString()
    {
       String info = "";
-      info = "EXHIBIT: " + name + "\nID: " + id + "\nDescription: " + description + "\nTotal Exhibit Value: $" + value + "\nTotal Floor Space Required: " + floorSpace + " sq. ft. \n" + "\nTotal Number of Current Visitors: " + numCurrentVisitors + "\nTotal Number of Current Artifacts: " + numArtifacts + "\nList of Artifacts within Museum: ";
+      info = "EXHIBIT: " + name + "\nID: " + id + "\nDescription: " + description + "\nTotal Exhibit Value: $" + value + "\nTotal Floor Space Required: " + floorSpace + " sq. ft." + "\nTotal Number of Current Visitors: " + numCurrentVisitors + "\nTotal Number of Current Artifacts: " + numArtifacts + "\n\nList of Artifacts within Museum: ";
       for (int i=0; i< numArtifacts; i++)
       {
          info+= ("\n" + artifactList.get(i));

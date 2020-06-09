@@ -20,6 +20,12 @@ public class ObjectTester
          System.out.println (d2.daysBetween(d1));
          System.out.println (d2.compareTo(d1));
          System.out.println (d1.compareTo(d2));
+         Exhibit e = new Exhibit ("ETEST", 1001, "Test for constructor");
+         System.out.println(a1.equals(a2));
+         Date dm1 = new Date ("03/06/2020 C.E");
+
+         Artifact a = new Artifact ("A1", 10000, "First ARTIFACT", 20, 20, dm1, dateP1, e1, false);
+              System.out.println (a1.equals(a));
       }
       catch (InputMismatchException imx)
       {

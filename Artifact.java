@@ -41,7 +41,12 @@ public class Artifact
    public Artifact(String artifactName, int idNum, String descr, double val, double reqFloorSpace, Date dateMade, Date dateBought, Exhibit location, boolean displayed)
    {
       name = artifactName;
-      id = idNum;
+      
+      if (idNum > 9999 && ((idNum+"").length() == 5))
+         id= idNum;
+      else
+         throw new InputMismatchException();
+         
       description = descr;
       value = val;
       floorSpace = reqFloorSpace;
@@ -56,7 +61,12 @@ public class Artifact
    public Artifact (String artifactName, int idNum, String descr, double val, double reqFloorSpace, Date dateMade, Date dateBought, Exhibit location, boolean displayed, ArrayList<Visitor> visitors)
    {
       name = artifactName;
-      id = idNum;
+      
+      if (idNum > 9999 && ((idNum+"").length() == 5))
+         id= idNum;
+      else
+         throw new InputMismatchException();
+         
       description = descr;
       value = val;
       floorSpace = reqFloorSpace;
@@ -130,9 +140,12 @@ public class Artifact
    
    public void setId(int id)
    { 
-      id = Math.abs(id);
-      if (((id+"").length() == 5))
-         this.id = id;
+   
+      if (id > 9999 && ((id+"").length() == 5))
+         this.id= id;
+      else
+         throw new InputMismatchException();
+         
    }
    
    public void setDescription(String description)
@@ -220,9 +233,7 @@ public class Artifact
       String [] visitors = new String [numCurrentVisitors];
       for (int i=0;i<numCurrentVisitors;i++)
       {
-         visitors[i] =currentVisitors.get(i).getFirstName();
-         visitors[i] += currentVisitors.get(i).getLastName();
-         visitors[i] += currentVisitors.get(i).getId();
+         visitors[i] =currentVisitors.get(i).identifierToString();
       }
       return visitors;
    }
@@ -335,7 +346,9 @@ public class Artifact
    {
       boolean equals = (other != null && name.equals(other.name) && id == other.id && description.equals(other.description) 
                         && value == other.value && floorSpace == other.floorSpace && onDisplay == onDisplay
-                        && dateMade.equals(other.dateMade) && datePurchased.equals(other.datePurchased) && exhibitLocation.equals(other.exhibitLocation));
+                        && dateMade.equals(other.dateMade) && datePurchased.equals(other.datePurchased) 
+                        && exhibitLocation.getName().equals(other.exhibitLocation.getName()) && exhibitLocation.getId() == other.exhibitLocation.getId()
+                        && exhibitLocation.getDescription().equals(other.exhibitLocation.getDescription()));
       if (numCurrentVisitors == other.numCurrentVisitors)
       {
          for (int i=0;i<numCurrentVisitors;i++)

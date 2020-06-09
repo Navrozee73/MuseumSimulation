@@ -4,8 +4,21 @@
    
    
    User: Navroze
-   Date: 08/06/2020
+   Date: 08/08/2020
    Changes Made:
+                  Created constructor, accessors and mutators
+                  
+   Date: 08/09/2020
+   Changes Made:
+                  Created toString methods
+                  daysBetween(Date)
+                  withinDates(Date1, Date2)
+                  equals(Date)
+                  compareTo(Date)
+                  isOlder(Date)
+                  progressDate(int)
+
+                 
       
                   
 */
