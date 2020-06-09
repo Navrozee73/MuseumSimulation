@@ -15,6 +15,11 @@ public class ObjectTester
          e1.addArtifact(a1);
          e1.addArtifact (a2);
          System.out.println(e1.toString());
+         Date d1 = new Date ("01/01/2020 C.E");
+         Date d2 = new Date ("01/01/2019 C.E");
+         System.out.println (d2.daysBetween(d1));
+         System.out.println (d2.compareTo(d1));
+         System.out.println (d1.compareTo(d2));
       }
       catch (InputMismatchException imx)
       {

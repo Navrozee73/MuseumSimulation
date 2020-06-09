@@ -63,9 +63,33 @@ public class Date
 //       }
    }
    
-   public int compareTo (Date other)
+   public String toString() 
    {
-      return 1;
+      String dayString, monString, yearString = "";
+      String output;
+      if (day < 10)
+         dayString = "0" + day;
+      else
+         dayString = "" + day;
+      if (month < 10)
+         monString = "0" + month;
+      else
+         monString = "" + month;
+      if (year < 10)
+         yearString += "0";
+      if (year < 100)
+         yearString += "0";
+      if (year < 1000)
+         yearString += "0";
+      yearString += ""+year;
+      
+      output= "Day: " + dayString + "\nMonth: " + monString + "\nYear: " + yearString;
+      
+      if (ce)
+         output += "C.E.";
+      else 
+         output += "B.C.E.";
+      return output;      
    }
    
    public String identifierToString()
@@ -96,4 +120,192 @@ public class Date
          output += "B.C.E.";
       return output;
    }
+   
+   public int daysBetween(Date other)
+   { 
+      Date higherDate, lowerDate;
+      int daysNum = 0;
+      
+      if (this.isOlder(other))
+      {
+         higherDate = this;
+         lowerDate = other;
+      }
+      else
+      {
+         higherDate = other;
+         lowerDate = this;
+      }
+       
+      if (this.equals(other))
+         return 0;
+      else
+      {
+         if (ce && other.ce) //both ce
+         {
+            daysNum += Date.DAYS_IN_MONTH[lowerDate.month-1]-lowerDate.day;   //makes lowerDate basicaly to upper month
+            
+            // add days to basically round to upper year
+            for (int i = lowerDate.month+1; i<= 12; i++) //starts 1 up cuz rounded there
+            {
+               daysNum += Date.DAYS_IN_MONTH[i-1];  
+            }
+            
+            daysNum += (higherDate.year - (lowerDate.year+1)) * 365;
+            
+            for (int i=1;i<higherDate.month;i++)
+            {
+               daysNum += Date.DAYS_IN_MONTH[i-1];
+            }
+            daysNum += higherDate.day;
+         }
+         else if (!ce && !other.ce) //both bce
+         {
+            daysNum += Date.DAYS_IN_MONTH[lowerDate.month-1]-lowerDate.day;   //rounds to upper month
+            
+            // adds days in months
+            for (int i = lowerDate.month+1; i<= 12; i++) //starts 1 up cuz rounded there
+            {
+               daysNum += Date.DAYS_IN_MONTH[lowerDate.month+1-1];  
+            }
+            
+            daysNum += (((lowerDate.year-1) - higherDate.year) * 365);
+            
+            for (int i=1;i<higherDate.month;i++)
+            {
+               daysNum += Date.DAYS_IN_MONTH[i-1];
+            }
+            daysNum += higherDate.day;            
+         }
+         else  // lowerDate is bce, higherDate is ce
+         {
+            daysNum += Date.DAYS_IN_MONTH[lowerDate.month-1]-lowerDate.day;   //rounds to upper month
+            
+            // adds days in months
+            for (int i = lowerDate.month+1; i<= 12; i++) //starts 1 up cuz rounded there
+            {
+               daysNum += Date.DAYS_IN_MONTH[lowerDate.month+1-1];  
+            }
+            
+            daysNum += (lowerDate.year-1)*365;
+            daysNum += higherDate.year*365;        
+         
+            for (int i=1;i<higherDate.month;i++)
+            {
+               daysNum += Date.DAYS_IN_MONTH[i-1];
+            }
+            daysNum += higherDate.day;      
+         }
+         return Math.abs(daysNum);
+      }  
+   }
+   
+   private boolean isOlder(Date other)
+   {
+      if (ce && !other.ce)
+         return false;
+      else if  (!ce && other.ce)
+         return true;
+      else        //both ce or both bce
+      {
+         if (ce)     //older has lower year, lower month, lower days
+         {
+            if (year - other.year > 0)
+               return false;
+            else if (year-other.year < 0)
+               return true;
+            else     // same year
+            {
+               if (month - other.month > 0)
+                  return false;
+               else if (month - other.month < 0)
+                  return true;
+               else  // same month
+               {
+                  if (day - other.day >= 0)   //same date or is younger 
+                     return false;
+                  else if (day - other.day < 0)
+                     return true;  
+               }
+            }
+         }
+            
+         else if (!ce)        //older Date has higher year, lower month, lower day
+         {
+            if (year - other.year > 0)
+               return true;
+            else if (year - other.year < 0)
+               return false;
+            else
+            {
+              if (month - other.month > 0)
+                  return false;
+               else if (month - other.month < 0)
+                  return true;
+               else  // same month
+               {
+                  if (day - other.day >= 0)   //same date or is younger 
+                     return false;
+                  else if (day - other.day < 0)
+                     return true;   
+               }
+            }
+         }
+      }
+      
+      return false; //needed to compile
+   }
+   
+   public int compareTo (Date other)
+   {
+      if (this.isOlder(other))
+         return (-1* this.daysBetween(other));
+      else
+         return (this.daysBetween(other));  
+   }
+   
+   public boolean withinDates (Date min, Date max)
+   {
+      return (this.compareTo (min) > 0 && this.compareTo(max)< 0);
+   }
+
+   public boolean equals (Date other)
+   {
+      return (day == other.day && month == other.month && year == other.year && ce == other.ce);
+   }
+   
+   public void progressDate (int numDaysForward)
+   {
+      for (int i=0; i< numDaysForward;i++)
+         this.progressDate();
+   }
+   
+   public void progressDate ()
+   {
+         day++;
+         if (day > Date.DAYS_IN_MONTH[month-1]) //day flows over
+         {
+            month++;
+            day = 1;
+         }
+         
+         if (month > 12)
+         {
+            month = 1;
+            if (ce)  //ce
+            {
+               year ++;
+            }
+            else  //bce
+            {
+               year--;
+               if (year == 0)
+               {
+                  ce = true;
+               }
+            }
+         }
+      
+   }
 }
+
