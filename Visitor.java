@@ -138,10 +138,14 @@ abstract class Visitor {
         }
         return output;
     }
-    
-    public String identifierToString()
-    {
-       return ("ID - " + id + " First Name - " + firstName + " Last Name - " + lastName);
+
+    //Identifier ToString method
+    public String identifierToString (){
+        String output;
+        output = "ID - " + id;
+        output = output + "First Name - " + firstName;
+        output = output + "Last Name  - " + lastName;
+        return output;
     }
 
 }
