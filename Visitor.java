@@ -1,10 +1,4 @@
-/*
-
-User: Navroze
-Date: 09/06/2020
-Changes Made: Incorporated Error throwing
-*/
-import java.util.*;
+import java.util.ArrayList;
 
 abstract class Visitor {
 
@@ -18,7 +12,7 @@ abstract class Visitor {
     private ArrayList <Exhibit> visitedExhibits;
     private ArrayList <Artifact> visitedArtifacts;
 
-    //Default constructor if no parameters are entered
+    //Default constructor if no parameters are exntered
     public Visitor (){
         id = 0000;
         firstName = "firstName";
@@ -28,12 +22,7 @@ abstract class Visitor {
 
     //Main constructor
     public Visitor (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact, ArrayList <Exhibit> visitedExhibits, ArrayList <Artifact> visitedArtifacts){
-       
-        if (id > 100000 && (id+"").length() == 6)
-            this.id = id;
-        else
-            throw new InputMismatchException();
-            
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -76,20 +65,14 @@ abstract class Visitor {
 
     //Mutators
     public void setId (int id){
-    
-        if (id > 100000 && (id+"").length() == 6)
-            this.id = id;
-        else
-            throw new InputMismatchException();
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
-         this.lastName = lastName; 
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public void setAge(int age) {
         this.age = age;
@@ -155,10 +138,50 @@ abstract class Visitor {
         }
         return output;
     }
-    //Identifier ToString method    
-    public String identifierToString()
-    {
-       return ("Full Name: " + firstName + " " + lastName + " ID: " + id);
+
+    //Identifier ToString method
+    public String identifierToString (){
+        String output;
+        output = "ID - " + id;
+        output = output + "\n First Name - " + firstName;
+        output = output + "\n Last Name  - " + lastName;
+        return output;
+    }
+
+    //Move visitor to different location
+    public void moveVisitor (Exhibit newExhibit, Artifact newArtifact){
+        //Create boolean to track uniqueness of artifact/exhibit
+        boolean isUnique = true;
+        //Check if current exhibit is already visited
+        for (int i = 0; i < visitedExhibits.size(); i++){
+            if (visitedExhibits.get(i) == currentExhibit){
+                //If found in array, set boolean to false
+                isUnique = false;
+            }
+        }
+        //If boolean is true, meaning this exhibit is unique, add exhibit to visited exhibit array
+        if (isUnique){
+            visitedExhibits.add(currentExhibit);
+        }
+
+        //Reset variable
+        isUnique = true;
+
+        //Check if current artifact is already visited
+        for (int i = 0; i < visitedArtifacts.size(); i++){
+            //If found in array, set boolean to false
+            if (visitedArtifacts.get(i) == currentArtifact){
+                isUnique = false;
+            }
+        }
+        //If boolean is true, meaning this artifact is unique, add artifact to visited artifact array
+        if (isUnique){
+            visitedArtifacts.add(currentArtifact);
+        }
+
+        //Set new current exhibit and artifact
+        currentExhibit = newExhibit;
+        currentArtifact = newArtifact;
     }
 
 }
