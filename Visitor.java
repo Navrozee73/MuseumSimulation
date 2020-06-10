@@ -155,7 +155,7 @@ abstract class Visitor {
         }
         return output;
     }
-    
+    //Identifier ToString method    
     public String identifierToString()
     {
        return ("Full Name: " + firstName + " " + lastName + " ID: " + id);
