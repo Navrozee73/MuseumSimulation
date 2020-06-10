@@ -58,7 +58,7 @@ public class Bank {
     //Prints revenue on a certain date
     public void printRevenue (Date selectedDate){
         //Create necessary variables
-        int selectedElement;
+        int selectedElement = -1;
         //Find selected element
         for (int i = 0; i < dailyRevenueDates.size(); i++){
             if ((dailyRevenueDates.get(i)).equals(selectedDate)){
@@ -102,7 +102,7 @@ public class Bank {
     //Adds today's revenue and date to respective arrays
     public void addRevenue (double revenue){
         //Adds revenue to today's daily revenue amount
-        dailyRevenue.set((dailyRevenue.size() - 1), revenue)
+        dailyRevenue.set((dailyRevenue.size() - 1), revenue);
         //Updates lifetime revenue amount
         updateLifetimeRevenue(revenue);
     }
