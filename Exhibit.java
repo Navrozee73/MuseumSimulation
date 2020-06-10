@@ -428,6 +428,11 @@ public class Exhibit
       return (numArtifacts - other.numArtifacts);
    }
    
+   // public double compareFloorSpace(Exhibit other)
+   // {
+   //    return (floorSpace - other.floorSpace);
+   // }
+   
    public int compareName(Exhibit other)
    {
       return (name.compareTo(other.name));
