@@ -270,7 +270,7 @@ public class Museum
           }
      }
      
-     public boolean moveVisitor(String, visitorName, String toArtifactName)
+     public boolean moveVisitor(String visitorName, String toArtifactName)
      {
           try
           {
