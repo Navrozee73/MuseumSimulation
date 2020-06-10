@@ -1,0 +1,13 @@
+/Adult.class
+/Artifact.class
+/Child.class
+/Date.class
+/Exhibit.class
+/MuseumRunner.class
+/ObjectTester.class
+/Senior.class
+/Visitor.class
+/Museum.class
+.classpath
+.project
+*.java

@@ -26,6 +26,7 @@ public class ObjectTester
 
          Artifact a = new Artifact ("A1", 10000, "First ARTIFACT", 20, 20, dm1, dateP1, e1, false);
               System.out.println (a1.equals(a));
+         System.out.print(dm1.identifierToString());
       }
       catch (InputMismatchException imx)
       {
