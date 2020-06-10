@@ -1122,7 +1122,7 @@ public class Museum
              
              for (int j = i + 1; j < allExhibits.size(); j ++)
              {
-                if ((allExhibits.get(j)).getNumCurrentVisitors) > max)
+                if (((allExhibits.get(j)).getNumCurrentVisitors) > max)
                 {
                    max = (allExhibits.get(j)).getNumCurrentVisitors();
                    maxIndex = j;

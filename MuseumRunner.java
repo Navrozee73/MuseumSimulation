@@ -1,4 +1,14 @@
 import java.util.*;
+/*
+BASED ON PROTOTYPE
+User: Navroze
+Date: 10/06/2020
+Changes Made:
+               - Made start menu
+               
+               
+*/
+import java.util.*;
 
 public class MuseumRunner
 {
@@ -6,24 +16,55 @@ public class MuseumRunner
    {
       int input;
       Museum museum;
+      boolean museumMade = false;
       Scanner sc = new Scanner(System.in);
-      while (input != 0)
-      {
+      do
+      { 	
          printStartMenu();
          input = sc.nextInt();
          if (input == 1)
          {
-            boolean museumMade = false;
             try
             {
-               museum = makeNewMuseum();
+               museum = makeNewMuseum(sc);
+               museumMade = true;
             } 
             catch (Exception e)
             {
                System.out.println ("Error creating museum. Check values and formatting are correct.");
+               input = 0;	//resets to 0 so loops again 
             }
-         }
-      }
+        } 
+        else if (input == 2) 
+        {
+         		try
+            {
+              	museum = loadNewMuseum();
+              	museumMade = true;
+            }
+          	catch (FileNotFoundException ef)
+            {
+              	System.out.println ("Error finding file.");
+              	input = 0;
+            }
+          	catch (Exception e)
+          	{
+              	System.out.println ("Error loading museum. Check file format is correct.")
+                input = 0;
+          	}	
+        } 
+        else if (input == 3)
+        {
+          try
+          {
+            	saveMuseum(museum);
+          }
+          catch (Exception e)
+          {
+            	System.out.println("Error saving museum")
+          }
+        }
+  		} while (input != 0 );
    }
    
    private static void printStartMenu()
@@ -35,7 +76,7 @@ public class MuseumRunner
       System.out.println ("4) Begin Simulation");
    }
    
-   private static void makeNewMuseum()
+   private static Museum makeNewMuseum(Scanner sc)
    {
       String stringDate;
       int makeDisplay, maxStorage;
@@ -45,7 +86,12 @@ public class MuseumRunner
       maxDisplay = sc.nextDouble();
       System.out.print ("Enter Max Storage Space: $");
       maxStorage = sc.nextDouble();
-      return (new Museum (stringDate, maxDisplay, maxStorage));
-      
+      return (new Museum (stringDate, maxDisplay, maxStorage)); //Isn't this a void method? Why is it returning? 	
+     																																				   
    }
+  
+  private static Museum loadNewMuseum()
+  {
+    	BufferedReader in = new BufferedReader (new File ("museumSave.txt"));
+  }
 }
