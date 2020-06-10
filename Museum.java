@@ -6,7 +6,7 @@
      Purpose:       This class represents a museum and manages all its operations.
 */
 
-public Museum
+public class Museum
 {
      private static final int VISITOR_BASE_ID = 100000;
      private static final int ARTIFACT_BASE_ID = 10000;
@@ -45,7 +45,7 @@ public Museum
      public Museum(String date1, String date2, double maxDisplaySpace, double maxStorageSpace)
      {
           Date openingDate = new Date(date1);
-          Date currentDate = new Date(date2);
+          Date currentDate = new Date(openingDate.identifierToString());
           this.openingDate = openingDate;
           this.currentDate = currentDate;
           this.maxDisplaySpace = maxDisplaySpace;
@@ -1083,6 +1083,7 @@ public Museum
              
              Collections.swap(allExhibits,i,maxIndex);
              System.out.println((allExhibits.get(i)).identifierToString());
+          }
      }
      
      public void printExhibitsAscendingNumVisitors()
@@ -1130,6 +1131,7 @@ public Museum
              
              Collections.swap(allExhibits,i,maxIndex);
              System.out.println((allExhibits.get(i)).identifierToString());
+          }
      }
      
      public void printExhibitsReverseAlpha()
@@ -2171,5 +2173,4 @@ public Museum
         return false;
     }
     
-}
 }
