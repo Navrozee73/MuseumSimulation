@@ -14,7 +14,7 @@ abstract class Visitor {
 
     //Default constructor if no parameters are exntered
     public Visitor (){
-        id = 0000;
+        id = 00000;
         firstName = "firstName";
         lastName = "lastName";
         age = 0;
