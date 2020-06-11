@@ -1,3 +1,6 @@
+import java.util.*;
+import java.io.*;
+
 /*
 BASED ON PROTOTYPE
 User: Navroze
@@ -28,7 +31,7 @@ public class MuseumRunner {
                     museum = loadNewMuseum();
                     museumMade = true;
                 } else if (input == 3) {
-                    saveMuseum();
+                    saveMuseum(museum);
                 } else if (input == 4) {
                     if (museumMade) {
                         mainMenu(sc, museum);
@@ -63,7 +66,7 @@ public class MuseumRunner {
         System.out.println("1) Museum Affairs and Analytics");
         System.out.println("2) Update Museum Simulation");
         System.out.println("3) Back to Start Menu");
-        //Repeat until proper input is recieved
+        //Repeat until proper input is received
         do {
             input = -1;
             try {
@@ -201,6 +204,38 @@ public class MuseumRunner {
         int input = -1;
 
         System.out.println("Exhibit Analytics");
+        System.out.println("1) Print information about exhibits");
+        System.out.println("2) Sort exhibits by criteria");
+        System.out.println("3) Search exhibits by criteria");
+        System.out.println("4) Compare exhibits");
+        System.out.println("5) Back to Facility Analytics");
+
+        do {
+            try {
+                input = sc.nextInt();
+
+                if (input == 1){
+                    printExhibitInfo(sc, museum);
+                } else if (input == 2){
+
+                } else if (input == 3){
+
+                } else if (input == 4){
+
+                } else if (input != 5){
+                    System.out.println("Invalid Input. Try Again.");
+                    input = -1;
+                }
+            } catch (Exception e){
+                System.out.println("Error reading input. Try again.");
+            }
+        } while (input != 5);
+    }
+
+    private static void printExhibitInfo (Scanner sc, Museum museum){
+        int input = -1;
+
+        System.out.println("Exhibit Information");
         System.out.println("1) Print information on all exhibits");
         System.out.println("2) Print all artifacts within specific exhibit");
         System.out.println("3) Print specific exhibit information");
@@ -214,24 +249,101 @@ public class MuseumRunner {
                 input = sc.nextInt();
 
                 if (input == 1){
-                    System.out.println("Exhibit Information \n");
+
                     museum.printAllExhibits();
+
                 } else if (input == 2){
-                    System.out.println("Total storage space(m²) - " + museum.getMaxStorageSpace());
+
+                    int input1 = -1;
+
+                    System.out.println("Options");
+                    System.out.println("1) Search by ID");
+                    System.out.println("2) Search by name");
+
+                    do {
+                        try {
+                            input1 = sc.nextInt();
+                            if (input1 == 1){
+                                boolean properInput = true;
+                                System.out.print("ID - ");
+                                do {
+                                    try {
+                                        int id = sc.nextInt();
+                                        museum.printAllArtifactsInExhibit(id);
+                                    } catch (Exception e) {
+                                        System.out.println("Improper Input. Try again.");
+                                        properInput = false;
+                                    }
+                                } while (!properInput);
+                            } else if (input1 == 2) {
+                                boolean properInput = true;
+                                do {
+                                    try {
+                                        System.out.print("Name - ");
+                                        String name = sc.nextLine();
+                                        museum.printAllArtifactsInExhibit(name);
+                                    } catch (Exception e){
+                                        System.out.println("Improper Input. Try again.");
+                                        properInput = false;
+                                    }
+                                } while (!properInput);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Improper input. Try again.");
+                        }
+                    } while (input1 != 1 && input1 != 2);
+
                 } else if (input == 3){
-                    System.out.println("Total number of exhibits - " + museum.numTotalExhibits());
+
+                    int input1 = -1;
+
+                    System.out.println("Options");
+                    System.out.println("1) Search by ID");
+                    System.out.println("2) Search by name");
+
+                    do {
+                        try {
+                            input1 = sc.nextInt();
+                            if (input1 == 1){
+                                boolean properInput = true;
+                                System.out.print("ID - ");
+                                do {
+                                    try {
+                                        int id = sc.nextInt();
+                                        museum.printSpecificExhibit(id);
+                                    } catch (Exception e) {
+                                        System.out.println("Improper Input. Try again.");
+                                        properInput = false;
+                                    }
+                                } while (!properInput);
+                            } else if (input1 == 2) {
+                                boolean properInput = true;
+                                do {
+                                    try {
+                                        System.out.print("Name - ");
+                                        String name = sc.nextLine();
+                                        museum.printSpecificExhibit(name);
+                                    } catch (Exception e){
+                                        System.out.println("Improper Input. Try again.");
+                                        properInput = false;
+                                    }
+                                } while (!properInput);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Improper input. Try again.");
+                        }
+                    } while (input1 != 1 && input1 != 2);
+
                 } else if (input == 4){
-                    System.out.println("Total number of artifacts - " + museum.numTotalArtifacts());
+
+
+
                 } else if (input == 5){
-                    System.out.println("Current number of visitors - " + museum.numTotalVisitors());
+
                 } else if (input == 6){
-                    System.out.println("Current date - " + (museum.getCurrentDate()).toString());
-                } else if (input == 7){
-                    System.out.println("Opening date - " + (museum.getOpeningDate()).toString());
-                } else if (input == 8){
-                    System.out.println("Total days open - " + museum.getDaysOpenCount());
-                } else if (input != 9){
-                    System.out.println("Invalid Input. Try again.");
+
+                } else if (input != 7){
+                    System.out.println("Invalid Input. Try Again.");
                     input = -1;
                 }
             } catch (Exception e){
@@ -247,7 +359,7 @@ public class MuseumRunner {
 
     private static Museum makeNewMuseum(Scanner sc){
         String stringDate;
-        int makeDisplay, maxStorage;
+        double maxDisplay, maxStorage;
         System.out.print ("Enter opening date (dd/mm/yyyy C.E/B.C.E)  : ");
         stringDate = sc.nextLine();
         System.out.print ("Enter Max Display Space: $");
@@ -274,6 +386,7 @@ public class MuseumRunner {
         artifacts.trimToSize();
         exhibits.trimToSize();
         visitors.trimToSize();
+        
 
         BufferedReader in = new BufferedReader (new FileReader ("museumSave.txt"));
         Date openDate = new Date (in.readLine());
@@ -308,9 +421,9 @@ public class MuseumRunner {
         numArtifacts = Integer.parseInt(in.readLine());
         for (int i=0;i<numArtifacts;i++) {
             Artifact temp = new Artifact(in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Double.parseDouble(in.readLine()),
-            Double.parseDouble(in.readLine()),new Date(in.readLine()), new Date(in.readLine()),(Exhibit tempExh = findExhibit(exhibits, Integer.parseInt(in.readLine()))) ,Boolean.parseBoolean(in.readLine()));
+            Double.parseDouble(in.readLine()),new Date(in.readLine()), new Date(in.readLine()),findExhibit(exhibits, Integer.parseInt(in.readLine())), Boolean.parseBoolean(in.readLine()));
             artifacts.add(temp);
-            tempExh.addArtifact(temp);
+            temp.getExhibitLocation().addArtifact(temp);
         }
 
         // Making visitors
@@ -324,142 +437,147 @@ public class MuseumRunner {
             String visFName = in.readLine();
             String visLName = in.readLine();
             int visAge = Integer.parseInt(in.readLine());
-            Artifact currArt = findArtifact(Integer.parseInt(in.readLine())); //currArt
+            Artifact currArt = findArtifact(artifacts,Integer.parseInt(in.readLine())); //currArt
             Exhibit currExh = currArt.getExhibitLocation(); //use currArt to find currExh
 
             // making prev visited exhibits
-            for (int i=0;i<Integer.parseInt(in.readLine()),i++){
+            int maxNumExhibits = Integer.parseInt(in.readLine());
+            for (int j=0;j<maxNumExhibits;j++){
                 Exhibit temp = findExhibit (exhibits,Integer.parseInt(in.readLine()));
                 prevVisitedExh.add(temp);
             }
 
             // making prev visited artifacts
-            for (int i=0;i<Integer.parseInt(in.readLine()), i++){
+            int maxNumArtifacts = Integer.parseInt(in.readLine());
+            for (int j=0;j<maxNumArtifacts; j++){
                 Artifact temp = findArtifact(artifacts, Integer.parseInt(in.readLine()));
                 prevVisitedArt.add(temp);
             }
-
             Visitor tempVisitor = new Visitor(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh, prevVisitedArt);
             visitors.add(tempVisitor);
         }
 
         return (new Museum(openDate, currDate,maxDisplay, maxStorage, numVisitors, numDaysOpen, exhibits, artifacts, visitors, bank));
     }
-  
-  	public static void saveMuseum (Museum museum)
-		{	
-   			BufferedWriter out = new BufferedWriter(new FileWriter("museumSave.txt"));
-   			// Print 
-   			out.write(museum.getOpeningDate().identifierToString());
-   			out.newLine();
-   			out.write(museum.getCurrentDate().identifierToString());
- 			  out.newLine();
- 			  out.write(museum.getMaxDisplaySpace());
- 			  out.newLine();
- 			  out.write(museum.getMaxStorageSpace());
- 			  out.newLine();
-  			 out.write(museum.getDaysOpenCount());
-  			 out.newLine();
-  			 
-  			 // Write all Dates open (for bank)
- 			  ArrayList <Date> datesOpen = museum.getBank().getDailyRevenueDates();
- 			  datesOpen.trimToSize();
- 			  for (int i=0;i<museum.getDaysOpenCount();i++)
-  			{
-   			   out.write(datesOpen.get(i).identifierToString());
-  			   out.newLine();
-  			}
-   
-   			//Write all Daily Revenues (for bank)
-   			ArrayList <double> revenues = museum.getBank().getDailyRevenue();
-   			revenues.trimToSize();
-   			for (int i=0; i < museum.getDaysOpenCount();i++)
-  		 	{
-      		out.write(revenues.get(i));
-      		out.newLine();
-   			}
-   
-   // Write Exhibits Info
-   			ArrayList <Exhibit> exhibits = museum.getAllExhibits();
-   			exhibits.trimToSize();
-   			out.write(exhibits.size());
-   			out.newLine();
-   			for (int i=0;i<exhibits.size();i++)
-   			{
-      			out.write(exhibits.get(i).getName());
-      			out.newLine();
-      			out.write(""+exhibits.get(i).getId());
-      			out.newLine();
-      			out.write(exhibits.get(i).getDescription());
-      			out.newLine();
-  	 		}
-   
-   			//Write Artifacts Info
-   			ArrayList <Artifact> artifacts = museum.getAllArtifacts();
-   			artifacts.trimToSize();
-   			out.write(artifacts.size());
-   			out.newLine();
-   			for (int i=0;i<artifacts.size();i++)
-   			{
-      			out.write(artifacts,get(i).getName());
-      			out.newLine();
-      			out.write(""+artifacts.get(i).getId());
-      			out.newLine();
-      			out.write(artifacts.get(i).getDescription());
-      			out.newLine();
-      			out.write(artifacts.get(i).getValue()+"");
-      			out.newLine();
-      			out.write(artifacts.get(i).getFloorSpace()+"");
-      			out.newLine();
-      			out.write(artifacts.get(i).getDateMade().identifierToString());
-      			out.newLine();
-      			out.write(artifacts.get(i).getDatePurchased().identifierToString());
-      			out.newLine();
-      			out.write(""+artifacts.get(i).getExhibitLocation().getId());
-      			out.newLine();
-      			out.write(artifacts.get(i).getOnDisplay());
-      			out.newLine();
-   			}
-   
-   			//Write Visitors Info
-   			ArrayList <Visitor> visitors = museum.getAllVisitors();
-   			visitors.trimToSize();
-   			out.write(visitors.size());
-   			out.newLine();
-   			for (int i=0;i<visitors.size();i++)
-  			{
-      			ArrayList <Exhibit> visitedExh = visitors.get(i).getVisitedExhibits();
-      			ArrayList <Artifact> visitedArt = visitors.get(i).getVisitedArtifacts();
-      			out.write(""+visitors.get(i).getId());
-      			out.newLine();
-      			out.write(visitors.get(i).getFirstName());
-   			  	out.newLine();
-      			out.write(visitors.get(i).getLastName());
-      			out.newLine();
-      			out.write(""+visitors.get(i).getAge());
-      			out.newLine();
-      			out.write(""+visitors.get(i).getCurrentExhibit.getId());
-      			out.newLine();
-      			// previously visited artifacts/exhibits
-      			out.write(""+visitedExh.size());
-      			out.newLine();
-      			for (int j=0;i<visitedExh.size();j++)
-      			{
-         				out.write(""+visitedExh.get(j).getId());
-         				out.newLine();
-      			}
-      
-      			out.write(""+visitedArt.size());
-      			out.newLine();
-      			for (int j=0;i<visitedArt.size();j++)
-      			{
-         				out.write(""+visitedArt.get(j).getId());
-         				out.newLine();
-      			}
-   			}   
-		}
 
-    private Exhibit findExhibit(ArrayList<Exhibit> exhibitList, int exhId){
+    public static void saveMuseum (Museum museum)
+    {
+      try
+      {
+        BufferedWriter out = new BufferedWriter(new FileWriter("museumSave.txt"));
+        // Print
+        out.write(museum.getOpeningDate().identifierToString());
+        out.newLine();
+        out.write(museum.getCurrentDate().identifierToString());
+        out.newLine();
+        out.write(""+museum.getMaxDisplaySpace());
+        out.newLine();
+        out.write(""+museum.getMaxStorageSpace());
+        out.newLine();
+        out.write(museum.getDaysOpenCount());
+        out.newLine();
+
+        // Write all Dates open (for bank)
+        ArrayList <Date> datesOpen = museum.getBank().getDailyRevenueDates();
+        datesOpen.trimToSize();
+        for (int i=0;i<museum.getDaysOpenCount();i++)
+        {
+            out.write(datesOpen.get(i).identifierToString());
+            out.newLine();
+        }
+
+        //Write all Daily Revenues (for bank)
+        ArrayList<Double> revenues = museum.getBank().getDailyRevenue();
+        revenues.trimToSize();
+        for (int i=0; i < museum.getDaysOpenCount();i++)
+        {
+            out.write(revenues.get(i));
+            out.newLine();
+        }
+
+        // Write Exhibits Info
+        ArrayList <Exhibit> exhibits = museum.getAllExhibits();
+        exhibits.trimToSize();
+        out.write(exhibits.size());
+        out.newLine();
+        for (int i=0;i<exhibits.size();i++)
+        {
+            out.write(exhibits.get(i).getName());
+            out.newLine();
+            out.write(""+exhibits.get(i).getId());
+            out.newLine();
+            out.write(exhibits.get(i).getDescription());
+            out.newLine();
+        }
+
+        //Write Artifacts Info
+        ArrayList <Artifact> artifacts = museum.getAllArtifacts();
+        artifacts.trimToSize();
+        out.write(artifacts.size());
+        out.newLine();
+        for (int i=0;i<artifacts.size();i++)
+        {
+            out.write(artifacts.get(i).getName());
+            out.newLine();
+            out.write(""+artifacts.get(i).getId());
+            out.newLine();
+            out.write(artifacts.get(i).getDescription());
+            out.newLine();
+            out.write(artifacts.get(i).getValue()+"");
+            out.newLine();
+            out.write(artifacts.get(i).getFloorSpace()+"");
+            out.newLine();
+            out.write(artifacts.get(i).getDateMade().identifierToString());
+            out.newLine();
+            out.write(artifacts.get(i).getDatePurchased().identifierToString());
+            out.newLine();
+            out.write(""+artifacts.get(i).getExhibitLocation().getId());
+            out.newLine();
+            out.write(""+artifacts.get(i).getOnDisplay());
+            out.newLine();
+        }
+
+        //Write Visitors Info
+        ArrayList <Visitor> visitors = museum.getAllVisitors();
+        visitors.trimToSize();
+        out.write(visitors.size());
+        out.newLine();
+        for (int i=0;i<visitors.size();i++) {
+            ArrayList <Exhibit> visitedExh = visitors.get(i).getVisitedExhibits();
+            ArrayList <Artifact> visitedArt = visitors.get(i).getVisitedArtifacts();
+            out.write(""+visitors.get(i).getId());
+            out.newLine();
+            out.write(visitors.get(i).getFirstName());
+            out.newLine();
+            out.write(visitors.get(i).getLastName());
+            out.newLine();
+            out.write(""+visitors.get(i).getAge());
+            out.newLine();
+            out.write(""+visitors.get(i).getCurrentExhibit().getId());
+            out.newLine();
+            // previously visited artifacts/exhibits
+            out.write(""+visitedExh.size());
+            out.newLine();
+            for (int j=0;i<visitedExh.size();j++) {
+                out.write(""+visitedExh.get(j).getId());
+                out.newLine();
+            }
+
+            out.write(""+visitedArt.size());
+            out.newLine();
+            for (int j=0;i<visitedArt.size();j++) {
+                out.write(""+visitedArt.get(j).getId());
+                out.newLine();
+            }
+        }
+      }
+      catch (IOException iox)
+      {
+         System.out.println ("Error reading from file! Returning to start menu.");
+      }
+    }
+
+    private static Exhibit findExhibit(ArrayList<Exhibit> exhibitList, int exhId){
         exhibitList.trimToSize();
         for (int i=0;i<exhibitList.size();i++) {
             if (exhId == exhibitList.get(i).getId())
@@ -468,13 +586,12 @@ public class MuseumRunner {
         return null;
     }
 
-    private Artifact findArtifact(int artId){
+    private static Artifact findArtifact(ArrayList<Artifact> artifactList,int artId){
         artifactList.trimToSize();
         for (int i=0;i<artifactList.size();i++) {
             if (artId == artifactList.get(i).getId())
                     return artifactList.get(i);
         }
-            return null;
-    }
-
+        return null;
+   }
 }

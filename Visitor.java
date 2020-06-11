@@ -12,7 +12,7 @@ abstract class Visitor {
     private ArrayList <Exhibit> visitedExhibits;
     private ArrayList <Artifact> visitedArtifacts;
 
-    //Default constructor if no parameters are exntered
+    //Default constructor if no parameters are entered
     public Visitor (){
         id = 00000;
         firstName = "firstName";

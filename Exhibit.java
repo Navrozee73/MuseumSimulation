@@ -1,5 +1,5 @@
 /*
-   File: Artifact.java
+   File: Exhibit.java
    Description: 
    
    
@@ -28,6 +28,7 @@ import java.util.*;
 
 public class Exhibit
 {
+   // FIELDS
    private String name;
    private int id;
    private String description;
@@ -40,6 +41,9 @@ public class Exhibit
    private ArrayList<Artifact> artifactList;
    private ArrayList<Visitor> currentVisitors;
    
+   //CONSTRUCTORS
+   
+   // Constructor for creating brand new exhibit
    public Exhibit(String exhName, int idNum, String desc)
    {
       name = exhName;
@@ -59,6 +63,7 @@ public class Exhibit
       currentVisitors = new ArrayList<Visitor>();
    }
    
+   // Constructor for creating exhibit from file, given all fields
    public Exhibit(String exhName, int idNum, String desc, boolean displayed, int visitorCount, int artifactCount, double price, double reqSpace, ArrayList<Artifact> artifacts, ArrayList<Visitor> visitors)
    {
       name = exhName;
@@ -81,6 +86,7 @@ public class Exhibit
       currentVisitors = visitors;
    }
    
+   // Constructor for creating exhibit from file, given all fields but array sizes undetermined
    public Exhibit(String exhName, int idNum, String desc, boolean displayed, double price, double reqSpace, ArrayList<Artifact> artifacts, ArrayList<Visitor> visitors)
    {
       name = exhName;
@@ -103,6 +109,7 @@ public class Exhibit
       numCurrentVisitors = currentVisitors.size();
    }
    
+   // ACCESSORS & MUTATORS
    public String getName()
    {
       return name;
@@ -428,10 +435,10 @@ public class Exhibit
       return (numArtifacts - other.numArtifacts);
    }
    
-   // public double compareFloorSpace(Exhibit other)
-   // {
-   //    return (floorSpace - other.floorSpace);
-   // }
+   public double compareFloorSpace(Exhibit other)
+   {
+      return (floorSpace - other.floorSpace);
+   }
    
    public int compareName(Exhibit other)
    {
