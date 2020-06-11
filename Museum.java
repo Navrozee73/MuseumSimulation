@@ -26,10 +26,10 @@ public class Museum
      private static int numExhibitsAdded = 0;
      private static int numArtifactsAdded = 0;
      
-     public Museum(String date1, String date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
+     public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
      {
-          Date openingDate = new Date(date1);
-          Date currentDate = new Date(date2);
+          Date openingDate = date1;
+          Date currentDate = date2;
           this.openingDate = openingDate;
           this.currentDate = currentDate;
           this.maxDisplaySpace = maxDisplaySpace;
@@ -40,6 +40,9 @@ public class Museum
           this.allArtifacts = allArtifacts;
           this.allVisitors = allVisitors;
           this.bank = bank;
+          numVisitorsAdded = allVisitors.size();
+          numExhibitsAdded = allExhibits.size();
+          numArtifactsAdded = allArtifacts.size();
      }
      
      public Museum(String date1, String date2, double maxDisplaySpace, double maxStorageSpace)
