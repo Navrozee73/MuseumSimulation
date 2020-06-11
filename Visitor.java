@@ -60,10 +60,12 @@ abstract class Visitor {
     public Artifact getCurrentArtifact (){ return currentArtifact; }
 
     public ArrayList<Exhibit> getVisitedExhibits (){
+        visitedExhibits.trimToSize();
         return visitedExhibits;
     }
 
     public ArrayList<Artifact> getVisitedArtifacts (){
+        visitedArtifacts.trimToSize();
         return visitedArtifacts;
     }
 

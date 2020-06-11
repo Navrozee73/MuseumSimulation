@@ -22,7 +22,9 @@ public class Bank {
         return dailyRevenue;
     }
 
-    public ArrayList <Date> getDailyRevenueDates () { return dailyRevenueDates; }
+    public ArrayList <Date> getDailyRevenueDates () { 
+    return dailyRevenueDates; 
+    }
 
     //Mutators
     public void setLifetimeRevenue (double lifetimeRevenue){

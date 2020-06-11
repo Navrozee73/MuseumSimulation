@@ -45,7 +45,7 @@ public class Date
 //       {
          int temp;
          
-         year = Integer.parseInt(date.substring(6,10));   
+            year = Integer.parseInt(date.substring(6,10));   
            
          temp = Integer.parseInt(date.substring(3,5));   //month
          if (temp >= 1 && temp <= 12)
