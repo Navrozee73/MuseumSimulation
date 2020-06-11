@@ -22,7 +22,11 @@ abstract class Visitor {
 
     //Main constructor
     public Visitor (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact, ArrayList <Exhibit> visitedExhibits, ArrayList <Artifact> visitedArtifacts){
-        this.id = id;
+        if (id >= 100000 && (id+"").length() == 6)
+            this.id = id;
+        else
+            throw new InputMismatchException();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
