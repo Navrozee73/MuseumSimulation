@@ -31,6 +31,23 @@ public class Museum
    private int numExhibitsAdded;
    private int numArtifactsAdded;
    
+   public Museum()
+   {
+        openingDate = null;
+        currentDate = null;
+        maxDisplaySpace = 0;
+        maxStorageSpace = 0;
+        numCurrentVisitors = 0;
+        daysOpenCount = 0;
+        allExhibits = null;
+        allArtifacts = null;
+        allVisitors = null;
+        bank = null;
+        numVisitorsAdded = 0;
+        numExhibitsAdded = 0;
+        numArtifactsAdded = 0;
+   }  
+   
    public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
    {
         Date openingDate = date1;
