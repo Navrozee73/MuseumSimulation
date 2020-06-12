@@ -103,10 +103,20 @@ public class Bank {
 
     //Adds revenue to today's amount
     public void addRevenue (double revenue){
-        //Calculates new revenue
-        double newRevenue = revenue + dailyRevenue.get(dailyRevenue.size() - 1);
-        //Adds revenue to today's daily revenue amount
-        dailyRevenue.set((dailyRevenue.size() - 1), newRevenue);
+        // Variable for calculating/storing new revenue
+        double newRevenue;
+        
+        // New daily revenue element will be added once first visitor enters
+        if (dailyRevenue.size() == 0){
+            newRevenue = revenue;
+            dailyRevenue.add(newRevenue);
+        }
+        else{
+            newRevenue = revenue + dailyRevenue.get(dailyRevenue.size() - 1);
+            
+            //Adds revenue to today's daily revenue amount
+            dailyRevenue.set((dailyRevenue.size() - 1), revenue);
+        }
         //Updates lifetime revenue amount
         updateLifetimeRevenue(revenue);
     }
