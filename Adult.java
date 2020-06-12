@@ -12,4 +12,7 @@ public class Adult extends Visitor {
         super(id,firstName, lastName, age, currentExhibit, currentArtifact, visitedExhibits, visitedArtifacts);
     }
 
+    public Adult (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact){
+        super(id,firstName, lastName, age, currentExhibit, currentArtifact);
+    }
 }
