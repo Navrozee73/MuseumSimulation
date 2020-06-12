@@ -155,39 +155,50 @@ abstract class Visitor {
     }
 
     //Move visitor to different location
-    public void moveVisitor (Exhibit newExhibit, Artifact newArtifact){
+    public boolean moveVisitor (Artifact newArtifact){
         //Create boolean to track uniqueness of artifact/exhibit
         boolean isUnique = true;
-        //Check if current exhibit is already visited
+        //Store newArtifact's exhibit as newExhibit
+        Exhibit newExhibit = newArtifact.getExhibitLocation();
+        
+        //Check if current exhibit is already visited or if visitor is already there
+        if (newExhibit.equals(currentExhibit)){
+            isUnique = false;
+        }
+        
         for (int i = 0; i < visitedExhibits.size(); i++){
-            if (visitedExhibits.get(i) == currentExhibit){
+            if (visitedExhibits.get(i).equals(newExhibit)){
                 //If found in array, set boolean to false
                 isUnique = false;
             }
         }
-        //If boolean is true, meaning this exhibit is unique, add exhibit to visited exhibit array
+        //If boolean is true, meaning this exhibit is unique, add exhibit to visited exhibit array and set new exhibit
         if (isUnique){
             visitedExhibits.add(currentExhibit);
+            currentExhibit = newExhibit;
         }
 
         //Reset variable
         isUnique = true;
 
-        //Check if current artifact is already visited
+        //Check if current artifact is already visited or if visitor is already there
+        if (newArtifact.equals(currentExhibit)){
+            isUnique = false;
+        }
+        
         for (int i = 0; i < visitedArtifacts.size(); i++){
             //If found in array, set boolean to false
-            if (visitedArtifacts.get(i) == currentArtifact){
+            if (visitedArtifacts.get(i) == newArtifact){
                 isUnique = false;
             }
         }
-        //If boolean is true, meaning this artifact is unique, add artifact to visited artifact array
+        //If boolean is true, meaning this artifact is unique, add artifact to visited artifact array and set new artifact
         if (isUnique){
             visitedArtifacts.add(currentArtifact);
+            currentArtifact = newArtifact;
         }
-
-        //Set new current exhibit and artifact
-        currentExhibit = newExhibit;
-        currentArtifact = newArtifact;
+        
+        //Return boolean to see if Museum needs to add Visitor needs to artifact/exhibit current visitors
+        return isUnique;
     }
-
 }
