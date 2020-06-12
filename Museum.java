@@ -525,9 +525,7 @@ public class Museum
    
    public boolean moveToLobby(Visitor visitor)
    {
-      String fullName = visitor.getFirstName() + " " + visitor.getLastName();
-      return (moveVisitor(fullName, "Lobby"));
-      
+      return (visitor.moveToLobby(allExhibits.get(findExhibitIndexByName("Lobby"))));
    }
    
      public void closeForTheDay()
