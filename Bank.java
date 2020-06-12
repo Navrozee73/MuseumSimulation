@@ -101,10 +101,12 @@ public class Bank {
         System.out.println("Total revenue for the selected period - $" + totalRevenue);
     }
 
-    //Adds today's revenue and date to respective arrays
+    //Adds revenue to today's amount
     public void addRevenue (double revenue){
+        //Calculates new revenue
+        double newRevenue = revenue + dailyRevenue.get(dailyRevenue.size() - 1);
         //Adds revenue to today's daily revenue amount
-        dailyRevenue.set((dailyRevenue.size() - 1), revenue);
+        dailyRevenue.set((dailyRevenue.size() - 1), newRevenue);
         //Updates lifetime revenue amount
         updateLifetimeRevenue(revenue);
     }
