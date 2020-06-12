@@ -25,6 +25,7 @@ import java.util.*;
 
 public class Artifact
 {
+   // FIELDS
    private String name;
    private int id;
    private String description;
@@ -38,11 +39,12 @@ public class Artifact
    private Exhibit exhibitLocation;
    private ArrayList<Visitor> currentVisitors;
    
+   // Constructor for brand new exhibit
    public Artifact(String artifactName, int idNum, String descr, double val, double reqFloorSpace, Date dateMade, Date dateBought, Exhibit location, boolean displayed)
    {
       name = artifactName;
       
-      if (idNum > 9999 && ((idNum+"").length() == 5))
+      if (idNum > 9999 && ((idNum+"").length() == 5)) //valid Exhibit IDs must be 10000-99999
          id= idNum;
       else
          throw new InputMismatchException();
@@ -58,11 +60,12 @@ public class Artifact
       currentVisitors = new ArrayList<Visitor>();
    }
    
+   // Constructor for Artifact that has all information known from database
    public Artifact (String artifactName, int idNum, String descr, double val, double reqFloorSpace, Date dateMade, Date dateBought, Exhibit location, boolean displayed, ArrayList<Visitor> visitors)
    {
       name = artifactName;
       
-      if (idNum > 9999 && ((idNum+"").length() == 5))
+      if (idNum > 9999 && ((idNum+"").length() == 5)) //valid Exhibit IDs must be 10000-99999
          id= idNum;
       else
          throw new InputMismatchException();
@@ -78,6 +81,7 @@ public class Artifact
       numCurrentVisitors = 0;
    }
    
+   // ACCESSORS & MUTATORS
    public String getName()
    {
       return name;
@@ -141,7 +145,7 @@ public class Artifact
    public void setId(int id)
    { 
    
-      if (id > 9999 && ((id+"").length() == 5))
+      if (id > 9999 && ((id+"").length() == 5)) //valid Exhibit IDs must be 10000-99999 
          this.id= id;
       else
          throw new InputMismatchException();
@@ -192,13 +196,15 @@ public class Artifact
    {
       currentVisitors = visitors;
    }
-   
+ 
+   // Updates numCurrentVisitors to reflect array 
    private void updateNumCurrentVisitors()
    {
       currentVisitors.trimToSize();
       numCurrentVisitors = currentVisitors.size();
    }
    
+   // Returns all Artifact's properties  
    public String toString() 
    {
       String info = "";
@@ -213,11 +219,13 @@ public class Artifact
       return info;
    }
    
+   // Returns artifact name and id
    public String identifierToString() 
    {
       return("Name: " + name + " ID: " + id);
    }
    
+   // returns all visitors' properties
    public String [] currentVisitorsToString() 
    {
       String [] visitors = new String [numCurrentVisitors];
@@ -228,6 +236,7 @@ public class Artifact
       return visitors;
    }
    
+   // returns all visitors' identifiers
    public String[] currentVisitorsIdentifierToString()
    {
       String [] visitors = new String [numCurrentVisitors];
@@ -238,6 +247,7 @@ public class Artifact
       return visitors;
    }
    
+   // adds a visitor to the artifact
    public boolean addVisitor (Visitor newVisitor)
    {  
       try 
@@ -252,6 +262,7 @@ public class Artifact
       }
    }
    
+   // deletes the visitor from the artifact's currentVisitors
    public boolean removeVisitor (Visitor targetVisitor)
    {  
       boolean found = false;
@@ -267,81 +278,98 @@ public class Artifact
       return found;
    }  
    
+   // returns whether the artifact's value exceeds an amount   
    public boolean valueExceeds (double min)
    {
       return (value > min);
    }
    
+   // returns whether the artifact's value is within a range    
    public boolean valueInRange(double min, double max)
    {
       return (value >= min && value <= max);
    }
-   
+
+   // returns whether the artifact's number of visitors exceeds an amount   
    public boolean numCurrentVisitorsExceeds(int min)
    {
       return (numCurrentVisitors > min);
    }
    
+   // returns whether the artifact's number of visitors is within a range    
    public boolean numCurrentVisitorsInRange(int min, int max)
    {
       return (numCurrentVisitors >= min && numCurrentVisitors <= max);
    }
-   
+
+   // returns whether the artifact's floor space is under an amount   
    public boolean floorSpaceUnder(double max)
    {
       return (floorSpace < max);
    }
-   
+
+   // returns whether the artifact's floor space is within a range 
    public boolean floorSpaceInRange(double min, double max)
    {
       return (floorSpace >= min && floorSpace <= max);
    }
-   
+
+   // returns whether the artifact is made before a certain date   
    public boolean madeBefore(Date date)
    {
       return (dateMade.compareTo(date) > 0);
    }
    
+   // returns whether the artifact was made within a set range of dates
    public boolean madeWithin (Date date1, Date date2)
    {
       return (dateMade.compareTo(date1) <=0 && dateMade.compareTo(date2) >= 0);
    }
    
+   // returns whether the artifact was bought before a certain date
    public boolean purchasedBefore(Date date)
    {
       return (datePurchased.compareTo(date) > 0);
    }
    
+   // returns whether the artifact was made within a set range of dates
    public boolean purchasedWithin (Date date1, Date date2)
    {
       return (datePurchased.compareTo(date1) <= 0 && datePurchased.compareTo(date2) >= 0);
    }
    
+   // Compare artifact values   
    public double compareValue (Artifact other)
    {
       return (value - other.value);
    }
    
+   // Compare artifact names
    public int compareName(Artifact other)
    {
       return (name.compareTo(other.name));
    }
    
+   // Compare number of visitors between artifacts   
    public int compareNumCurrentVisitors(Artifact other)
    {
       return (numCurrentVisitors - other.numCurrentVisitors);
    }
+
    
+   // Compare dates two artifacts were made
    public int compareDateMade(Artifact other)
    {
       return (dateMade.compareTo(other.dateMade));
    }
    
+   // Compare dates two artifacts were bought   
    public int compareDatePurchased(Artifact other)
    {
       return (datePurchased.compareTo(other.datePurchased));
    }
-   
+
+   // Returns whether two artifacts are the same   
    public boolean equals(Artifact other)
    {
       boolean equals = (other != null && name.equals(other.name) && id == other.id && description.equals(other.description) 
@@ -364,7 +392,8 @@ public class Artifact
       
       return equals;
    }
-   
+
+   // empties all visitors from the artifact
    public void clearVisitors()
    {
       currentVisitors.clear();
