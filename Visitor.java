@@ -36,6 +36,21 @@ abstract class Visitor {
         this.visitedArtifacts = visitedArtifacts;
     }
 
+    public Visitor (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact){
+        if (id >= 100000 && (id+"").length() == 6)
+            this.id = id;
+        else
+            throw new InputMismatchException();
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.currentExhibit = currentExhibit;
+        this.currentArtifact = currentArtifact;
+        visitedExhibits = new ArrayList();
+        visitedArtifacts = new ArrayList();
+    }
+    
     //Accessors
     public int getId (){
         return id;
