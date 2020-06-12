@@ -48,7 +48,7 @@ public class Museum
         numArtifactsAdded = 0;
    }  
    
-   public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
+   public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList<Exhibit> allExhibits, ArrayList<Artifact> allArtifacts, ArrayList<Visitor> allVisitors, Bank bank)
    {
         Date openingDate = date1;
         Date currentDate = date2;
@@ -76,9 +76,9 @@ public class Museum
       daysOpenCount = 0;
       this.maxDisplaySpace = maxDisplaySpace;
       this.maxStorageSpace = maxStorageSpace;
-      allExhibits = new ArrayList();
-      allArtifacts = new ArrayList();
-      allVisitors = new ArrayList();
+      allExhibits = new ArrayList<Exhibit>();
+      allArtifacts = new ArrayList<Artifact>();
+      allVisitors = new ArrayList<Visitor>();
       bank = new Bank();
       numVisitorsAdded = 0;
       numExhibitsAdded = 0;
@@ -151,15 +151,15 @@ public class Museum
       daysOpenCount = num;
    }
    
-   public void setAllExhibits(ArrayList allExhibits) {
+   public void setAllExhibits(ArrayList <Exhibit> allExhibits) {
       this.allExhibits = allExhibits;
    }
    
-   public void setAllArtifacts(ArrayList allArtifacts) {
+   public void setAllArtifacts(ArrayList<Artifact> allArtifacts) {
       this.allArtifacts = allArtifacts;
    }
    
-   public void setAllVisitors(ArrayList allVisitors) {
+   public void setAllVisitors(ArrayList <Visitor>allVisitors) {
       this.allVisitors = allVisitors;
    }
    

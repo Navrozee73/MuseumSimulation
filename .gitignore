@@ -12,3 +12,5 @@
 .project
 *.java
 /bin/
+*.class
+*.class

@@ -18,25 +18,30 @@ public class MuseumRunner {
         Museum museum = new Museum();
         boolean museumMade = false;
         Scanner sc = new Scanner(System.in);
-
+        System.out.println("WELCOME TO THE MUSEUM SIMULATOR");
         do {
             input = -1;
+            System.out.println();
             printStartMenu();
             try {
+                System.out.print ("Choose an option: ");
                 input = sc.nextInt();
+                System.out.println();
                 if (input == 1) {
                     museum = makeNewMuseum(sc);
-                    museumMade = true;
+                    if (museum != null)
+                      museumMade = true;
                 } else if (input == 2) {
                     museum = loadNewMuseum();
-                    museumMade = true;
+                    if (museum != null)
+                        museumMade = true;
                 } else if (input == 3) {
                     saveMuseum(museum);
                 } else if (input == 4) {
                     if (museumMade) {
                         mainMenu(sc, museum);
                     } else {
-
+                        System.out.println("You need to make or load a museum before you can begin the simulation!");
                     }
                 }
 
@@ -361,6 +366,7 @@ public class MuseumRunner {
         String stringDate;
         double maxDisplay, maxStorage;
         System.out.print ("Enter opening date (dd/mm/yyyy C.E/B.C.E)  : ");
+        sc.nextLine();  // flush
         stringDate = sc.nextLine();
         System.out.print ("Enter Max Display Space: $");
         maxDisplay = sc.nextDouble();
@@ -387,77 +393,100 @@ public class MuseumRunner {
         exhibits.trimToSize();
         visitors.trimToSize();
         
-
-        BufferedReader in = new BufferedReader (new FileReader ("museumSave.txt"));
-        Date openDate = new Date (in.readLine());
-        Date currDate = new Date(in.readLine());
-        maxDisplay = Double.parseDouble(in.readLine());
-        maxStorage = Double.parseDouble(in.readLine());
-        numDaysOpen = Integer.parseInt(in.readLine());
-
-        for (int i = 0; i< numDaysOpen;i++) {
-            Date temp = new Date (in.readLine());
-            dates.add(temp);
-        }
-
-        // making bank
-        for (int i=0; i < numDaysOpen;i++) {
-            dailyRev.add(Double.parseDouble(in.readLine()));
-            lifetimeRev += dailyRev.get(i);
-        }
-
-        bank = new Bank (lifetimeRev, dailyRev, dates, currDate);
-
-        // making exhibit
-        numExhibits = Integer.parseInt(in.readLine());
-        Exhibit lobby = new Exhibit("Lobby", 1000, "Starting area for visitors");
-        exhibits.add(lobby);
-        for (int i= 0; i < numExhibits;i++) {
-            Exhibit temp = new Exhibit (in.readLine(), Integer.parseInt(in.readLine()), in.readLine());
-            exhibits.add(temp);
-        }
-
-        // making artifacts and adding to exhibit
-        numArtifacts = Integer.parseInt(in.readLine());
-        for (int i=0;i<numArtifacts;i++) {
-            Artifact temp = new Artifact(in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Double.parseDouble(in.readLine()),
-            Double.parseDouble(in.readLine()),new Date(in.readLine()), new Date(in.readLine()),findExhibit(exhibits, Integer.parseInt(in.readLine())), Boolean.parseBoolean(in.readLine()));
-            artifacts.add(temp);
-            temp.getExhibitLocation().addArtifact(temp);
-        }
-
-        // Making visitors
-        numVisitors = Integer.parseInt(in.readLine());
-        for (int i=0; i<numVisitors;i++) {
-            ArrayList <Exhibit>prevVisitedExh = new ArrayList<Exhibit>();
-            ArrayList <Artifact>prevVisitedArt = new ArrayList<Artifact>();
-            prevVisitedExh.trimToSize();
-            prevVisitedArt.trimToSize();
-            int visId = Integer.parseInt(in.readLine());
-            String visFName = in.readLine();
-            String visLName = in.readLine();
-            int visAge = Integer.parseInt(in.readLine());
-            Artifact currArt = findArtifact(artifacts,Integer.parseInt(in.readLine())); //currArt
-            Exhibit currExh = currArt.getExhibitLocation(); //use currArt to find currExh
-
-            // making prev visited exhibits
-            int maxNumExhibits = Integer.parseInt(in.readLine());
-            for (int j=0;j<maxNumExhibits;j++){
-                Exhibit temp = findExhibit (exhibits,Integer.parseInt(in.readLine()));
-                prevVisitedExh.add(temp);
+        try
+        {
+            BufferedReader in = new BufferedReader (new FileReader ("museumSave.txt"));
+            Date openDate = new Date (in.readLine());
+            Date currDate = new Date(in.readLine());
+            maxDisplay = Double.parseDouble(in.readLine());
+            maxStorage = Double.parseDouble(in.readLine());
+            numDaysOpen = Integer.parseInt(in.readLine());
+      
+            for (int i = 0; i< numDaysOpen;i++) {
+                Date temp = new Date (in.readLine());
+                dates.add(temp);
+            }
+      
+            // making bank
+            for (int i=0; i < numDaysOpen;i++) {
+                dailyRev.add(Double.parseDouble(in.readLine()));
+                lifetimeRev += dailyRev.get(i);
+            }
+      
+            bank = new Bank (lifetimeRev, dailyRev, dates, currDate);
+      
+            // making exhibit
+            numExhibits = Integer.parseInt(in.readLine());
+            Exhibit lobby = new Exhibit("Lobby", 1000, "Starting area for visitors");
+            exhibits.add(lobby);
+            for (int i= 0; i < numExhibits;i++) {
+                Exhibit temp = new Exhibit (in.readLine(), Integer.parseInt(in.readLine()), in.readLine());
+                exhibits.add(temp);
+            }
+      
+            // making artifacts and adding to exhibit
+            numArtifacts = Integer.parseInt(in.readLine());
+            for (int i=0;i<numArtifacts;i++) {
+                Artifact temp = new Artifact(in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Double.parseDouble(in.readLine()),
+                Double.parseDouble(in.readLine()),new Date(in.readLine()), new Date(in.readLine()),findExhibit(exhibits, Integer.parseInt(in.readLine())), Boolean.parseBoolean(in.readLine()));
+                artifacts.add(temp);
+                temp.getExhibitLocation().addArtifact(temp);
+            }
+      
+            // Making visitors
+            numVisitors = Integer.parseInt(in.readLine());
+            for (int i=0; i<numVisitors;i++) {
+                Visitor tempVisitor;
+                ArrayList <Exhibit>prevVisitedExh = new ArrayList<Exhibit>();
+                ArrayList <Artifact>prevVisitedArt = new ArrayList<Artifact>();
+                prevVisitedExh.trimToSize();
+                prevVisitedArt.trimToSize();
+                int visId = Integer.parseInt(in.readLine());
+                String visFName = in.readLine();
+                String visLName = in.readLine();
+                int visAge = Integer.parseInt(in.readLine());
+                Artifact currArt = findArtifact(artifacts,Integer.parseInt(in.readLine())); //currArt
+                Exhibit currExh = currArt.getExhibitLocation(); //use currArt to find currExh
+      
+                // making prev visited exhibits
+                int maxNumExhibits = Integer.parseInt(in.readLine());
+                for (int j=0;j<maxNumExhibits;j++){
+                    Exhibit temp = findExhibit (exhibits,Integer.parseInt(in.readLine()));
+                    prevVisitedExh.add(temp);
+                }
+      
+                // making prev visited artifacts
+                int maxNumArtifacts = Integer.parseInt(in.readLine());
+                for (int j=0;j<maxNumArtifacts; j++){
+                    Artifact temp = findArtifact(artifacts, Integer.parseInt(in.readLine()));
+                    prevVisitedArt.add(temp);
+                }
+                
+                if (visAge >= Child.MIN_AGE && visAge <= Child.MAX_AGE)
+                {
+                   tempVisitor = new Child(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh, prevVisitedArt);
+                   visitors.add(tempVisitor);
+                }
+                else if (visAge <= Adult.MAX_AGE)
+                {
+                   tempVisitor = new Adult(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh, prevVisitedArt);
+                   visitors.add(tempVisitor);
+                }
+                else if (visAge >= Senior.MIN_AGE)
+                { 
+                   tempVisitor = new Senior(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh, prevVisitedArt);
+                   visitors.add(tempVisitor);
+                }   
             }
 
-            // making prev visited artifacts
-            int maxNumArtifacts = Integer.parseInt(in.readLine());
-            for (int j=0;j<maxNumArtifacts; j++){
-                Artifact temp = findArtifact(artifacts, Integer.parseInt(in.readLine()));
-                prevVisitedArt.add(temp);
-            }
-            Visitor tempVisitor = new Visitor(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh, prevVisitedArt);
-            visitors.add(tempVisitor);
+            return (new Museum(openDate, currDate,maxDisplay, maxStorage, numVisitors, numDaysOpen, exhibits, artifacts, visitors, bank));
         }
-
-        return (new Museum(openDate, currDate,maxDisplay, maxStorage, numVisitors, numDaysOpen, exhibits, artifacts, visitors, bank));
+        catch (IOException iox)
+        {
+            System.out.println("Error reading from file. Check if file exists!");
+            System.out.println();
+            return null;
+        }
     }
 
     public static void saveMuseum (Museum museum)
@@ -491,7 +520,7 @@ public class MuseumRunner {
         revenues.trimToSize();
         for (int i=0; i < museum.getDaysOpenCount();i++)
         {
-            out.write(revenues.get(i));
+            out.write(""+revenues.get(i));
             out.newLine();
         }
 
