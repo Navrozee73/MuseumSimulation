@@ -44,7 +44,7 @@ public class Exhibit
    {
       name = exhName;
       
-      if (idNum > 999 && ((idNum+"").length() == 4))
+      if (idNum > 999 && ((idNum+"").length() == 4))  //valid Exhibit IDs must be 1000-9999  
          id= idNum;
       else
          throw new InputMismatchException();
@@ -85,7 +85,7 @@ public class Exhibit
    {
       name = exhName;
       
-      if (idNum > 999 && ((idNum+"").length() == 4))
+      if (idNum > 999 && ((idNum+"").length() == 4))  //valid Exhibit IDs must be 1000-9999
          id= idNum;
       else
          throw new InputMismatchException();
@@ -158,7 +158,7 @@ public class Exhibit
       name = exhName;
    }
    
-   public void setId(int idNum)
+   public void setId(int idNum)     // Id number is only valid if 1000-9999
    {
       if (idNum > 999 && ((idNum+"").length() == 4))
          id = idNum;
@@ -206,18 +206,22 @@ public class Exhibit
       currentVisitors = list;
    }
    
+   //UPDATE METHODS
+   //Updates the number of Artifacts within the exhibit
    private void updateNumArtifacts()
    {
       artifactList.trimToSize();
       numArtifacts = artifactList.size();
    }
    
+   //Updates the number of visitors in the Exhibit
    private void updateNumCurrentVisitors()
    {
       currentVisitors.trimToSize();
       numCurrentVisitors = currentVisitors.size();
    }
    
+   // Updates the total value of the artifacts within the exhibit
    private void updateValue()
    {
       double temp=0;
@@ -225,7 +229,8 @@ public class Exhibit
          temp += artifactList.get(i).getValue();
       value = temp;
    }
-   
+
+   // Updates the total floor space of the artifacts within the exhibit   
    private void updateFloorSpace()
    {
       double temp=0;
@@ -233,7 +238,8 @@ public class Exhibit
          temp += artifactList.get(i).getFloorSpace();
       floorSpace = temp;
    }
-   
+
+   // Updates whether or not any parts of the exhibit are on display 
    private void updateOnDisplay()
    {
       boolean temp = false;
@@ -242,7 +248,8 @@ public class Exhibit
             temp = true;
       onDisplay = temp;
    }
-   
+ 
+   // Print all properties  
    public String toString()
    {
       String info = "";
@@ -254,11 +261,13 @@ public class Exhibit
       return info;
    }
    
+   // Print just Exhibit Name + id
    public String identifierToString()
    {
       return ("Name: " + name + " ID: " + id);
    }
    
+   // Return all artifacts' properties
    public String[] artifactsToString()
    {
       String [] artifactsInfo = new String [numArtifacts];
@@ -269,6 +278,7 @@ public class Exhibit
       return artifactsInfo;
    }
    
+   // Return all visitors' properties
    public String[] currentVisitorsToString()
    {
       String [] visitorsInfo = new String [numCurrentVisitors];
@@ -280,6 +290,7 @@ public class Exhibit
       return visitorsInfo;
    }
    
+   // Return all artifact identifiers
    public String [] artifactIdentifiersToString() 
    {
       String [] identifiers = new String [numArtifacts];
@@ -291,6 +302,7 @@ public class Exhibit
       return identifiers;
    }
    
+   // Return all visitor identifiers
    public String[] currentVisitorIdentifiersToString()
    {
       String [] identifiers = new String [numCurrentVisitors];
@@ -302,6 +314,7 @@ public class Exhibit
       return identifiers;
    }
    
+   // Add an artifact to the exhibit, updates all properties of exhibit
    public boolean addArtifact (Artifact newArtifact)
    {
       try 
@@ -319,6 +332,7 @@ public class Exhibit
       }
    }
    
+   // Remove an artifact from the exhibit
    public boolean removeArtifact (Artifact targetArtifact)
    {
       boolean found = false;
@@ -334,6 +348,7 @@ public class Exhibit
       return found;
    }
    
+   // Add a visitor to the exhibit 
    public boolean addVisitor(Visitor targetVisitor)
    {
       try 
@@ -348,6 +363,7 @@ public class Exhibit
       }  
    }
    
+   // Remove a visitor from the currentVisitors list. Does not remove from the artifact they're within
    public boolean removeVisitor(Visitor targetVisitor)
    {
       boolean found = false;
@@ -363,6 +379,7 @@ public class Exhibit
       return found;
    }
    
+   // returns if two exhibits are the same
    public boolean equals (Exhibit other)
    {
       boolean equals = (other != null && name.equals(other.name) && id == other.id && 
@@ -383,56 +400,74 @@ public class Exhibit
       return equals;
    }
    
+   // returns whether the exhibit's total value exceeds an amount
    public boolean valueExceeds(double min)
    {
       return (value > min);
    }
-   
+
+   // returns whether the exhibit's total value is within a range 
    public boolean valueInRange (double min, double max)
    {
       return (value >= min && value <= max);
    }
-   
+
+   // returns whether the exhibit's total number of visitors exceeds an amount   
    public boolean currentNumVisitorsExceeds(int min)
    {
       return (numCurrentVisitors > min);
    }
    
+   // returns whether the exhibit's total number of visitors is within a range    
    public boolean currentNumVisitorsInRange (int min, int max)
    {
       return (numCurrentVisitors>= min && numCurrentVisitors <= max);
    }
    
+   // returns whether the exhibit's total value is below an amount   
    public boolean floorSpaceUnder(double max)
    {
       return (floorSpace < max);
    }
    
+   // returns whether the exhibit's total floor space is within a range    
    public boolean floorSpaceInRange(double min, double max)
    {  
       return (floorSpace >= min && floorSpace <= max);
    }
-   
+
+   // Compare exhibit values   
    public double compareValue (Exhibit other)
    {
       return (value - other.value);
    }
    
+   // compare number of visitors at an exhibit
    public int compareNumCurrentVisitors(Exhibit other)
    {
       return (numCurrentVisitors - other.numCurrentVisitors);
    }
    
+   // compares number of artifacts at another exhibit
    public int compareNumArtifacts(Exhibit other)
    {
       return (numArtifacts - other.numArtifacts);
    }
    
+
+   // compares exhibit floor space
+   public double compareFloorSpace(Exhibit other)
+   {
+      return (floorSpace - other.floorSpace);
+   }
+   
+   // compares exhibit names
    public int compareName(Exhibit other)
    {
       return (name.compareTo(other.name));
    }
    
+   // empties all visitors from the exhibit. Does not clear visitors from inner artifacts
    public void clearVisitors()
    {
       for (int i=0; i<numArtifacts;i++)
