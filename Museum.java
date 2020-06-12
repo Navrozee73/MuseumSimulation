@@ -4,8 +4,6 @@
      Creation Date: 2020-6-5
      Course:        ICS4U1-01
      Purpose:       This class represents a museum and manages all its operations.
-     
-     June 10th:     Debugging
 */
 
 import java.util.ArrayList;
@@ -31,41 +29,41 @@ public class Museum
    private int numExhibitsAdded;
    private int numArtifactsAdded;
    
-   public Museum()
-   {
-        openingDate = null;
-        currentDate = null;
-        maxDisplaySpace = 0;
-        maxStorageSpace = 0;
-        numCurrentVisitors = 0;
-        daysOpenCount = 0;
-        allExhibits = null;
-        allArtifacts = null;
-        allVisitors = null;
-        bank = null;
-        numVisitorsAdded = 0;
-        numExhibitsAdded = 0;
-        numArtifactsAdded = 0;
-   }  
-   
-   public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList<Exhibit> allExhibits, ArrayList<Artifact> allArtifacts, ArrayList<Visitor> allVisitors, Bank bank)
-   {
-        Date openingDate = date1;
-        Date currentDate = date2;
-        this.openingDate = openingDate;
-        this.currentDate = currentDate;
-        this.maxDisplaySpace = maxDisplaySpace;
-        this.maxStorageSpace = maxStorageSpace;
-        this.numCurrentVisitors = numCurrentVisitors;
-        this.daysOpenCount = daysOpenCount;
-        this.allExhibits = allExhibits;
-        this.allArtifacts = allArtifacts;
-        this.allVisitors = allVisitors;
-        this.bank = bank;
-        numVisitorsAdded = allVisitors.size();
-        numExhibitsAdded = allExhibits.size();
-        numArtifactsAdded = allArtifacts.size();
-   }
+     public Museum()
+     {
+          openingDate = null;
+          currentDate = null;
+          maxDisplaySpace = 0;
+          maxStorageSpace = 0;
+          numCurrentVisitors = 0;
+          daysOpenCount = 0;
+          allExhibits = null;
+          allArtifacts = null;
+          allVisitors = null;
+          bank = null;
+          numVisitorsAdded = 0;
+          numExhibitsAdded = 0;
+          numArtifactsAdded = 0;
+     }
+     
+     public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
+     {
+          Date openingDate = date1;
+          Date currentDate = date2;
+          this.openingDate = openingDate;
+          this.currentDate = currentDate;
+          this.maxDisplaySpace = maxDisplaySpace;
+          this.maxStorageSpace = maxStorageSpace;
+          this.numCurrentVisitors = numCurrentVisitors;
+          this.daysOpenCount = daysOpenCount;
+          this.allExhibits = allExhibits;
+          this.allArtifacts = allArtifacts;
+          this.allVisitors = allVisitors;
+          this.bank = bank;
+          numVisitorsAdded = allVisitors.size();
+          numExhibitsAdded = allExhibits.size();
+          numArtifactsAdded = allArtifacts.size();
+     }
    
    public Museum(String date, double maxDisplaySpace, double maxStorageSpace)
    {
@@ -76,9 +74,9 @@ public class Museum
       daysOpenCount = 0;
       this.maxDisplaySpace = maxDisplaySpace;
       this.maxStorageSpace = maxStorageSpace;
-      allExhibits = new ArrayList<Exhibit>();
-      allArtifacts = new ArrayList<Artifact>();
-      allVisitors = new ArrayList<Visitor>();
+      allExhibits = new ArrayList();
+      allArtifacts = new ArrayList();
+      allVisitors = new ArrayList();
       bank = new Bank();
       numVisitorsAdded = 0;
       numExhibitsAdded = 0;
@@ -151,37 +149,51 @@ public class Museum
       daysOpenCount = num;
    }
    
-   public void setAllExhibits(ArrayList <Exhibit> allExhibits) {
+   public void setAllExhibits(ArrayList allExhibits) {
       this.allExhibits = allExhibits;
    }
    
-   public void setAllArtifacts(ArrayList<Artifact> allArtifacts) {
+   public void setAllArtifacts(ArrayList allArtifacts) {
       this.allArtifacts = allArtifacts;
    }
    
-   public void setAllVisitors(ArrayList <Visitor>allVisitors) {
+   public void setAllVisitors(ArrayList allVisitors) {
       this.allVisitors = allVisitors;
    }
    
-//     public void setBank(double lifeTimeRevenue, double[] dailyRevenue) {
-//           Bank newBank = new Bank (lifeTimeRevenue, dailyRevenue);
-//           bank = newBank;
-//      }
+   public void setBank(double lifeTimeRevenue, ArrayList <Double> dailyRevenue, ArrayList <Date> dailyRevenueDates, Date currentDate) {
+       Bank newBank = new Bank (lifeTimeRevenue, dailyRevenue, dailyRevenueDates, currentDate);
+       bank = newBank;
+   }
+   
+   public void setBank(Bank bank)
+   {
+       this.bank = bank;
+   } 
       
      public void addVisitor(String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact)
      {
-//           try
-//           {               
+           try
+           {               
                if (age >= Child.MIN_AGE)
                {
                     Visitor newVisitor;
                     
                     if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
-                         newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact, null, null);
+                    {
+                         newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+                         bank.addRevenue(Child.ENTRANCE_FEE);
+                    }
                     else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
-                         newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact, null, null);
+                    {
+                         newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+                         bank.addRevenue(Adult.ENTRANCE_FEE);
+                    }
                     else
-                         newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact, null, null);
+                    {
+                         newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+                         bank.addRevenue(Senior.ENTRANCE_FEE);
+                    }
                          
                          numVisitorsAdded++;
                          numCurrentVisitors++;
@@ -191,22 +203,25 @@ public class Museum
                 }
                 else
                     System.out.println("Age is not valid");
-//           }
-//           catch(Exception e)
-//           {
-//                System.out.println("Error adding visitor");
-//           }
+             }
+           catch(Exception e)
+           {
+                System.out.println("Error adding visitor");
+           }
      }
    
    public void removeVisitor(int givenId)
    {
       int foundIndex = findVisitorIndexById(givenId);
+      Visitor foundVisitor = allVisitors.get(foundIndex);
       
       if (foundIndex == -1)
          System.out.println("Visitor with ID " + givenId + " cannot be found");
       else
       {
          allVisitors.remove(foundIndex);    
+         (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
+         (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);
          numCurrentVisitors--; 
       }
    }
@@ -214,12 +229,15 @@ public class Museum
    public void removeVisitor(String givenName)
    {
       int foundIndex = findVisitorIndexByName(givenName);
+      Visitor foundVisitor = allVisitors.get(foundIndex);
       
       if (foundIndex == -1)
          System.out.println("Visitor with name " + givenName + " cannot be found");
       else
       {
-         allVisitors.remove(foundIndex);    
+         allVisitors.remove(foundIndex);
+         (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
+         (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);    
          numCurrentVisitors--; 
       }   
    }
@@ -260,8 +278,8 @@ public class Museum
    
    public void addArtifact(String name, String description, double value, double floorSpace, String dateMadeString, String datePurchasedString, int exhibitId, boolean onDisplay)
    {
-//       try
-//       {
+      try
+      {
          Date dateMade = new Date(dateMadeString);
          Date datePurchased = new Date(datePurchasedString);
          int foundIndex = findExhibitIndexById(exhibitId);
@@ -271,112 +289,193 @@ public class Museum
             Artifact newArtifact = new Artifact(name, ARTIFACT_BASE_ID + numArtifactsAdded, description, value, floorSpace, dateMade, datePurchased, allExhibits.get(foundIndex), onDisplay);
             allArtifacts.add(newArtifact);
             (allExhibits.get(foundIndex)).addArtifact(newArtifact);
+            numArtifactsAdded++;
          }
          else
             System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
-//       }
-//       catch(Exception e)
-//       {
-//          System.out.println("Error adding artifact");
-//       }
+      }
+      catch(Exception e)
+      {
+         System.out.println("Error adding artifact");
+      }
    }
    
    public void removeArtifact(int artifactId)
    {
       int foundIndex = findArtifactIndexById(artifactId);
+      Artifact foundArtifact = allArtifacts.get(foundIndex);
       
       if (foundIndex == -1)
          System.out.println("Artifact with ID " + artifactId + " cannot be found");
       else
+      {
          allArtifacts.remove(foundIndex);
+         foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
+      }
    }
    
    public void removeArtifact(String artifactName)
    {
       int foundIndex = findArtifactIndexByName(artifactName);
+      Artifact foundArtifact = allArtifacts.get(foundIndex);
       
       if (foundIndex == -1)
          System.out.println("Artifact called " + artifactName + " cannot be found");
       else
+      {
          allArtifacts.remove(foundIndex);
+         foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
+      }
    }
    
-//    public boolean moveVisitor(int visitorId, int toArtifactId)
-//    {
-//       try
-//       {
-//          int visitorFoundIndex = findVisitorIndexById(visitorId);
-//          int artifactFoundIndex = findArtifactIndexById(toArtifactId);
-//          Visitor movingVisitor;
-//          Artifact toArtifact;
-//          
-//          if (visitorFoundIndex != -1 && artifactFoundIndex != -1)
-//          {
-//             movingVisitor = allVisitors.get(visitorFoundIndex);
-//             toArtifact = allArtifacts.get(artifactFoundIndex);
-//             movingVisitor.moveVisitor(toArtifact);
-//             return true;
-//          }
-//          else
-//             return false;
-//       }
-//       catch(Exception e)
-//       { 
-//          return false;
-//       }
-//    }
+   public boolean moveVisitor(int visitorId, int toArtifactId)
+   {
+      try
+      {
+         // locate visitor and artifact ID
+         int visitorFoundIndex = findVisitorIndexById(visitorId);
+         int artifactFoundIndex = findArtifactIndexById(toArtifactId);
+         
+         // boolean indicates if the visitor is successfully moved (different artifact is given)
+         boolean moveSuccessful = false;
+         
+         // variables to store objects
+         Visitor movingVisitor;
+         Artifact toArtifact;
+         Exhibit toExhibit;
+         Exhibit originalExhibit = allVisitors.get(visitorFoundIndex).getCurrentExhibit();
+         
+         // check if IDs given are valid
+         
+         if (visitorFoundIndex != -1 && artifactFoundIndex != -1)
+         {
+            movingVisitor = allVisitors.get(visitorFoundIndex);
+            toArtifact = allArtifacts.get(artifactFoundIndex);
+            
+            // move visitor to another object (updates visitor info)
+            moveSuccessful = movingVisitor.moveVisitor(toArtifact);
+            
+            // if visitor is successfully moved
+            if (moveSuccessful)
+            {
+               // remove visitor from their initial artifact
+               // add visitor to their new artifact
+               
+               (movingVisitor.getCurrentArtifact()).removeVisitor(movingVisitor);
+               toArtifact.addVisitor(movingVisitor);
+                
+               // if artifact is located in another exhibit
+               if (toArtifact.getExhibitLocation().equals(originalExhibit) == false)
+               {
+                  toExhibit = toArtifact.getExhibitLocation();
+                  
+                  // remove visitor from their initial exhibit
+                  // add visitor to their new exhibit
+                  
+                  (movingVisitor.getCurrentExhibit()).removeVisitor(movingVisitor);
+                  toExhibit.addVisitor(movingVisitor);
+               }
+            }
+           
+            return true;
+         }
+         else
+            return false;
+      }
+      catch(Exception e)
+      { 
+         return false;
+      }
+   }
    
-//    public boolean moveVisitor(String visitorName, String toArtifactName)
-//    {
-//       try
-//       {
-//          int visitorFoundIndex = findVisitorIndexByName(visitorName);
-//          int artifactFoundIndex = findArtifactIndexByName(toArtifactName);
-//          Visitor movingVisitor;
-//          Artifact toArtifact;
-//          
-//          if (visitorFoundIndex != -1 && artifactFoundIndex != -1)
-//          {
-//             movingVisitor = allVisitors.get(visitorFoundIndex);
-//             toArtifact = allArtifacts.get(artifactFoundIndex);
-//             movingVisitor.moveVisitor(toArtifact);
-//             return true;
-//          }
-//          else
-//             return false;
-//       }
-//       catch(Exception e)
-//       { 
-//          return false;
-//       }
-//    }
+   public boolean moveVisitor(String visitorName, String toArtifactName)
+   {
+      try
+      {
+         // locate visitor and artifact ID
+         int visitorFoundIndex = findVisitorIndexByName(visitorName);
+         int artifactFoundIndex = findArtifactIndexByName(toArtifactName);
+         
+         // boolean indicates if the visitor is successfully moved (different artifact is given)
+         boolean moveSuccessful = false;
+         
+         // variables to store objects
+         Visitor movingVisitor;
+         Artifact toArtifact;
+         Exhibit toExhibit;
+         Exhibit originalExhibit = allVisitors.get(visitorFoundIndex).getCurrentExhibit();
+         
+         // check if IDs given are valid
+         
+         if (visitorFoundIndex != -1 && artifactFoundIndex != -1)
+         {
+            movingVisitor = allVisitors.get(visitorFoundIndex);
+            toArtifact = allArtifacts.get(artifactFoundIndex);
+            
+            // move visitor to another object (updates visitor info)
+            moveSuccessful = movingVisitor.moveVisitor(toArtifact);
+            
+            // if visitor is successfully moved
+            if (moveSuccessful)
+            {
+               // remove visitor from their initial artifact
+               // add visitor to their new artifact
+               
+               (movingVisitor.getCurrentArtifact()).removeVisitor(movingVisitor);
+               toArtifact.addVisitor(movingVisitor);
+                  
+               // if artifact is located in another exhibit
+               if (toArtifact.getExhibitLocation().equals(originalExhibit) == false)
+               {
+                  toExhibit = toArtifact.getExhibitLocation();
+                  
+                  // remove visitor from their initial exhibit
+                  // add visitor to their new exhibit
+                  
+                  (movingVisitor.getCurrentExhibit()).removeVisitor(movingVisitor);
+                  toExhibit.addVisitor(movingVisitor);
+               }
+               
+               return true;
+            }
+            
+            return false;
+         }
+         else
+            return false;
+      }
+      catch(Exception e)
+      { 
+         return false;
+      }
+   }
    
-//      public void closeForTheDay()
-//      {
-//           // add current date to Bank's date array
-//           (bank.getDailyRevenueDates()).add(currentDate);
-//           
-//           // update days open and current date for Museum
-//           // set tomorrow's initial daily revenue as $0 for Bank
-//           daysOpenCount++;
-//           currentDate.progressDate();
-//           (bank.getDailyRevenue()).add(0);
-//           
-//           // clear visitor array in Museum
-//           allVisitors.clear();
-//           
-//           // clear currentVisitors in all Artifacts and Exhibits
-//           for (int i = 0; i < allExhibits.size(); i ++)
-//           {
-//                (allExhibits.get(i)).clearVisitors();
-//           }
-//           
-//           for (int i = 0; i < allArtifacts.size(); i ++)
-//           {
-//                (allArtifacts.get(i)).clearVisitors();
-//           }
-//           
-//      }
+     public void closeForTheDay()
+     {
+          // add the current date to Bank's date array
+          (bank.getDailyRevenueDates()).add(currentDate);
+          
+          // update days open and current date for Museum
+          // set tomorrow's initial daily revenue as $0 for Bank
+          daysOpenCount++;
+          currentDate.progressDate();
+          (bank.getDailyRevenue()).add(0.0);
+          
+          // clear visitor array in Museum
+          allVisitors.clear();
+          
+          // clear currentVisitors in all Artifacts and Exhibits
+          for (int i = 0; i < allExhibits.size(); i ++)
+          {
+               (allExhibits.get(i)).clearVisitors();
+          }
+          
+          for (int i = 0; i < allArtifacts.size(); i ++)
+          {
+               (allArtifacts.get(i)).clearVisitors();
+          }
+          
+     }
    
    public int numTotalExhibits()
    {
@@ -953,7 +1052,7 @@ public class Museum
       int foundIndex = findExhibitIndexByName(exhibitName);
       
       if (foundIndex == -1)
-         System.out.println("Exhibit with ID " + exhibitName + " cannot be found");
+         System.out.println("Exhibit called " + exhibitName + " cannot be found");
       else
          System.out.println((allExhibits.get(foundIndex)).identifierToString());
    }
