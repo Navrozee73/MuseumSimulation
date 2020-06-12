@@ -11,5 +11,8 @@ public class Child extends Visitor{
     public Child (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact, ArrayList<Exhibit> visitedExhibits, ArrayList<Artifact> visitedArtifacts){
         super(id, firstName, lastName, age, currentExhibit, currentArtifact, visitedExhibits, visitedArtifacts);
     }
-
+    
+    public Child (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact){
+        super(id,firstName, lastName, age, currentExhibit, currentArtifact);
+    }
 }
