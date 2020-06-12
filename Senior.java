@@ -11,4 +11,7 @@ public class Senior extends Visitor {
         super(id,firstName, lastName, age, currentExhibit, currentArtifact, visitedExhibits, visitedArtifacts);
     }
 
+    public Senior (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact){
+        super(id,firstName, lastName, age, currentExhibit, currentArtifact);
+    }
 }
