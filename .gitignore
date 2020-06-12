@@ -14,3 +14,6 @@
 /bin/
 *.class
 *.class
+Exhibit.class
+Artifact.class
+Visitor.class

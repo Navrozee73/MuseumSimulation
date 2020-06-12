@@ -81,6 +81,7 @@ public class Museum
       numVisitorsAdded = 0;
       numExhibitsAdded = 0;
       numArtifactsAdded = 0;
+      this.addExhibit("Lobby", "Area to store all new visitors, or visitors not currently at an existing artifact.");
    }
    
    public Date getOpeningDate() {
@@ -170,7 +171,8 @@ public class Museum
    {
        this.bank = bank;
    } 
-      
+     
+     // addVisitor for when reading from file 
      public void addVisitor(String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact)
      {
            try
@@ -209,7 +211,46 @@ public class Museum
                 System.out.println("Error adding visitor");
            }
      }
-   
+
+     // addVisitor for brand new visitor, placed in lobby
+     public void addVisitor(String firstName, String lastName, int age)
+     {
+           try
+           {               
+               if (age >= Child.MIN_AGE)
+               {
+                    Visitor newVisitor;
+                    Exhibit lobby = allExhibits.get(findExhibitIndexByName("Lobby"));
+                    
+                    if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
+                    {
+                         newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+                         bank.addRevenue(Child.ENTRANCE_FEE);
+                    }
+                    else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
+                    {
+                         newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+                         bank.addRevenue(Adult.ENTRANCE_FEE);
+                    }
+                    else
+                    {
+                         newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+                         bank.addRevenue(Senior.ENTRANCE_FEE);
+                    }
+                         
+                         numVisitorsAdded++;
+                         numCurrentVisitors++;
+                         allVisitors.add(newVisitor);
+                         lobby.addVisitor(newVisitor);
+                }
+                else
+                    System.out.println("Age is not valid");
+             }
+           catch(Exception e)
+           {
+                System.out.println("Error adding visitor");
+           }
+     }   
    public void removeVisitor(int givenId)
    {
       int foundIndex = findVisitorIndexById(givenId);
@@ -259,11 +300,21 @@ public class Museum
    public void removeExhibit(int exhibitId)
    {
       int foundIndex = findExhibitIndexById(exhibitId);
+      Exhibit foundExhibit = allExhibits.get(foundIndex);
       
       if (foundIndex == -1)
          System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
       else
+      {  
+         // remove all artifacts from Exhibit (thus movig visitors to lobby)
+         ArrayList <Artifact> displacedArtifacts = foundExhibit.getArtifactList();
+         displacedArtifacts.trimToSize();
+         for (int i=0;i < displacedArtifacts.size(); i++)
+         {
+            this.removeArtifact(displacedArtifacts.get(i).getId());
+         }
          allExhibits.remove(foundIndex);     
+      }
    }
    
    public void removeExhibit(String exhibitName)
@@ -309,7 +360,18 @@ public class Museum
          System.out.println("Artifact with ID " + artifactId + " cannot be found");
       else
       {
+         // move all visitors at artifact to lobby        
+         ArrayList<Visitor> displacedVisitors = foundArtifact.getCurrentVisitors();
+         displacedVisitors.trimToSize();
+         for (int i=0; i < displacedVisitors.size();i++)
+         {
+            this.moveToLobby(displacedVisitors.get(i));  //moves visitor to lobby
+         }
+         
+         // remove artifact from arraylist
          allArtifacts.remove(foundIndex);
+         
+         // remove artifact from exhibit
          foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
       }
    }
@@ -323,7 +385,18 @@ public class Museum
          System.out.println("Artifact called " + artifactName + " cannot be found");
       else
       {
+         // move all visitors at artifact to lobby         
+         ArrayList<Visitor> displacedVisitors = foundArtifact.getCurrentVisitors();
+         displacedVisitors.trimToSize();
+         for (int i=0; i < displacedVisitors.size();i++)
+         {
+            this.moveToLobby(displacedVisitors.get(i));  //moves visitor to lobby
+         }
+         
+         // remove artifact from arraylist
          allArtifacts.remove(foundIndex);
+         
+         // remove artifact from exhibit
          foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
       }
    }
@@ -448,6 +521,13 @@ public class Museum
       { 
          return false;
       }
+   }
+   
+   public boolean moveToLobby(Visitor visitor)
+   {
+      String fullName = visitor.getFirstName() + " " + visitor.getLastName();
+      return (moveVisitor(fullName, "Lobby"));
+      
    }
    
      public void closeForTheDay()
