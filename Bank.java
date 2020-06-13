@@ -47,6 +47,9 @@ public class Bank {
     public Bank (){
         lifetimeRevenue = 0;
         dailyRevenue = new ArrayList<Double>();
+        dailyRevenue.trimToSize();
+        dailyRevenueDates = new ArrayList<Date>();
+        dailyRevenueDates.trimToSize();
     }
 
     //Main Constructor

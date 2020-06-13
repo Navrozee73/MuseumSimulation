@@ -1,0 +1,103 @@
+01/01/2002 C.E.
+10/01/2002 C.E.
+1000.0
+500.0
+10
+01/01/2002 C.E.
+02/01/2002 C.E.
+03/01/2002 C.E.
+04/01/2002 C.E.
+05/01/2002 C.E.
+06/01/2002 C.E.
+07/01/2002 C.E.
+08/01/2002 C.E.
+09/01/2002 C.E.
+10/01/2002 C.E.
+15.0
+15.0
+15.0
+15.0
+15.0
+15.0
+15.0
+15.0
+15.0
+60.0
+4
+Lobby
+1000
+Area to store all new visitors, or visitors not currently at an existing artifact.
+Age of The Dinosaurs
+1001
+From T-rex to stegosauruses, dinoes are big creatures!
+SpaceMan Jim's Voyage
+1002
+Spaceman Jim may have died on the mission to Mars, but this exhibit helps honour him.
+The Chinese Empire
+1003
+The gripping tales of how the Kung Fu Panda brought peace to the world, told through history
+3
+T-rex Neck
+10000
+Neck of the big dino t-rex. Very big.
+300.0
+30.0
+01/01/6000 B.C.E.
+01/01/2002 C.E.
+1001
+false
+Chinese Urn
+10001
+This urn is very expensive and used to be owned by me.
+50000.0
+4.0
+02/01/0900 C.E.
+06/01/2002 C.E.
+1003
+true
+AstroBar
+10002
+A food that Jim ate
+20.0
+1.0
+20/12/1969 C.E.
+05/01/2002 C.E.
+1002
+true
+4
+100000
+Navroze
+Antia
+68
+10002
+0
+0
+100001
+Aravind
+Subramanian
+65
+10001
+1
+1002
+1
+10002
+100002
+Jerry
+Wei
+82
+10002
+1
+1003
+1
+10001
+100003
+William
+Peng
+74
+10002
+2
+1001
+1003
+2
+10000
+10001

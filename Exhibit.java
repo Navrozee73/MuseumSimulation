@@ -260,11 +260,13 @@ public class Exhibit
    public String toString()
    {
       String info = "";
-      info = "EXHIBIT: " + name + "\nID: " + id + "\nDescription: " + description + "\nTotal Exhibit Value: $" + value + "\nTotal Floor Space Required: " + floorSpace + " sq. ft." + "\nTotal Number of Current Visitors: " + numCurrentVisitors + "\nTotal Number of Current Artifacts: " + numArtifacts + "\n\nList of Artifacts within Museum: ";
+      info = "EXHIBIT: " + name + "\nID: " + id + "\nDescription: " + description + "\nTotal Exhibit Value: $" + value + "\nTotal Floor Space Required: " + floorSpace + " sq. ft." + "\nTotal Number of Current Visitors: " + numCurrentVisitors + "\nTotal Number of Current Artifacts: " + numArtifacts + "\n\nList of Artifacts within Exhibit: ";
       for (int i=0; i< numArtifacts; i++)
       {
          info+= ("\n" + artifactList.get(i));
       } 
+      if (numArtifacts == 0)
+         info+= ("\nN/A");
       return info;
    }
    
