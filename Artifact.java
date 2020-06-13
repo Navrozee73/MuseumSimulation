@@ -377,18 +377,23 @@ public class Artifact
                         && dateMade.equals(other.dateMade) && datePurchased.equals(other.datePurchased) 
                         && exhibitLocation.getName().equals(other.exhibitLocation.getName()) && exhibitLocation.getId() == other.exhibitLocation.getId()
                         && exhibitLocation.getDescription().equals(other.exhibitLocation.getDescription()));
-      if (numCurrentVisitors == other.numCurrentVisitors)
+      if (other != null)
       {
-         for (int i=0;i<numCurrentVisitors;i++)
+         if (numCurrentVisitors == other.numCurrentVisitors)
          {
-            if (!((currentVisitors.get(i)).equals(other.currentVisitors.get(i))))
-               equals = false;
+            for (int i=0;i<numCurrentVisitors;i++)
+            {
+               if (!((currentVisitors.get(i)).equals(other.currentVisitors.get(i))))
+                  equals = false;
+            }
+         }
+         else
+         {
+            equals = false;
          }
       }
       else
-      {
          equals = false;
-      }
       
       return equals;
    }
