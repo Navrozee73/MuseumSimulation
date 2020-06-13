@@ -1,9 +1,9 @@
 /*
-     Class Name:    Museum
-     Author:        Jerry & William
-     Creation Date: 2020-6-5
-     Course:        ICS4U1-01
-     Purpose:       This class represents a museum and manages all its operations.
+   Class Name:       Museum.java
+   Authors:          Jerry & William
+   Creation Date:    2020-6-5
+   Course:           ICS4U1-02
+   Purpose:          This class represents a museum and manages all its operations.
 */
 
 import java.util.ArrayList;
@@ -11,60 +11,65 @@ import java.util.*;
 
 public class Museum
 {
-   private static final int VISITOR_BASE_ID = 100000;
-   private static final int ARTIFACT_BASE_ID = 10000;
-   private static final int EXHIBIT_BASE_ID = 1000;
+   private static final int VISITOR_BASE_ID = 100000;       // ID of the first visitor added
+   private static final int ARTIFACT_BASE_ID = 10000;       // ID of the first artifact added
+   private static final int EXHIBIT_BASE_ID = 1000;         // ID of the museum lobby (first exhibit added)
    
-   private Date openingDate;
-   private Date currentDate;
-   private double maxDisplaySpace;
-   private double maxStorageSpace;
-   private int numCurrentVisitors;
-   private int daysOpenCount;
-   private ArrayList <Exhibit> allExhibits;
-   private ArrayList <Artifact> allArtifacts;
-   private ArrayList <Visitor> allVisitors;
-   private Bank bank;
-   private int numVisitorsAdded;
-   private int numExhibitsAdded;
-   private int numArtifactsAdded;
+   private Date openingDate;                                // opening date of the museum
+   private Date currentDate;                                // current date in museum simulation
+   private double maxDisplaySpace;                          // total amount of display space available
+   private double maxStorageSpace;                          // total amount of storage space available
+   private int numCurrentVisitors;                          // current number of visitors inside museum
+   private int daysOpenCount;                               // number of days the museum has been open
+   private ArrayList <Exhibit> allExhibits;                 // all exhibits in museum
+   private ArrayList <Artifact> allArtifacts;               // all artifacts in museum
+   private ArrayList <Visitor> allVisitors;                 // all visitors currently in museum
+   private Bank bank;                                       // manages the financial aspects of the museum
+   private int numVisitorsAdded;                            // total number of visitors added
+   private int numExhibitsAdded;                            // total number of exhibits added
+   private int numArtifactsAdded;                           // total number of artifacts added
    
-     public Museum()
-     {
-          openingDate = null;
-          currentDate = null;
-          maxDisplaySpace = 0;
-          maxStorageSpace = 0;
-          numCurrentVisitors = 0;
-          daysOpenCount = 0;
-          allExhibits = null;
-          allArtifacts = null;
-          allVisitors = null;
-          bank = null;
-          numVisitorsAdded = 0;
-          numExhibitsAdded = 0;
-          numArtifactsAdded = 0;
-     }
-     
-     public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
-     {
-          Date openingDate = date1;
-          Date currentDate = date2;
-          this.openingDate = openingDate;
-          this.currentDate = currentDate;
-          this.maxDisplaySpace = maxDisplaySpace;
-          this.maxStorageSpace = maxStorageSpace;
-          this.numCurrentVisitors = numCurrentVisitors;
-          this.daysOpenCount = daysOpenCount;
-          this.allExhibits = allExhibits;
-          this.allArtifacts = allArtifacts;
-          this.allVisitors = allVisitors;
-          this.bank = bank;
-          numVisitorsAdded = allVisitors.size();
-          numExhibitsAdded = allExhibits.size();
-          numArtifactsAdded = allArtifacts.size();
-     }
+   // Constructors
    
+   // default constructor if no parameters are entered
+   public Museum()
+   {
+      openingDate = null;
+      currentDate = null;
+      maxDisplaySpace = 0;
+      maxStorageSpace = 0;
+      numCurrentVisitors = 0;
+      daysOpenCount = 0;
+      allExhibits = null;
+      allArtifacts = null;
+      allVisitors = null;
+      bank = null;
+      numVisitorsAdded = 0;
+      numExhibitsAdded = 0;
+      numArtifactsAdded = 0;
+   }
+   
+   // constructor for creating a pre-existing museum, given all fields
+   public Museum(Date date1, Date date2, double maxDisplaySpace, double maxStorageSpace, int numCurrentVisitors, int daysOpenCount, ArrayList allExhibits, ArrayList allArtifacts, ArrayList allVisitors, Bank bank)
+   {
+      Date openingDate = date1;
+      Date currentDate = date2;
+      this.openingDate = openingDate;
+      this.currentDate = currentDate;
+      this.maxDisplaySpace = maxDisplaySpace;
+      this.maxStorageSpace = maxStorageSpace;
+      this.numCurrentVisitors = numCurrentVisitors;
+      this.daysOpenCount = daysOpenCount;
+      this.allExhibits = allExhibits;
+      this.allArtifacts = allArtifacts;
+      this.allVisitors = allVisitors;
+      this.bank = bank;
+      numVisitorsAdded = allVisitors.size();
+      numExhibitsAdded = allExhibits.size();
+      numArtifactsAdded = allArtifacts.size();
+   }
+   
+   // constructor for creating a brand new museum, only given opening date, max display space, and max storage space
    public Museum(String date, double maxDisplaySpace, double maxStorageSpace)
    {
       Date openingDate = new Date(date);
@@ -77,12 +82,22 @@ public class Museum
       allExhibits = new ArrayList();
       allArtifacts = new ArrayList();
       allVisitors = new ArrayList();
-      bank = new Bank();
+      
+      ArrayList <Double> dailyRevenue = new ArrayList<Double>();
+      ArrayList <Date> dates = new ArrayList<Date>();
+      dailyRevenue.trimToSize();
+      dates.trimToSize();
+      dailyRevenue.add(0.0);
+      dates.add(openingDate);
+      bank = new Bank(0,dailyRevenue, dates, currentDate);
+      
       numVisitorsAdded = 0;
       numExhibitsAdded = 0;
       numArtifactsAdded = 0;
       this.addExhibit("Lobby", "Area to store all new visitors, or visitors not currently at an existing artifact.");
    }
+   
+   // Accessors
    
    public Date getOpeningDate() {
       return openingDate;
@@ -120,10 +135,12 @@ public class Museum
       return allVisitors;
    }
         
-     public Bank getBank() {
-          return bank;
-     }
-        
+   public Bank getBank() {
+      return bank;
+   }
+     
+   // Mutators
+      
    public void setOpeningDate(String date) {
       Date setDate = new Date(date);
       openingDate = setDate;
@@ -163,94 +180,107 @@ public class Museum
    }
    
    public void setBank(double lifeTimeRevenue, ArrayList <Double> dailyRevenue, ArrayList <Date> dailyRevenueDates, Date currentDate) {
-       Bank newBank = new Bank (lifeTimeRevenue, dailyRevenue, dailyRevenueDates, currentDate);
-       bank = newBank;
+      Bank newBank = new Bank (lifeTimeRevenue, dailyRevenue, dailyRevenueDates, currentDate);
+      bank = newBank;
    }
    
-   public void setBank(Bank bank)
-   {
-       this.bank = bank;
+   public void setBank(Bank bank) {
+      this.bank = bank;
    } 
-     
-     // addVisitor for when reading from file 
-     public void addVisitor(String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact)
-     {
-           try
-           {               
-               if (age >= Child.MIN_AGE)
-               {
-                    Visitor newVisitor;
+   
+   // Instance Methods
+   
+   /* Adds a pre-existing visitor to the museum
+   *  String firstName - first name of visitor being added
+   *  String lastName - last name of visitor being added
+   *  Exhibit currentExhibit - the exhibit the visitor is currently in
+   *  Artifact currentArtifact - the artifact the visitor is currently in
+   */
+   
+   public void addVisitor(String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact)
+   {
+      try
+      {               
+         if (age >= Child.MIN_AGE)
+         {
+            Visitor newVisitor;
                     
-                    if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
-                    {
-                         newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
-                         bank.addRevenue(Child.ENTRANCE_FEE);
-                    }
-                    else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
-                    {
-                         newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
-                         bank.addRevenue(Adult.ENTRANCE_FEE);
-                    }
-                    else
-                    {
-                         newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
-                         bank.addRevenue(Senior.ENTRANCE_FEE);
-                    }
+            if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
+            {
+               newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+               bank.addRevenue(Child.ENTRANCE_FEE);
+            }
+            else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
+            {
+               newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+               bank.addRevenue(Adult.ENTRANCE_FEE);
+            }
+            else
+            {
+               newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, currentExhibit, currentArtifact);
+               bank.addRevenue(Senior.ENTRANCE_FEE);
+            }
                          
-                         numVisitorsAdded++;
-                         numCurrentVisitors++;
-                         allVisitors.add(newVisitor);
-                         currentExhibit.addVisitor(newVisitor);
-                         currentArtifact.addVisitor(newVisitor);
-                }
-                else
-                    System.out.println("Age is not valid");
-             }
-           catch(Exception e)
-           {
-                System.out.println("Error adding visitor");
-           }
-     }
+            numVisitorsAdded++;
+            numCurrentVisitors++;
+            allVisitors.add(newVisitor);
+            currentExhibit.addVisitor(newVisitor);
+            currentArtifact.addVisitor(newVisitor);
+         }
+         else
+            System.out.println("Age is not valid");
+      }
+      catch(Exception e)
+      {
+         System.out.println("Error adding visitor");
+      }
+   }
 
-     // addVisitor for brand new visitor, placed in lobby
-     public void addVisitor(String firstName, String lastName, int age)
-     {
-           try
-           {               
-               if (age >= Child.MIN_AGE)
-               {
-                    Visitor newVisitor;
-                    Exhibit lobby = allExhibits.get(findExhibitIndexByName("Lobby"));
+   /* Adds a brand new visitor to the museum, placed in lobby
+   *  String firstName - first name of visitor being added
+   *  String lastName - last name of visitor being added
+   *  Exhibit currentExhibit - the exhibit the visitor is currently in
+   *  Artifact currentArtifact - the artifact the visitor is currently in
+   */
+   public void addVisitor(String firstName, String lastName, int age)
+   {
+      try
+      {               
+         if (age >= Child.MIN_AGE)
+         {
+            Visitor newVisitor;
+            Exhibit lobby = allExhibits.get(findExhibitIndexByName("Lobby"));
                     
-                    if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
-                    {
-                         newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
-                         bank.addRevenue(Child.ENTRANCE_FEE);
-                    }
-                    else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
-                    {
-                         newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
-                         bank.addRevenue(Adult.ENTRANCE_FEE);
-                    }
-                    else
-                    {
-                         newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
-                         bank.addRevenue(Senior.ENTRANCE_FEE);
-                    }
+            if (age >= Child.MIN_AGE && age <= Child.MAX_AGE)
+            {
+               newVisitor = new Child (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+               bank.addRevenue(Child.ENTRANCE_FEE);
+            }
+            else if (age >= Adult.MIN_AGE && age <= Adult.MAX_AGE)
+            {
+               newVisitor = new Adult (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+               bank.addRevenue(Adult.ENTRANCE_FEE);
+            }
+            else
+            {
+               newVisitor = new Senior (VISITOR_BASE_ID + numVisitorsAdded, firstName, lastName, age, lobby, null);
+               bank.addRevenue(Senior.ENTRANCE_FEE);
+            }
                          
-                         numVisitorsAdded++;
-                         numCurrentVisitors++;
-                         allVisitors.add(newVisitor);
-                         lobby.addVisitor(newVisitor);
-                }
-                else
-                    System.out.println("Age is not valid");
-             }
-           catch(Exception e)
-           {
-                System.out.println("Error adding visitor");
-           }
-     }   
+            numVisitorsAdded++;
+            numCurrentVisitors++;
+            allVisitors.add(newVisitor);
+            lobby.addVisitor(newVisitor);
+         }
+         else
+            System.out.println("Age is not valid");
+      }
+      catch(Exception e)
+      {
+         System.out.println("Error adding visitor");
+      }
+   }   
+   
    public void removeVisitor(int givenId)
    {
       int foundIndex = findVisitorIndexById(givenId);
@@ -528,32 +558,32 @@ public class Museum
       return (visitor.moveToLobby(allExhibits.get(findExhibitIndexByName("Lobby"))));
    }
    
-     public void closeForTheDay()
-     {
+   public void closeForTheDay()
+   {
           // add the current date to Bank's date array
-          (bank.getDailyRevenueDates()).add(currentDate);
+      (bank.getDailyRevenueDates()).add(currentDate);
           
           // update days open and current date for Museum
           // set tomorrow's initial daily revenue as $0 for Bank
-          daysOpenCount++;
-          currentDate.progressDate();
-          (bank.getDailyRevenue()).add(0.0);
+      daysOpenCount++;
+      currentDate.progressDate();
+      (bank.getDailyRevenue()).add(0.0);
           
           // clear visitor array in Museum
-          allVisitors.clear();
+      allVisitors.clear();
           
           // clear currentVisitors in all Artifacts and Exhibits
-          for (int i = 0; i < allExhibits.size(); i ++)
-          {
-               (allExhibits.get(i)).clearVisitors();
-          }
+      for (int i = 0; i < allExhibits.size(); i ++)
+      {
+         (allExhibits.get(i)).clearVisitors();
+      }
           
-          for (int i = 0; i < allArtifacts.size(); i ++)
-          {
-               (allArtifacts.get(i)).clearVisitors();
-          }
+      for (int i = 0; i < allArtifacts.size(); i ++)
+      {
+         (allArtifacts.get(i)).clearVisitors();
+      }
           
-     }
+   }
    
    public int numTotalExhibits()
    {
