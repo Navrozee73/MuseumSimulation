@@ -23,7 +23,7 @@ public class MuseumRunner {
 
 		do {
 			input = -1;
-         
+         System.out.println("Start Menu");
 		   System.out.println("Choose from the below options, or hit 0 to return");
 		   System.out.println("1) Make New Museum (WARNING: THIS WILL OVERRIDE ANY PREVIOUSLY SAVED FILES)");
 		   System.out.println("2) Load previously stored museum information");
@@ -31,19 +31,23 @@ public class MuseumRunner {
 		   System.out.println("4) Begin Simulation");
 			try {
 				input = sc.nextInt();
+            System.out.println();
 				if (input == 1) {
 					museum = makeNewMuseum(sc);
 					museumMade = true;
+               System.out.println("Museum has been created!");
 				} else if (input == 2) {
 					museum = loadNewMuseum();
 					museumMade = true;
+               System.out.println("Museum loaded successfully!");
 				} else if (input == 3) {
 					saveMuseum(museum);
+               System.out.println("Museum saved successfully!");
 				} else if (input == 4) {
 					if (museumMade) {
 						mainMenu(sc, museum);
 					} else {
-
+                  System.out.println("Make a museum first!");
 					}
 				}
 
@@ -60,28 +64,28 @@ public class MuseumRunner {
 	private static void mainMenu(Scanner sc, Museum museum) {
 		int input;
 
-		System.out.println("Main Menu");
-		System.out.println("1) Museum Affairs and Analytics");
-		System.out.println("2) Update Museum Simulation");
-		System.out.println("3) Back to Start Menu");
 		// Repeat until proper input is received
 		do {
-			input = -1;
-			try {
-				// Get input
-				input = sc.nextInt();
-				// Direct user according to input
-				if (input == 1) {
-					museumAnalyticsMenu(sc, museum);
-				} else if (input == 2) {
-					museumSimulationMenu(sc, museum);
-				} else if (input != 3) {
-					System.out.println("Invalid Input. Try again.");
-				}
-			} catch (Exception e) {
-				System.out.println("Error reading input. Please try again.");
-				input = -1;
-			}
+      		System.out.println("Main Menu");
+		      System.out.println("1) Museum Affairs and Analytics");
+		      System.out.println("2) Update Museum Simulation");
+		      System.out.println("3) Back to Start Menu");
+		   	input = -1;
+		   try {
+				   // Get input
+				   input = sc.nextInt();
+				   // Direct user according to input
+				   if (input == 1) {
+				   	museumAnalyticsMenu(sc, museum);
+				   } else if (input == 2) {
+				   	museumSimulationMenu(sc, museum);
+				   } else if (input != 3) {
+				   	System.out.println("Invalid Input. Try again.");
+				   }
+			   } catch (Exception e) {
+			   	System.out.println("Error reading input. Please try again.");
+			   	input = -1;
+			   }
 		} while (input != 3);
 	}
 
@@ -89,14 +93,15 @@ public class MuseumRunner {
 	private static void museumAnalyticsMenu(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Museum Affairs and Analytics");
-		System.out.println("1) Museum Information and Statistics");
-		System.out.println("2) Museum Facility Analytics");
-		System.out.println("3) Museum Finances");
-		System.out.println("4) Museum Optimization");
-		System.out.println("5) Back to Main Menu");
+
 		// Repeat until proper input is received
 		do {
+		   System.out.println("Museum Affairs and Analytics");
+		   System.out.println("1) Museum Information and Statistics");
+		   System.out.println("2) Museum Facility Analytics");
+		   System.out.println("3) Museum Finances");
+		   System.out.println("4) Museum Optimization");
+		   System.out.println("5) Back to Main Menu");
 			input = -1;
 			try {
 				// Get input
@@ -124,19 +129,20 @@ public class MuseumRunner {
 	private static void museumStatsAndInfo(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Museum Information and Statistics");
-		System.out.println("1) Print total display space in museum");
-		System.out.println("2) Print total storage space in museum");
-		System.out.println("3) Print total number of exhibits in museum");
-		System.out.println("4) Print total number of artifacts in museum");
-		System.out.println("5) Print current number of visitors in museum");
-		System.out.println("6) Print current date");
-		System.out.println("7) Print opening date");
-		System.out.println("8) Print total days museum has been open");
-		System.out.println("9) Back to Museum Affairs");
+
 
 		do {
 			input = -1;
+		   System.out.println("Museum Information and Statistics");
+		   System.out.println("1) Print total display space in museum");
+		   System.out.println("2) Print total storage space in museum");
+		   System.out.println("3) Print total number of exhibits in museum");
+		   System.out.println("4) Print total number of artifacts in museum");
+		   System.out.println("5) Print current number of visitors in museum");
+		   System.out.println("6) Print current date");
+		   System.out.println("7) Print opening date");
+		   System.out.println("8) Print total days museum has been open");
+		   System.out.println("9) Back to Museum Affairs");         
 			try {
 				input = sc.nextInt();
 
@@ -170,14 +176,13 @@ public class MuseumRunner {
 
 	public static void museumFacilityAnalytics(Scanner sc, Museum museum) {
 		int input = -1;
-
-		System.out.println("Museum Facility Analytics Menu");
-		System.out.println("1) Exhibits");
-		System.out.println("2) Artifacts");
-		System.out.println("3) Visitors");
-		System.out.println("4) Back to Museum Affairs");
-
 		do {
+         input = -1;
+		   System.out.println("Museum Facility Analytics Menu");
+		   System.out.println("1) Exhibits");
+		   System.out.println("2) Artifacts");
+		   System.out.println("3) Visitors");
+		   System.out.println("4) Back to Museum Affairs");      
 			try {
 				input = sc.nextInt();
 
@@ -200,15 +205,14 @@ public class MuseumRunner {
 
 	private static void exhibitAnalytics(Scanner sc, Museum museum) {
 		int input = -1;
-
-		System.out.println("Exhibit Analytics");
-		System.out.println("1) Print information about exhibits");
-		System.out.println("2) Sort exhibits by criteria");
-		System.out.println("3) Search exhibits by criteria");
-		System.out.println("4) Compare exhibits");
-		System.out.println("5) Back to Facility Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Exhibit Analytics");
+		   System.out.println("1) Print information about exhibits");
+		   System.out.println("2) Sort exhibits by criteria");
+		   System.out.println("3) Search exhibits by criteria");
+		   System.out.println("4) Compare exhibits");
+		   System.out.println("5) Back to Facility Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -233,16 +237,16 @@ public class MuseumRunner {
 	private static void printExhibitInfo(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Exhibit Information");
-		System.out.println("1) Print information on all exhibits");
-		System.out.println("2) Print all artifacts within specific exhibit");
-		System.out.println("3) Print specific exhibit information");
-		System.out.println("4) Print all visitors inside specific exhibit");
-		System.out.println("5) Print number of artifacts within specific exhibit");
-		System.out.println("6) Print number of visitors currently at specific exhibit");
-		System.out.println("7) Back to Exhibit Analysis");
-
 		do {
+         input = -1;
+		   System.out.println("Exhibit Information");
+		   System.out.println("1) Print information on all exhibits");
+		   System.out.println("2) Print all artifacts within specific exhibit");
+		   System.out.println("3) Print specific exhibit information");
+		   System.out.println("4) Print all visitors inside specific exhibit");
+		   System.out.println("5) Print number of artifacts within specific exhibit");
+		   System.out.println("6) Print number of visitors currently at specific exhibit");
+		   System.out.println("7) Back to Exhibit Analysis");
 			try {
 				input = sc.nextInt();
 
@@ -254,11 +258,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1= -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -294,12 +298,11 @@ public class MuseumRunner {
 				} else if (input == 3) {
 
 					int input1 = -1;
-
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1=-1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -336,11 +339,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -378,11 +381,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1=-1;
+   					System.out.println("Options");
+   					System.out.println("1) Search by ID");
+   					System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -422,11 +425,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
-					do {
+					do {  
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -478,20 +481,20 @@ public class MuseumRunner {
 	private static void sortExhibits(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Sort Exhibits");
-		System.out.println("1) Display all exhibits currently on floor");
-		System.out.println("2) Display all exhibits currently in storage");
-		System.out.println("3) Display all exhibits, sorted by ascending value");
-		System.out.println("4) Display all exhibits, sorted by descending value");
-		System.out.println("5) Display all exhibits sorted by ascending required floor space");
-		System.out.println("6) Display all exhibits sorted by descending required floor space");
-		System.out.println("7) Display all exhibits, sorted by ascending number of current visitors");
-		System.out.println("8) Display all exhibits, sorted by descending number of current visitors");
-		System.out.println("9) Display all exhibits in alphabetical order");
-		System.out.println("10) Display all exhibits in reverse alphabetical order");
-		System.out.println("11) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Sort Exhibits");
+		   System.out.println("1) Display all exhibits currently on floor");
+		   System.out.println("2) Display all exhibits currently in storage");
+		   System.out.println("3) Display all exhibits, sorted by ascending value");
+		   System.out.println("4) Display all exhibits, sorted by descending value");
+		   System.out.println("5) Display all exhibits sorted by ascending required floor space");
+		   System.out.println("6) Display all exhibits sorted by descending required floor space");
+		   System.out.println("7) Display all exhibits, sorted by ascending number of current visitors");
+		   System.out.println("8) Display all exhibits, sorted by descending number of current visitors");
+		   System.out.println("9) Display all exhibits in alphabetical order");
+		   System.out.println("10) Display all exhibits in reverse alphabetical order");
+		   System.out.println("11) Back to Exhibit Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -528,18 +531,18 @@ public class MuseumRunner {
 	private static void searchExhibits(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Search Exhibits");
-		System.out.println("1) Search by ID");
-		System.out.println("2) Search by name");
-		System.out.println("3) Print exhibits exceeding certain value");
-		System.out.println("4) Print exhibits within range of values");
-		System.out.println("5) Print exhibits exceeding certain number of visitors");
-		System.out.println("6) Print exhibits within a range of current visitors");
-		System.out.println("7) Print exhibits that fit within a specified floor space");
-		System.out.println("8) Print exhibits that fit within a range of floor space");
-		System.out.println("9) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Search Exhibits");
+		   System.out.println("1) Search by ID");
+		   System.out.println("2) Search by name");
+		   System.out.println("3) Print exhibits exceeding certain value");
+		   System.out.println("4) Print exhibits within range of values");
+		   System.out.println("5) Print exhibits exceeding certain number of visitors");
+		   System.out.println("6) Print exhibits within a range of current visitors");
+		   System.out.println("7) Print exhibits that fit within a specified floor space");
+		   System.out.println("8) Print exhibits that fit within a range of floor space");
+		   System.out.println("9) Back to Exhibit Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -693,14 +696,14 @@ public class MuseumRunner {
 	private static void compareExhibits(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Compare Exhibits");
-		System.out.println("1) Compare values between exhibits");
-		System.out.println("2) Compare number of visitors between exhibits");
-		System.out.println("3) Compare required floor space between exhibits");
-		System.out.println("4) Compare number of artifacts between exhibits");
-		System.out.println("5) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Compare Exhibits");
+		   System.out.println("1) Compare values between exhibits");
+		   System.out.println("2) Compare number of visitors between exhibits");
+		   System.out.println("3) Compare required floor space between exhibits");
+		   System.out.println("4) Compare number of artifacts between exhibits");
+		   System.out.println("5) Back to Exhibit Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -755,11 +758,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -802,11 +805,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -849,11 +852,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -906,14 +909,14 @@ public class MuseumRunner {
 	private static void artifactAnalytics(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Artifact Analytics");
-		System.out.println("1) Print information about artifacts");
-		System.out.println("2) Sort artifacts by criteria");
-		System.out.println("3) Search artifacts by criteria");
-		System.out.println("4) Compare artifacts");
-		System.out.println("5) Back to Facility Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Artifact Analytics");
+		   System.out.println("1) Print information about artifacts");
+		   System.out.println("2) Sort artifacts by criteria");
+		   System.out.println("3) Search artifacts by criteria");
+		   System.out.println("4) Compare artifacts");
+		   System.out.println("5) Back to Facility Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -938,30 +941,30 @@ public class MuseumRunner {
 	private static void printArtifactInfo(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Artifact Information");
-		System.out.println("1) Print information on all artifacts");
-		System.out.println("2) Print specific artifact information");
-		System.out.println("3) Print all visitors at specific artifact");
-		System.out.println("4) Print number of visitors currently at specific artifact");
-		System.out.println("5) Back to Exhibit Analysis");
-
 		do {
+         input = -1;
+	   	System.out.println("Artifact Information");
+	   	System.out.println("1) Print information on all artifacts");
+	   	System.out.println("2) Print specific artifact information");
+	   	System.out.println("3) Print all visitors at specific artifact");
+	   	System.out.println("4) Print number of visitors currently at specific artifact");
+	   	System.out.println("5) Back to Exhibit Analysis");
 			try {
 				input = sc.nextInt();
 
 				if (input == 1) {
 
-			///////////////CUNCOMMENT LATER		museum.printAllArtifacts();
+			///////////////UNCOMMENT LATER//////museum.printAllArtifacts();//////////////////////////////////////////////////////
 
 				} else if (input == 2) {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -998,11 +1001,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -1040,11 +1043,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+			   		System.out.println("Options");
+			   		System.out.println("1) Search by ID");
+			   		System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -1084,11 +1087,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 
@@ -1140,20 +1143,20 @@ public class MuseumRunner {
 	private static void sortArtifacts(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Sort Exhibits");
-		System.out.println("1) Display all exhibits currently on floor");
-		System.out.println("2) Display all exhibits currently in storage");
-		System.out.println("3) Display all exhibits, sorted by ascending value");
-		System.out.println("4) Display all exhibits, sorted by descending value");
-		System.out.println("5) Display all exhibits sorted by ascending required floor space");
-		System.out.println("6) Display all exhibits sorted by descending required floor space");
-		System.out.println("7) Display all exhibits, sorted by ascending number of current visitors");
-		System.out.println("8) Display all exhibits, sorted by descending number of current visitors");
-		System.out.println("9) Display all exhibits in alphabetical order");
-		System.out.println("10) Display all exhibits in reverse alphabetical order");
-		System.out.println("11) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Sort Exhibits");
+		   System.out.println("1) Display all exhibits currently on floor");
+		   System.out.println("2) Display all exhibits currently in storage");
+		   System.out.println("3) Display all exhibits, sorted by ascending value");
+		   System.out.println("4) Display all exhibits, sorted by descending value");
+		   System.out.println("5) Display all exhibits sorted by ascending required floor space");
+		   System.out.println("6) Display all exhibits sorted by descending required floor space");
+		   System.out.println("7) Display all exhibits, sorted by ascending number of current visitors");
+		   System.out.println("8) Display all exhibits, sorted by descending number of current visitors");
+		   System.out.println("9) Display all exhibits in alphabetical order");
+		   System.out.println("10) Display all exhibits in reverse alphabetical order");
+		   System.out.println("11) Back to Exhibit Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -1189,19 +1192,19 @@ public class MuseumRunner {
 
 	private static void searchArtifacts(Scanner sc, Museum museum) {
 		int input = -1;
-
-		System.out.println("Search Exhibits");
-		System.out.println("1) Search by ID");
-		System.out.println("2) Search by name");
-		System.out.println("3) Print exhibits exceeding certain value");
-		System.out.println("4) Print exhibits within range of values");
-		System.out.println("5) Print exhibits exceeding certain number of visitors");
-		System.out.println("6) Print exhibits within a range of current visitors");
-		System.out.println("7) Print exhibits that fit within a specified floor space");
-		System.out.println("8) Print exhibits that fit within a range of floor space");
-		System.out.println("9) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Search Exhibits");
+		   System.out.println("1) Search by ID");
+		   System.out.println("2) Search by name");
+		   System.out.println("3) Print exhibits exceeding certain value");
+		   System.out.println("4) Print exhibits within range of values");
+		   System.out.println("5) Print exhibits exceeding certain number of visitors");
+		   System.out.println("6) Print exhibits within a range of current visitors");
+		   System.out.println("7) Print exhibits that fit within a specified floor space");
+		   System.out.println("8) Print exhibits that fit within a range of floor space");
+		   System.out.println("9) Back to Exhibit Analytics");
+
 			try {
 				input = sc.nextInt();
 
@@ -1355,14 +1358,14 @@ public class MuseumRunner {
 	private static void compareArtifacts(Scanner sc, Museum museum) {
 		int input = -1;
 
-		System.out.println("Compare Exhibits");
-		System.out.println("1) Compare values between exhibits");
-		System.out.println("2) Compare number of visitors between exhibits");
-		System.out.println("3) Compare required floor space between exhibits");
-		System.out.println("4) Compare number of artifacts between exhibits");
-		System.out.println("5) Back to Exhibit Analytics");
-
 		do {
+         input = -1;
+		   System.out.println("Compare Exhibits");
+		   System.out.println("1) Compare values between exhibits");
+		   System.out.println("2) Compare number of visitors between exhibits");
+		   System.out.println("3) Compare required floor space between exhibits");
+		   System.out.println("4) Compare number of artifacts between exhibits");
+		   System.out.println("5) Back to Exhibit Analytics");
 			try {
 				input = sc.nextInt();
 
@@ -1370,11 +1373,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -1417,11 +1420,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+				   	System.out.println("Options");
+				   	System.out.println("1) Search by ID");
+				   	System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -1464,11 +1467,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+				   	System.out.println("1) Search by ID");
+				   	System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -1511,11 +1514,11 @@ public class MuseumRunner {
 
 					int input1 = -1;
 
-					System.out.println("Options");
-					System.out.println("1) Search by ID");
-					System.out.println("2) Search by name");
-
 					do {
+                  input1 = -1;
+					   System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
 							if (input1 == 1) {
@@ -1612,6 +1615,7 @@ public class MuseumRunner {
       
       do 
       {
+            input = -1;
             System.out.println ("Edit Museum Information");
             System.out.println("0) Return to Museum Simulation Menu");
             System.out.println("1) Edit the amount of available display space within the museum");
@@ -1653,6 +1657,7 @@ public class MuseumRunner {
                }
                else if (input == 3)
                {
+                  facilityModificationMenu(sc, museum);
                }
                else if (input != 0)
                {
@@ -1667,6 +1672,46 @@ public class MuseumRunner {
       } while (input != 0);
    }
    
+   private static void facilityModificationMenu (Scanner sc, Museum museum)
+   {
+      int input = -1;
+      do
+      {
+         input = -1;
+         System.out.println("Add/Remove Facilities");
+         System.out.println("0) Go back to Edit Museum Information Menu");
+         System.out.println("1) Add exhibit");
+         System.out.println("2) Remove exhibit");
+         System.out.println("3) Add artifact *NOTE: EXHIBIT MUST FIRST BE CREATED TO HOUSE ARTIFACT");
+         System.out.println ("4) Remove artifact");
+         System.out.print("Enter your choice: ");
+         try
+         {
+            input = sc.nextInt();
+            System.out.println();
+            if (input == 1)   //Add exhibit
+            {
+            }
+            else if (input == 2) //Remove exhibit
+            {
+            }
+            else if (input == 3) // Add artifact
+            {
+            }
+            else if (input == 4) // Remove artifact
+            {
+            }
+            else if (input != 0)
+            {
+            }
+         }
+         catch (Exception e)
+         {
+            System.out.println("Error reading input. Please try again.");
+            input = -1;
+         }
+      } while (input != 0);
+   }   
    private static void dailyOperationsMenu (Scanner sc, Museum museum)
    {
    }
@@ -1757,6 +1802,7 @@ public class MuseumRunner {
 				Artifact currArt = findArtifact(artifacts, Integer.parseInt(in.readLine())); // currArt
 				Exhibit currExh = currArt.getExhibitLocation(); // use currArt to find currExh
             
+            
 				// making prev visited exhibits
 				int maxNumExhibits = Integer.parseInt(in.readLine());
 				for (int j = 0; j < maxNumExhibits; j++) {
@@ -1776,14 +1822,20 @@ public class MuseumRunner {
 					tempVisitor = new Child(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh,
 							prevVisitedArt);
 					visitors.add(tempVisitor);
+               currArt.addVisitor(tempVisitor);
+               currExh.addVisitor(tempVisitor);
 				} else if (visAge <= Adult.MAX_AGE) {
 					tempVisitor = new Adult(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh,
 							prevVisitedArt);
 					visitors.add(tempVisitor);
+               currArt.addVisitor(tempVisitor);
+               currExh.addVisitor(tempVisitor);
 				} else if (visAge >= Senior.MIN_AGE) {
 					tempVisitor = new Senior(visId, visFName, visLName, visAge, currExh, currArt, prevVisitedExh,
 							prevVisitedArt);
 					visitors.add(tempVisitor);
+               currArt.addVisitor(tempVisitor);
+               currExh.addVisitor(tempVisitor);
 				}
 			}
          in.close();
