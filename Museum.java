@@ -4,6 +4,9 @@
    Creation Date:    2020-6-5
    Course:           ICS4U1-02
    Purpose:          This class represents a museum and manages all its operations.
+   
+   June 13th:     daily operations in MuseumRunner
+                  
 */
 
 import java.util.ArrayList;
@@ -190,13 +193,14 @@ public class Museum
    
    // Instance Methods
    
-   /* Adds a pre-existing visitor to the museum
+   /* 
+   *  Adds a pre-existing visitor to the museum
    *  String firstName - first name of visitor being added
    *  String lastName - last name of visitor being added
+   *  int age - age of visitor
    *  Exhibit currentExhibit - the exhibit the visitor is currently in
    *  Artifact currentArtifact - the artifact the visitor is currently in
    */
-   
    public void addVisitor(String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact)
    {
       try
@@ -236,11 +240,11 @@ public class Museum
       }
    }
 
-   /* Adds a brand new visitor to the museum, placed in lobby
+   /* 
+   *  Adds a brand new visitor to the museum, placed in lobby
    *  String firstName - first name of visitor being added
    *  String lastName - last name of visitor being added
-   *  Exhibit currentExhibit - the exhibit the visitor is currently in
-   *  Artifact currentArtifact - the artifact the visitor is currently in
+   *  int age - age of visitor
    */
    public void addVisitor(String firstName, String lastName, int age)
    {
@@ -281,37 +285,65 @@ public class Museum
       }
    }   
    
+   /* 
+   *  Removes a specific visitor from the museum, given their ID 
+   *  int givenId - ID of visitor to be removed
+   */
    public void removeVisitor(int givenId)
    {
-      int foundIndex = findVisitorIndexById(givenId);
-      Visitor foundVisitor = allVisitors.get(foundIndex);
-      
-      if (foundIndex == -1)
-         System.out.println("Visitor with ID " + givenId + " cannot be found");
-      else
+      try
       {
-         allVisitors.remove(foundIndex);    
-         (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
-         (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);
-         numCurrentVisitors--; 
+         int foundIndex = findVisitorIndexById(givenId);
+         Visitor foundVisitor = allVisitors.get(foundIndex);
+         
+         if (foundIndex == -1)
+            System.out.println("Visitor with ID " + givenId + " cannot be found");
+         else
+         {
+            allVisitors.remove(foundIndex);    
+            (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
+            (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);
+            numCurrentVisitors--; 
+         }
+      }
+      catch (Exception e)
+      {
+         System.out.println("Error removing visitor");
       }
    }
    
+   /*
+   *  Removes a specific visitor from the museum, given their full name
+   *  String givenName - full name of visitor to be removed
+   */
    public void removeVisitor(String givenName)
    {
-      int foundIndex = findVisitorIndexByName(givenName);
-      Visitor foundVisitor = allVisitors.get(foundIndex);
-      
-      if (foundIndex == -1)
-         System.out.println("Visitor with name " + givenName + " cannot be found");
-      else
+      try
       {
-         allVisitors.remove(foundIndex);
-         (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
-         (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);    
-         numCurrentVisitors--; 
-      }   
+         int foundIndex = findVisitorIndexByName(givenName);
+         Visitor foundVisitor = allVisitors.get(foundIndex);
+      
+         if (foundIndex == -1)
+            System.out.println("Visitor with name " + givenName + " cannot be found");
+         else
+         {
+            allVisitors.remove(foundIndex);
+            (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
+            (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);    
+            numCurrentVisitors--; 
+         }   
+      }
+      catch (Exception e)
+      {
+         System.out.println("Error removing visitor");
+      }
    }
+   
+   /*
+   *  Adds a brand new exhibit to the museum, given its name and description
+   *  String name - name of exhibit
+   *  String description - description of exhibit
+   */
    
    public void addExhibit(String name, String description)
    {
@@ -327,25 +359,42 @@ public class Museum
       }
    }
    
+   /*
+   *  Removes an exhibit from the museum, given its ID
+   *  String exhibitId - ID of exhibit
+   */
+   
    public void removeExhibit(int exhibitId)
    {
-      int foundIndex = findExhibitIndexById(exhibitId);
-      Exhibit foundExhibit = allExhibits.get(foundIndex);
-      
-      if (foundIndex == -1)
-         System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
-      else
-      {  
-         // remove all artifacts from Exhibit (thus movig visitors to lobby)
-         ArrayList <Artifact> displacedArtifacts = foundExhibit.getArtifactList();
-         displacedArtifacts.trimToSize();
-         for (int i=0;i < displacedArtifacts.size(); i++)
-         {
-            this.removeArtifact(displacedArtifacts.get(i).getId());
+      try
+      {
+         int foundIndex = findExhibitIndexById(exhibitId);
+         Exhibit foundExhibit = allExhibits.get(foundIndex);
+         
+         if (foundIndex == -1)
+            System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
+         else
+         {  
+            // remove all artifacts from Exhibit (thus movig visitors to lobby)
+            ArrayList <Artifact> displacedArtifacts = foundExhibit.getArtifactList();
+            displacedArtifacts.trimToSize();
+            for (int i=0;i < displacedArtifacts.size(); i++)
+            {
+               this.removeArtifact(displacedArtifacts.get(i).getId());
+            }
+            allExhibits.remove(foundIndex);     
          }
-         allExhibits.remove(foundIndex);     
+      }
+      catch (Exception e)
+      {
+         System.out.println("Error removing exhibit");
       }
    }
+   
+   /*
+   *  Removes exhibit from museum, given its name
+   *  String exhibitName - name of exhibit
+   */
    
    public void removeExhibit(String exhibitName)
    {
@@ -356,6 +405,18 @@ public class Museum
       else
          allExhibits.remove(foundIndex);     
    }
+   
+   /*
+   *  Adds a new artifact to the museum
+   *  String name - name of artifact
+   *  String description - description of artifact
+   *  double value - value of artifact
+   *  double floorSpace - floor space required for artifact
+   *  String dateMadeString - String representation of artifact's date made
+   *  String datePurchasedString - String representation of artifact's date purchased
+   *  int exhibitId - ID of the exhibit the artifact belongs to
+   *  boolean onDisplay - indicates whether or not the artifact is on display
+   */
    
    public void addArtifact(String name, String description, double value, double floorSpace, String dateMadeString, String datePurchasedString, int exhibitId, boolean onDisplay)
    {
@@ -368,18 +429,31 @@ public class Museum
          if (foundIndex != -1)
          {
             Artifact newArtifact = new Artifact(name, ARTIFACT_BASE_ID + numArtifactsAdded, description, value, floorSpace, dateMade, datePurchased, allExhibits.get(foundIndex), onDisplay);
-            allArtifacts.add(newArtifact);
-            (allExhibits.get(foundIndex)).addArtifact(newArtifact);
-            numArtifactsAdded++;
+            
+            if((onDisplay == true && floorSpace + displaySpaceUsed() <= maxDisplaySpace) || (onDisplay == false && floorSpace + storageSpaceUsed() <= maxStorageSpace))
+            {
+               allArtifacts.add(newArtifact);
+               (allExhibits.get(foundIndex)).addArtifact(newArtifact);
+               numArtifactsAdded++;
+            }
+            else
+            {
+               System.out.println("Artifact cannot be added");
+            }
          }
          else
-            System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
+            System.out.println("Artifact with ID " + exhibitId + " cannot be found");
       }
       catch(Exception e)
       {
          System.out.println("Error adding artifact");
       }
    }
+   
+   /*
+   *  Removes an artifact from the museum
+   *  int artifactId - ID of artifact to be removed
+   */
    
    public void removeArtifact(int artifactId)
    {
@@ -406,6 +480,11 @@ public class Museum
       }
    }
    
+   /*
+   *  Removes an artifact from the museum
+   *  String artifactName - name of artifact to be removed
+   */
+   
    public void removeArtifact(String artifactName)
    {
       int foundIndex = findArtifactIndexByName(artifactName);
@@ -431,10 +510,17 @@ public class Museum
       }
    }
    
+   /*
+   *  Moves a specific visitor to another artifact
+   *  int visitorId - ID of visitor to be moved
+   *  int toArtifactId - ID of artifact destination
+   *  returns boolean indicating if visitor is successfully moved
+   */
+   
    public boolean moveVisitor(int visitorId, int toArtifactId)
    {
-      try
-      {
+//       try
+//       {
          // locate visitor and artifact ID
          int visitorFoundIndex = findVisitorIndexById(visitorId);
          int artifactFoundIndex = findArtifactIndexById(toArtifactId);
@@ -484,13 +570,19 @@ public class Museum
          }
          else
             return false;
-      }
-      catch(Exception e)
-      { 
-         return false;
-      }
+//       }
+//       catch(Exception e)
+//       { 
+//          return false;
+//       }
    }
    
+   /*
+   *  Moves a specific visitor to another artifact
+   *  String visitorName - name of visitor to be moved
+   *  String toArtifactName - name of artifact destination
+   *  returns boolean indicating if visitor is successfully moved
+   */
    public boolean moveVisitor(String visitorName, String toArtifactName)
    {
       try
@@ -553,26 +645,32 @@ public class Museum
       }
    }
    
+   /*
+   *  Moves a specific visitor to the lobby
+   *  returns boolean indicating if visitor is successfully moved
+   */
    public boolean moveToLobby(Visitor visitor)
    {
       return (visitor.moveToLobby(allExhibits.get(findExhibitIndexByName("Lobby"))));
    }
    
+
+   // Closes the museum for the day
    public void closeForTheDay()
    {
-          // add the current date to Bank's date array
+      // add the current date to Bank's date array
       (bank.getDailyRevenueDates()).add(currentDate);
           
-          // update days open and current date for Museum
-          // set tomorrow's initial daily revenue as $0 for Bank
+      // update days open and current date for Museum
+      // set tomorrow's initial daily revenue as $0 for Bank
       daysOpenCount++;
       currentDate.progressDate();
       (bank.getDailyRevenue()).add(0.0);
           
-          // clear visitor array in Museum
+      // clear visitor array in Museum
       allVisitors.clear();
           
-          // clear currentVisitors in all Artifacts and Exhibits
+      // clear currentVisitors in all Artifacts and Exhibits
       for (int i = 0; i < allExhibits.size(); i ++)
       {
          (allExhibits.get(i)).clearVisitors();
@@ -585,24 +683,28 @@ public class Museum
           
    }
    
+   // Returns the number of total exhibits in the museum
    public int numTotalExhibits()
    {
       allExhibits.trimToSize();
       return allExhibits.size();
    }
    
+   // Returns the number of total artifacts in the museum
    public int numTotalArtifacts()
    {
       allArtifacts.trimToSize();
       return allArtifacts.size();
    }
    
+   // Returns the number of total visitors in the museum
    public int numTotalVisitors()
    {
       allVisitors.trimToSize();
       return allVisitors.size();
    }
    
+   // Prints identifier of all visitors in museum
    public void printAllVisitors()
    {
       allVisitors.trimToSize();
@@ -612,6 +714,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Prints a specific visitor's identifier, given their ID
+   *  givenId - ID of visitor being printed
+   */
    public void printSpecificVisitor(int givenId)
    {
       int foundIndex = findVisitorIndexById(givenId);
@@ -622,6 +728,10 @@ public class Museum
          System.out.println((allVisitors.get(foundIndex)).identifierToString());
    }
    
+   /*
+   *  Prints a specific visitor's identifier, given their full name
+   *  givenName - full name of visitor being printed
+   */
    public void printSpecificVisitor(String givenName)
    {
       int foundIndex = findVisitorIndexByName(givenName);
@@ -632,6 +742,10 @@ public class Museum
          System.out.println((allVisitors.get(foundIndex)).identifierToString());
    }
    
+   /*
+   *  Print all the artifacts a visitor has visited
+   *  givneId - ID of visitor
+   */
    public void printVisitedArtifacts(int givenId)
    {
       int foundIndex = findVisitorIndexById(givenId);
@@ -652,6 +766,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Print all the artifacts a visitor has visited
+   *  givneId - ID of visitor
+   */
    public void printVisitedArtifacts(String givenName)
    {
       int foundIndex = findVisitorIndexByName(givenName);
@@ -1908,5 +2026,31 @@ public class Museum
       }
       
       return artifactIndex;
+   }
+   
+   private double displaySpaceUsed()
+   {
+      double spaceUsed = 0;
+      
+      for (int i = 0; i < allArtifacts.size(); i ++)
+      {
+         if (allArtifacts.get(i).getOnDisplay())
+            spaceUsed += allArtifacts.get(i).getFloorSpace();
+      }
+      
+      return spaceUsed;
+   }
+   
+   private double storageSpaceUsed()
+   {
+      double spaceUsed = 0;
+      
+      for (int i = 0; i < allArtifacts.size(); i ++)
+      {
+         if (allArtifacts.get(i).getOnDisplay() == false)
+            spaceUsed += allArtifacts.get(i).getFloorSpace();
+      }
+      
+      return spaceUsed;
    }
 }
