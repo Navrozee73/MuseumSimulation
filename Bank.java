@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class Bank {
@@ -54,10 +55,14 @@ public class Bank {
 
     //Main Constructor
     public Bank (double lifetimeRevenue, ArrayList<Double> dailyRevenue, ArrayList<Date> dailyRevenueDates, Date currentDate){
-        this.lifetimeRevenue = lifetimeRevenue;
-        this.dailyRevenue = dailyRevenue;
-        this.currentDate = currentDate;
-        this.dailyRevenueDates = dailyRevenueDates;
+        try{
+            this.lifetimeRevenue = lifetimeRevenue;
+            this.dailyRevenue = dailyRevenue;
+            this.currentDate = currentDate;
+            this.dailyRevenueDates = dailyRevenueDates;
+        }catch(Exception e){
+            Bank();
+        }
     }
 
     //Prints revenue on a certain date

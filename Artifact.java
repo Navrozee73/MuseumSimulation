@@ -137,6 +137,10 @@ public class Artifact
       return currentVisitors;
    }
    
+   public Visitor[] getCurrentVisitorsArray(){
+       return currentVisitors.toArray(new Visitor[currentVisitors.size()]);
+   }
+   
    public void setName(String name)
    {
       this.name = name;

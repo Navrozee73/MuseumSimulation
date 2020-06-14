@@ -59,10 +59,10 @@ public class Date
          else
             throw new InputMismatchException();
             
-         if (date.substring(11).equals("C.E.") || date.substring(11).equals("C.E"))
-            ce = true;
-         else if (date.substring(11).equals("B.C.E.") || date.substring(11).equals("B.C.E") || date.substring(11).equals("B.C.") || date.substring(11).equals("B.C"))
+         if (date.contains("B.C.E.") || date.contains("B.C.E") || date.contains("BCE") ||date.contains("B.C.") || date.contains("B.C") || date.contains("BC"))
             ce = false;
+         else if (date.contains("C.E.") || date.contains("C.E") || date.contains("CE"))
+            ce = true;
          else
             throw new InputMismatchException();
 //       }
