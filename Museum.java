@@ -5,8 +5,8 @@
    Course:           ICS4U1-02
    Purpose:          This class represents a museum and manages all its operations.
    
-   June 13th:     daily operations in MuseumRunner
-                  
+   June 13th:     daily operations, museumFinance, museumOptimization in MuseumRunner
+                  added check for artifact + private methods            
 */
 
 import java.util.ArrayList;
@@ -407,7 +407,7 @@ public class Museum
    }
    
    /*
-   *  Adds a new artifact to the museum
+   *  Adds a new artifact to the museum if there is enough space available
    *  String name - name of artifact
    *  String description - description of artifact
    *  double value - value of artifact
@@ -519,8 +519,8 @@ public class Museum
    
    public boolean moveVisitor(int visitorId, int toArtifactId)
    {
-//       try
-//       {
+      try
+      {
          // locate visitor and artifact ID
          int visitorFoundIndex = findVisitorIndexById(visitorId);
          int artifactFoundIndex = findArtifactIndexById(toArtifactId);
@@ -570,11 +570,11 @@ public class Museum
          }
          else
             return false;
-//       }
-//       catch(Exception e)
-//       { 
-//          return false;
-//       }
+      }
+      catch(Exception e)
+      { 
+         return false;
+      }
    }
    
    /*
@@ -743,7 +743,7 @@ public class Museum
    }
    
    /*
-   *  Print all the artifacts a visitor has visited
+   *  Print all the artifacts a visitor has visited, given their ID
    *  givneId - ID of visitor
    */
    public void printVisitedArtifacts(int givenId)
@@ -767,8 +767,8 @@ public class Museum
    }
    
    /*
-   *  Print all the artifacts a visitor has visited
-   *  givneId - ID of visitor
+   *  Print all the artifacts a visitor has visited, given their name
+   *  givneName - name of visitor
    */
    public void printVisitedArtifacts(String givenName)
    {
@@ -790,6 +790,7 @@ public class Museum
       }   
    }
    
+   // Returns the number of adults in the museum
    public int numAdults()
    {
       int adultCount = 0;
@@ -804,6 +805,7 @@ public class Museum
       return adultCount;
    }
    
+   // Returns the number of children in the museum
    public int numChildren()
    {
       int childCount = 0;
@@ -818,6 +820,7 @@ public class Museum
       return childCount;
    }
    
+   // Returns the number of seniors in the museum
    public int numSeniors()
    {
       int seniorCount = 0;
@@ -832,6 +835,7 @@ public class Museum
       return seniorCount;
    }
    
+   // Returns the average age of all current visitors in the museum
    public double averageAge()
    {
       int ageSum = 0;
@@ -849,6 +853,7 @@ public class Museum
       return average;
    }
    
+   // Prints the identifiers of all adults in the museum
    public void printAllAdults()
    {
       allVisitors.trimToSize();
@@ -859,6 +864,7 @@ public class Museum
       }
    }
    
+   // Prints the identifiers of all children in the museum
    public void printAllChildren()
    {
       allVisitors.trimToSize();
@@ -869,6 +875,7 @@ public class Museum
       }
    }
    
+   // Prints the identifiers of all seniors in the museum
    public void printAllSeniors()
    {
       allVisitors.trimToSize();
@@ -879,6 +886,7 @@ public class Museum
       }
    }
    
+   // Prints current visitors from lowest to highest age, sorted using selection sort
    public void printVisitorsAscendingAge()
    {
       int min;
@@ -904,6 +912,7 @@ public class Museum
       }
    }
    
+   // Prints current visitors from highest to lowest age, sorted using selection sort
    public void printVisitorsDescendingAge()
    {
       int max;
@@ -929,6 +938,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Prints all visitors at a given exhibit, given its ID
+   *  int exhibitId - ID of exhibit
+   */
    public void printVisitorsAtExhibit(int exhibitId)
    {
       int foundIndex = findExhibitIndexById(exhibitId);
@@ -950,6 +963,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Prints all visitors at a given exhibit, given its name
+   *  String exhibitName - name of exhibit
+   */
    public void printVisitorsAtExhibit(String exhibitName)
    {
       int foundIndex = findExhibitIndexByName(exhibitName);
@@ -970,6 +987,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Prints all visitors at a given artifact, given its ID
+   *  int artifactId - ID of artifact
+   */
    public void printVisitorsAtArtifact(int artifactId)
    {
       int foundIndex = findArtifactIndexById(artifactId);
@@ -990,6 +1011,10 @@ public class Museum
       }
    }
    
+   /*
+   *  Prints all visitors at a given artifact, given its name
+   *  String artifactName - name of artifact
+   */
    public void printVisitorsAtArtifact(String artifactName)
    {
       int foundIndex = findArtifactIndexByName(artifactName);
@@ -1010,6 +1035,11 @@ public class Museum
       }
    }
    
+   /*
+   *  Uses sequential search to find a specific visitor, given their ID
+   *  int visitorId - ID of visitor
+   *  Returns Visitor object if found, null if not found
+   */
    public Visitor searchVisitorById(int visitorId)
    {
       int foundIndex = findVisitorIndexById(visitorId);
@@ -1025,6 +1055,11 @@ public class Museum
       }
    }
    
+   /*
+   *  Uses sequential search to find a specific visitor, given their full name
+   *  String visitorName - full name of visitor
+   *  Returns Visitor object if found, null if not found
+   */
    public Visitor searchVisitorByName(String visitorName)
    {
       int foundIndex = findVisitorIndexByName(visitorName);

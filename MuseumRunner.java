@@ -112,9 +112,9 @@ public class MuseumRunner {
 				} else if (input == 2) {
 					museumFacilityAnalytics(sc, museum);
 				} else if (input == 3) {
-
+               museumFinances(sc, museum);
 				} else if (input == 4) {
-
+               museumOptimization(sc, museum);
 				} else if (input != 5) {
 					System.out.println("Invalid Input. Try again.");
 				}
@@ -191,7 +191,7 @@ public class MuseumRunner {
 				} else if (input == 2) {
 					artifactAnalytics(sc, museum);
 				} else if (input == 3) {
-
+               printVisitorInfo(sc, museum);
 				} else if (input != 4) {
 
 				}
@@ -203,6 +203,120 @@ public class MuseumRunner {
 		} while (input != 4);
 	}
 
+   private static void museumFinances(Scanner sc, Museum museum)
+   {
+      int input = -1;
+      do
+      {
+         input = -1;
+         System.out.println("Museum Finances Menu");
+         System.out.println("1) Display total lifetime revenue");
+         System.out.println("2) Display daily revenue for a specific date");
+         System.out.println("3) Display daily revenue for a range of dates");
+         System.out.println("4) Display the average revenue made per day");
+         System.out.println("5) Back to Museum Affairs");
+         try
+         {
+            input = sc.nextInt();
+            if (input == 1)
+               System.out.println("The museum's lifetime revenue is: $" + museum.getBank().getLifetimeRevenue());
+            else if (input == 2)
+            {
+               boolean properInput;
+               do
+               {
+                  try
+                  {
+                     String dateString;
+                     Date date;
+                     properInput = true;
+                     
+                     sc.nextLine();
+                     System.out.print("Enter a date (dd/mm/yyyy C.E/B.C.E): ");
+                     dateString = sc.nextLine();
+                     date = new Date(dateString);
+                     museum.getBank().printRevenue(date);
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Improper input. Please try again.");
+                     properInput = false;
+                  }
+               } while (!properInput);
+            }
+            else if (input == 3)
+            {
+               boolean properInput;
+               do
+               {
+                  try
+                  {
+                     String dateString1, dateString2;
+                     Date date1, date2;
+                     properInput = true;
+                     
+                     sc.nextLine();
+                     System.out.print("Enter the starting date (dd/mm/yyyy C.E/B.C.E): ");
+                     dateString1 = sc.nextLine();
+                     System.out.print("Enter the ending date (dd/mm/yyyy C.E/B.C.E): ");
+                     dateString2 = sc.nextLine();
+                     date1 = new Date(dateString1);
+                     date2 = new Date(dateString2);
+                     museum.getBank().printRangeRevenue(date1, date2);
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Improper input. Please try again.");
+                     properInput = false;
+                  }
+               } while (!properInput);
+            }
+            else if (input == 4)
+            {
+               double averageRevenue = museum.getBank().getLifetimeRevenue() / (double) museum.getDaysOpenCount();
+               System.out.println("The average revenue made per day is: $" + averageRevenue);
+            }
+            else if (input != 5)
+               System.out.println("Invalid input. Please try again.");
+         }
+         catch (Exception e)
+         {
+            sc.nextLine();
+            System.out.println("Improper input. Please try again.");
+         }
+      } while (input != 5);
+   }
+   
+   private static void museumOptimization(Scanner sc, Museum museum)
+   {
+      int input = -1;
+      do
+      {
+         input = -1;
+         System.out.println("Museum Optimization Menu");
+         System.out.println("1) Produce list of exhibits that should be displayed to maximize on-display space");
+         System.out.println("2) Produce list of exhibits that should be displayed to maximize storage space");
+         System.out.println("3) Back to Museum Affairs");
+         try
+         {
+            input = sc.nextInt();
+            if (input == 1)
+            {
+               // INSERT MUSEUM OPTIMIZATION METHOD HERE
+            }
+            else if (input == 2)
+            {
+               // INSERT MUSEUM OPTIMIZATION METHOD HERE
+            }
+            else if (input != 3)
+               System.out.println("Invalid input. Please try again.");
+         }
+         catch (Exception e)
+         {
+            System.out.println("Improper input. Please try again.");
+         }
+      } while (input != 3);
+   }
 	private static void exhibitAnalytics(Scanner sc, Museum museum) {
 		int input = -1;
 		do {
@@ -223,7 +337,7 @@ public class MuseumRunner {
 				} else if (input == 3) {
 					searchExhibits(sc, museum);
 				} else if (input == 4) {
-					compareExhibits(sc, museum);
+					compareExhibits(sc, museum);  
 				} else if (input != 5) {
 					System.out.println("Invalid Input. Try Again.");
 					input = -1;
@@ -475,7 +589,6 @@ public class MuseumRunner {
 			}
 
 		} while (input != 7);
-
 	}
 
 	private static void sortExhibits(Scanner sc, Museum museum) {
@@ -985,7 +1098,7 @@ public class MuseumRunner {
 									try {
 										System.out.print("Name - ");
 										String name = sc.nextLine();
-										museum.printSpecificExhibit(name);
+										museum.printSpecificExhibit(name);  ///////////////////////////////////shouldnt this be artifact?
 									} catch (Exception e) {
 										System.out.println("Improper Input. Try again.");
 										properInput = false;
@@ -1521,6 +1634,7 @@ public class MuseumRunner {
 					   System.out.println("2) Search by name");
 						try {
 							input1 = sc.nextInt();
+                     System.out.println();
 							if (input1 == 1) {
 								boolean properInput = true;
 								System.out.print("ID #1 - ");
@@ -1568,6 +1682,199 @@ public class MuseumRunner {
 
 	}
 
+   public static void printVisitorInfo (Scanner sc, Museum museum)
+   {
+      int input = -1;
+      
+      do
+      {
+         input = -1;
+         System.out.println("0) Back to Facility Analytics Menu");
+         System.out.println("1) Print Information on current visitors");
+         System.out.println("2) Sort visitors by criteria");
+         System.out.println("3) Search visitors by criteria");
+         System.out.println("4) Compare visitor information");
+         
+         try
+         {
+            input = sc.nextInt();
+            System.out.println();
+            
+            if (input == 1)
+            {  
+               printVisitorInfoMenu (sc,museum);
+            }
+            else if (input == 2)
+            {
+              sortVisitorMenu(sc,museum);
+            }
+            else if (input == 3)
+            {
+            //   searchVisitorMenu(sc, museum);
+            }
+            else if (input == 4)
+            {
+             //  compareVisitorsMenu(sc, museum);
+            }
+            else if (input != 0)
+            {
+               System.out.println("Please enter an input from 1-4");
+            }
+         }
+         catch (Exception e)
+         {
+            System.out.println("Error reading input. Please try again");
+            input = -1;
+         }
+      } while (input != 0);
+   }
+   
+   public static void printVisitorInfoMenu (Scanner sc, Museum museum)
+   {
+      int input = -1;
+      do
+      {
+         input = -1;
+         System.out.println("Print Visitor Information");
+         System.out.println("0) Back to Visitor Analytics Menu");
+         System.out.println("1) Print Information on all Visitors");
+         System.out.println("2) Print a specified visitor's name, age and current location (specified by ID or name)");
+         System.out.println("3) Print all artifacts a specified visitor has been to");
+         System.out.println("4) Print the current number of total visitors in the museum");
+         System.out.println("5) Print the current number of child visitors in the museum");
+         System.out.println("6) Print the current number of adult visitors in the museum");
+         System.out.println("7) Print the current number of senior visitors in the museum");
+         System.out.println("8) Print the average age of the current visitors");
+         System.out.print("Enter desired option: ");
+         
+         try
+         {
+            input = sc.nextInt();
+            System.out.println();
+            
+            if (input == 1)   // print all visitors
+            {
+               System.out.println("List of all visitors: ");
+               museum.printAllVisitors();
+               System.out.println();
+            }
+            else if (input == 2) //print on specific visitor
+            {
+              int input1 = -1;
+               
+               do
+               {
+                  input1 = -1;
+                  System.out.println("Options");
+					   System.out.println("1) Search by ID");
+					   System.out.println("2) Search by name");
+                  System.out.println("Enter desired choice: ");
+                  input1 = sc.nextInt();
+                  System.out.println();
+                  try
+                  {
+                     if (input1 == 1)     //print from 6 digit ID                     {
+                     {
+                        int id;
+                        System.out.print("Enter the visitor's 6 digit ID number: ");
+                        id = sc.nextInt();
+                        museum.printSpecificVisitor(id);   
+                        System.out.println();
+                     }
+                     else if (input1 == 2) //print from given full name, case-sensitive, sep. by a space
+                     {
+                        String fullName;
+                        sc.nextLine(); //flush
+                        System.out.println("Enter case-sensitive full name, separating the first and last name by a space: ");
+                        fullName = sc.nextLine();
+                        System.out.println();
+                        museum.printSpecificVisitor(fullName);
+                     }
+                     else if (!(input1 == 1 || input1 == 2))   // invalid option
+                     {
+                        System.out.println("Please enter 1 or 2");
+                        System.out.println();
+                        input1 = -1;
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Invalid input.");
+                     System.out.println();
+                     input1 = -1;
+                  }
+               }
+               while (!(input1 == 1 || input1 == 2));
+            }
+            else if (input == 3) // print all places a visitor has visited
+            {
+               
+               String fullName;
+               sc.nextLine(); //flush
+               System.out.println("Enter the full name of a visitor(separate the first and last name by a space): ");
+               fullName = sc.nextLine();
+               System.out.println();
+             //  museum.printVisitedArtifacts();
+               System.out.println();
+            }
+            else if (input == 4) // print current num total visitors
+            {
+               int numTotal = museum.numAdults() + museum.numChildren() + museum.numSeniors();
+               System.out.println("There are a total of " + numTotal + " current visitors at the museum");
+               System.out.println();
+            }
+            else if (input == 5) // print current num child visitors
+            {
+               System.out.println("There are a total of " + museum.numChildren() + " current visitors at the museum");
+               System.out.println();
+            }
+            else if (input == 6) //print current num adult visitors
+            {
+               System.out.println("There are a total of " + museum.numAdults() + " current visitors at the museum");
+               System.out.println();
+            }
+            else if (input == 7) //print current num senior visitors
+            {
+               System.out.println("There are a total of " + museum.numSeniors() + " current visitors at the museum");
+               System.out.println();
+            }
+            else if (input == 8) //print avg age of all visitors
+            {
+               System.out.println(museum.averageAge() + " is the average age of all the visitors");
+            }
+            else if (input != 0)
+            {
+               System.out.println("Please enter a valid digit from 0-9");
+               System.out.println();
+               input = -1;
+            }
+         }
+         catch (Exception e)
+         {
+            System.out.println("Error reading input. Try again.");
+            System.out.println();
+            input = -1;
+         }
+      } while (input != 0);
+   }
+
+   public static void sortVisitorMenu(Scanner sc, Museum museum)
+   {
+      int input = -1;
+      
+      do
+      {
+         input = -1;
+         System.out.println("Sort Visitors");
+         System.out.println("0) Back to Visitor Analytics Menu");
+         System.out.println("1) Print a list of all current child visitors");
+         System.out.println("2) Print a list of all current aduly visitors");
+         System.out.println("3) Print a list of all current senior visitors");
+         System.out.println("4) Print all visitors, sorted by ascending age");
+         System.out.println("5) Print all visitors, sorted by descending age");
+      } while (input != 0);
+   }
+   
 	// Prints Museum Simulation Menu, takes input, and directs user accordingly
 	private static void museumSimulationMenu(Scanner sc, Museum museum)
     {
@@ -1691,18 +1998,147 @@ public class MuseumRunner {
             System.out.println();
             if (input == 1)   //Add exhibit
             {
+               sc.nextLine(); // flush
+               String name, desc;
+               boolean validInput = false;
+               System.out.print("Enter the case sensitive name for the exhibit: ");
+               name = sc.nextLine();
+               System.out.print("Enter a description for the exhibit: ");
+               desc = sc.nextLine();
+               museum.addExhibit(name, desc);   // museum will return an error if unsuccessful
+               System.out.println ("New exhibit successfully added: "); 
+               System.out.println(museum.searchExhibitByName(name).identifierToString());
             }
             else if (input == 2) //Remove exhibit
             {
+               int input1 = -1;
+               do
+               {
+                  input1 = -1;
+                  System.out.println("Options: ");
+                  System.out.println("1) Search exhibit by ID");
+                  System.out.println("2) Search exhibit by name");
+                  System.out.print("Enter choice: ");
+                  try
+                  {
+                     input1 = sc.nextInt();
+                     System.out.println();
+                     if (input1 == 1)  //remove exhibit given id
+                     {
+                        int id;
+                        System.out.println ("Enter id of exhibit you want to remove: ");
+                        id = sc.nextInt();   // if not number entered, will kick back to options catch
+                        museum.removeExhibit(id);  // museum will give error msg if id doesnt exist
+                     }
+                     else if (input1 == 2)   // remove exhibit given name
+                     {
+                        sc.nextLine();    // flush
+                        String name;
+                        System.out.println("Enter case-sensitive name of exhibit you want to remove: ");
+                        name = sc.nextLine();   
+                        museum.removeExhibit(name);   //museum will give error msg if name doesnt exist
+                        
+                     }
+                     else if (!(input1 == 1 || input1 == 2))   // invalid option number
+                     {
+                        System.out.println("Enter either 1 or 2");
+                        input1 = -1;
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Invalid input. Try again.");
+                     input1 = -1;
+                  }
+               } while (!(input1 == 1 || input1 == 2));
             }
             else if (input == 3) // Add artifact
             {
-            }
+               sc.nextLine(); // flush
+               String name, desc, dateMade, datePurchased;
+               double value, floorSpace;
+               int exhId;
+               char onDisplayChar;
+               boolean onDisplay=false;
+               try
+               {
+                  System.out.print("Enter artifact name: ");
+                  name = sc.nextLine();
+                  System.out.print ("Enter artifact description: ");
+                  desc = sc.nextLine();
+                  System.out.print("Enter value of artifact: $");
+                  value = sc.nextDouble();
+                  System.out.print("Enter floor space required to house artifact (sq. ft.): ");
+                  floorSpace = sc.nextDouble();
+                  sc.nextLine(); // flush
+                  System.out.print("Enter the artifact's date of origin (dd/mm/yyyy C.E/B.C.E): ");
+                  dateMade = sc.nextLine();
+                  System.out.print("Enter the artifact's date of purchase (dd/mm/yyyy C.E/B.C.E): ");
+                  datePurchased = sc.nextLine();
+                  System.out.print("Enter the exhibit ID of where the artifact should be located: ");
+                  exhId = sc.nextInt();
+                  sc.nextLine(); // flush
+                  System.out.print ("Is the artifact on display right now? (Y/N): ");
+                  onDisplayChar = sc.nextLine().charAt(0);
+                  if (onDisplayChar == 'Y' || onDisplayChar == 'y')
+                     onDisplay = true;
+                  else if (onDisplayChar == 'N' || onDisplayChar == 'n')
+                     onDisplay = false;
+                  museum.addArtifact(name, desc, value, floorSpace, dateMade, datePurchased, exhId, onDisplay);
+                  System.out.println("Artifact succesfully made: ");
+                  ////System.out.println(museum.findArtifactIndexByName(name).identifierToString());  print ARTIFACT IDENTIFIER
+               }
+               catch (InputMismatchException imx)
+               {
+                  System.out.println("Invalid input. Returning to Facility Modification Menu");
+               }
+            } 
             else if (input == 4) // Remove artifact
             {
+               int input1 = -1;
+               do
+               {
+                  input1 = -1;
+                  System.out.println("Options: ");
+                  System.out.println("1) Search artifact by ID");
+                  System.out.println("2) Search artifact by name");
+                  System.out.print("Enter choice: ");
+                  try
+                  {
+                     input1 = sc.nextInt();
+                     System.out.println();
+                     if (input1 == 1)  //remove artifact given id
+                     {
+                        int id;
+                        System.out.println ("Enter id of artifact you want to remove: ");
+                        id = sc.nextInt();   // if not number entered, will kick back to options catch
+                        museum.removeArtifact(id);  // museum will give error msg if id doesnt exist
+                     }
+                     else if (input1 == 2)   // remove artifact given name
+                     {
+                        sc.nextLine();    // flush
+                        String name;
+                        System.out.println("Enter case-sensitive name of artifact you want to remove: ");
+                        name = sc.nextLine();   
+                        museum.removeExhibit(name);   //museum will give error msg if name doesnt exist
+                        
+                     }
+                     else if (!(input1 == 1 || input1 == 2))   // invalid option number
+                     {
+                        System.out.println("Enter either 1 or 2");
+                        input1 = -1;
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Invalid input. Try again.");
+                     input1 = -1;
+                  }
+               } while (!(input1 == 1 || input1 == 2));           
             }
             else if (input != 0)
             {
+               System.out.println("Please enter an option from 0-4");
             }
          }
          catch (Exception e)
@@ -1712,8 +2148,187 @@ public class MuseumRunner {
          }
       } while (input != 0);
    }   
+
    private static void dailyOperationsMenu (Scanner sc, Museum museum)
    {
+      int input = -1;
+      do
+      {
+         input = -1;
+         System.out.println("Daily Operations");
+         System.out.println("0) Return to Museum Simulation Menu");
+         System.out.println("1) Add Visitor");
+         System.out.println("2) Move Visitor");
+         System.out.println("3) Remove Visitor");
+         System.out.println("4) Close for the day");
+         System.out.print("Enter your choice: ");
+         
+         try
+         {
+            input = sc.nextInt();
+            System.out.println();
+            if (input == 1)
+            {
+               boolean properInput;
+               do
+               {  
+                  try
+                  {
+                     String firstName, lastName;
+                     int age;
+                     properInput = true;
+                     sc.nextLine();
+                     System.out.print("First Name: ");
+                     firstName = sc.nextLine();
+                     System.out.print("Last Name: ");
+                     lastName = sc.nextLine();
+                     System.out.print("Age: ");
+                     age = sc.nextInt();
+                     museum.addVisitor(firstName, lastName, age);
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Improper input. Please try again.");
+                     properInput = false;
+                  }
+               } while (!properInput);
+            }
+            else if (input == 2)
+            {
+               int input1 = -1;
+               do
+               {
+                  input1 = -1;
+                  System.out.println("Options:");
+                  System.out.println("1) Move visitor by visitor and artifact ID");
+                  System.out.println("2) Move visitor by visitor and artifact name");
+                  try
+                  {
+                     input1 = sc.nextInt();
+                     if (input1 == 1)
+                     {
+                        boolean properInput;
+                        do
+                        {
+                           try
+                           {
+                              properInput = true;
+                              System.out.print("Visitor ID: ");
+                              int visitorId = sc.nextInt();
+                              System.out.print("Artifact ID: ");
+                              int artifactId = sc.nextInt();
+                              museum.moveVisitor(visitorId, artifactId);
+                           }
+                           catch (Exception e)
+                           {
+                              System.out.println("Improper input. Please try again.");
+                              properInput = false;
+                           }
+                        } while (!properInput);
+                     }
+                     else if (input1 == 2)
+                     {
+                        boolean properInput;
+                        do
+                        {
+                           try
+                           {
+                              properInput = true;
+                              sc.nextLine();
+                              System.out.print("Visitor full name: ");
+                              String visitorName = sc.nextLine();
+                              System.out.print("Artifact name: ");
+                              String artifactName = sc.nextLine();
+                              museum.moveVisitor(visitorName, artifactName);
+                           }
+                           catch (Exception e)
+                           {
+                              System.out.println("Improper input. Please try again.");
+                              properInput = false;
+                           }
+                        } while (!properInput);
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Improper input. Please try again.");
+                  }
+               } while (input1 != 1 && input1 != 2);
+            }
+            else if (input == 3)
+            {
+               int input1 = -1;
+               do
+               {
+                  input1 = -1;
+                  System.out.println("Options: ");
+                  System.out.println("1) Remove visitor by ID");
+                  System.out.println("2) Remove visitor by name");
+                  try
+                  {
+                     input1 = sc.nextInt();
+                     if (input1 == 1)
+                     {
+                        boolean properInput;
+                        do
+                        {
+                           properInput = true;
+                           try
+                           {
+                              System.out.print("Enter visitor ID: ");
+                              int id = sc.nextInt();
+                              museum.removeVisitor(id);
+                           }
+                           catch (Exception e)
+                           {
+                              System.out.println("Improper input. Please try again.");
+                              properInput = false;
+                           }
+                        } while (!properInput);
+                     }
+                     else if (input1 == 2)
+                     {
+                        boolean properInput;
+                        do
+                        {
+                           properInput = true;
+                           try
+                           {
+                              sc.nextLine();
+                              System.out.print("Enter visitor's full name: ");
+                              String name = sc.nextLine();
+                              museum.removeVisitor(name);
+                           }
+                           catch (Exception e)
+                           {
+                              System.out.println("Improper input. Please try again.");
+                              properInput = false;
+                           }
+                        } while (!properInput);
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     System.out.println("Improper input. Please try again.");
+                  }
+               } while (input1 != 1 && input1 != 2);
+            }
+            else if (input == 4)
+            {
+               museum.closeForTheDay();
+               System.out.println("The museum has been closed for the day");
+            }
+            else if (input != 0)
+            {
+               System.out.println("Invalid input. Please try again.");
+            }
+         }
+         catch (Exception e)
+         {
+            sc.nextLine();
+            System.out.println("Improper input. Please try again.");
+         }
+      } while (input != 0);
    }
    
 	private static Museum makeNewMuseum(Scanner sc) {
@@ -1957,7 +2572,6 @@ public class MuseumRunner {
 			System.out.println("Error writing to file! Returning to start menu.");
 		}
 	}
-
 
 	private static Exhibit findExhibit(ArrayList<Exhibit> exhibitList, int exhId) {
 		exhibitList.trimToSize();
