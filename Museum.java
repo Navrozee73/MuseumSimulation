@@ -1789,30 +1789,42 @@ public class Museum {
     }
 
     public void printAllArtifacts() {
-        for (Artifact a : getAllArtifactsArray()) {
-            System.out.println(a);
-        }
+        try{
+            for (Artifact a : getAllArtifacts()) {
+                System.out.println(a.identifierToString());
+            }
+        }catch(Exception e){
+            System.out.println("Error printing all artifacts.");
+        }  
     }
 
     public void printSpecificArtifact(String name) {
-        System.out.println(searchArtifactByName(name));
+        try{
+            System.out.println(searchArtifactByName(name).identifierToString());
+        }catch(Exception e){
+            System.out.println("Error printing artifact.");
+        }
     }
 
     public void printSpecificArtifact(int id) {
-        System.out.println(searchArtifactByID(id));
+        try{
+            System.out.println(searchArtifactByID(id).identifierToString());
+        }catch(Exception e){
+            System.out.println("Error printing artifact.");
+        }
     }
 
     public void printAllVisitorsAtArtifact(String name) {
         ArrayList<Visitor> visitorList = searchArtifactByName(name).getCurrentVisitors();
         for (Visitor v : visitorList) {
-            System.out.println(v);
+            System.out.println(v.identifierToString());
         }
     }
 
     public void printAllVisitorsAtArtifact(int id) {
         ArrayList<Visitor> visitorList = searchArtifactByID(id).getCurrentVisitors();
         for (Visitor v : visitorList) {
-            System.out.println((Visitor) v);
+            System.out.println(v.identifierToString());
         }
     }
 
@@ -1837,7 +1849,7 @@ public class Museum {
     public void printArtifactsCurrentlyOnFloor() {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getOnDisplay()) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -1845,7 +1857,7 @@ public class Museum {
     public void printArtifactsInStorage() {
         for (Artifact a : getAllArtifactsArray()) {
             if (!a.getOnDisplay()) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -1869,7 +1881,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -1892,7 +1904,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -1915,7 +1927,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -1938,7 +1950,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -1961,7 +1973,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -1984,7 +1996,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -2007,7 +2019,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -2030,7 +2042,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -2053,7 +2065,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -2076,7 +2088,7 @@ public class Museum {
         }
 
         for (Artifact a : sortedList) {
-            System.out.println(a);
+            System.out.println(a.identifierToString());
         }
     }
 
@@ -2086,6 +2098,7 @@ public class Museum {
                 return a;
             }
         }
+        System.out.println("Artifact " + name + " not found.");
         return null;
     }
 
@@ -2095,22 +2108,14 @@ public class Museum {
                 return a;
             }
         }
+        System.out.println("Artifact " + id + " not found.");
         return null;
     }
 
-    /*
-    public void printArtifactsOfType(String type){
-        for(Artifact a: getAllArtifactsArray()){
-            if(a.getType().equals(type)){
-                System.out.println(a);
-            }
-        }
-    }
-     */
     public void printArtifactsExceedingValue(double min) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getValue() > min) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2118,7 +2123,7 @@ public class Museum {
     public void printArtifactsWithinValue(double min, double max) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getValue() >= min && a.getValue() <= max) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2126,7 +2131,7 @@ public class Museum {
     public void printArtifactsExceedingNumVisitors(int min) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getCurrentVisitors().size() > min) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2134,7 +2139,7 @@ public class Museum {
     public void printArtifactsWithinNumVisitors(int min, int max) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getCurrentVisitors().size() >= min && a.getCurrentVisitors().size() <= max) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2142,7 +2147,7 @@ public class Museum {
     public void printArtifactsLessThanFloorSpace(double max) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.getFloorSpace() < max) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2150,7 +2155,7 @@ public class Museum {
     public void printArtifactsMadeBefore(String date) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.madeBefore(new Date(date))) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2158,7 +2163,7 @@ public class Museum {
     public void printArtifactsMadeWithin(String date1, String date2) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.madeWithin(new Date(date1), new Date(date2))) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2166,7 +2171,7 @@ public class Museum {
     public void printArtifactsPurchasedBefore(String date) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.purchasedBefore(new Date(date))) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
@@ -2174,7 +2179,7 @@ public class Museum {
     public void printArtifactsPurchasedWithin(String date1, String date2) {
         for (Artifact a : getAllArtifactsArray()) {
             if (a.purchasedWithin(new Date(date1), new Date(date2))) {
-                System.out.println(a);
+                System.out.println(a.identifierToString());
             }
         }
     }
