@@ -2314,15 +2314,15 @@ public class Museum {
     }
 
     //Returns array containing the combination of exhibits occupying the
-    //greatest amount of display space without exceeding the maximum
-    public Exhibit[] findOptimalExhibitArrangement() {
+    //greatest amount of space without exceeding the maximum
+    public Exhibit[] findOptimalExhibitArrangement(double maxSpace) {
         Exhibit[] exhibits = findOptimalExhibitArrangement(getAllExhibitsArray(), 0, allExhibits.size() - 1);
         ArrayList<Exhibit> finalExhibitList = new ArrayList<>();
         double usedSpace = 0;
 
         try {
             for (Exhibit e : exhibits) {
-                if (usedSpace + e.getFloorSpace() < getMaxDisplaySpace()) {
+                if (usedSpace + e.getFloorSpace() <= maxSpace) {
                     usedSpace += e.getFloorSpace();
                     finalExhibitList.add(e);
                 }
