@@ -147,7 +147,7 @@ abstract class Visitor {
     public String toString (){
         String output;
         //Output fields
-        output = "ID - " + id + "\n First Name - " + firstName + "\n Last Name - " + lastName + "\n Age - " + age + "\n Current Exhibit - " + currentExhibit + "\n Current Artifact - " + currentArtifact;
+        output = "ID - " + id + "\n First Name - " + firstName + "\n Last Name - " + lastName + "\n Age - " + age + "\n Current Exhibit - " + currentExhibit.identifierToString() + "\n Current Artifact - " + currentArtifact.identifierToString();
         //Output visited artifact and exhibit lists
         output = output + "\n Visited Artifacts - ";
         for (int i = 0; i < visitedArtifacts.size(); i++){
