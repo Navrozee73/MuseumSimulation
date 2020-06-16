@@ -5,8 +5,8 @@
    Course:           ICS4U1-02
    Purpose:          This class represents a museum and manages all its operations.
    
-   June 13th:     daily operations, museumFinance, museumOptimization in MuseumRunner
-                  added check for artifact + private methods            
+   June 13th:     daily operations in MuseumRunner
+                  
 */
 
 import java.util.ArrayList;
@@ -92,7 +92,8 @@ public class Museum
       dates.trimToSize();
       dailyRevenue.add(0.0);
       dates.add(openingDate);
-      bank = new Bank(0,dailyRevenue, dates, currentDate);
+      //bank = new Bank(0, dailyRevenue, dates, currentDate); Throws Error
+      bank = new Bank();
       
       numVisitorsAdded = 0;
       numExhibitsAdded = 0;
@@ -136,6 +137,18 @@ public class Museum
    
    public ArrayList <Visitor> getAllVisitors() {
       return allVisitors;
+   }
+   
+   public Exhibit[] getAllExhibitsArray() {
+      return allExhibits.toArray(new Exhibit[allExhibits.size()]);
+   }
+  
+   public Artifact[] getAllArtifactsArray() {
+      return allArtifacts.toArray(new Artifact[allArtifacts.size()]);
+   }
+   
+   public Visitor[] getAllVisitorsArray() {
+      return allVisitors.toArray(new Visitor[allVisitors.size()]);
    }
         
    public Bank getBank() {
@@ -407,7 +420,7 @@ public class Museum
    }
    
    /*
-   *  Adds a new artifact to the museum if there is enough space available
+   *  Adds a new artifact to the museum
    *  String name - name of artifact
    *  String description - description of artifact
    *  double value - value of artifact
@@ -519,8 +532,8 @@ public class Museum
    
    public boolean moveVisitor(int visitorId, int toArtifactId)
    {
-      try
-      {
+//       try
+//       {
          // locate visitor and artifact ID
          int visitorFoundIndex = findVisitorIndexById(visitorId);
          int artifactFoundIndex = findArtifactIndexById(toArtifactId);
@@ -570,11 +583,11 @@ public class Museum
          }
          else
             return false;
-      }
-      catch(Exception e)
-      { 
-         return false;
-      }
+//       }
+//       catch(Exception e)
+//       { 
+//          return false;
+//       }
    }
    
    /*
@@ -743,7 +756,7 @@ public class Museum
    }
    
    /*
-   *  Print all the artifacts a visitor has visited, given their ID
+   *  Print all the artifacts a visitor has visited
    *  givneId - ID of visitor
    */
    public void printVisitedArtifacts(int givenId)
@@ -767,8 +780,8 @@ public class Museum
    }
    
    /*
-   *  Print all the artifacts a visitor has visited, given their name
-   *  givneName - name of visitor
+   *  Print all the artifacts a visitor has visited
+   *  givneId - ID of visitor
    */
    public void printVisitedArtifacts(String givenName)
    {
@@ -790,7 +803,6 @@ public class Museum
       }   
    }
    
-   // Returns the number of adults in the museum
    public int numAdults()
    {
       int adultCount = 0;
@@ -805,7 +817,6 @@ public class Museum
       return adultCount;
    }
    
-   // Returns the number of children in the museum
    public int numChildren()
    {
       int childCount = 0;
@@ -820,7 +831,6 @@ public class Museum
       return childCount;
    }
    
-   // Returns the number of seniors in the museum
    public int numSeniors()
    {
       int seniorCount = 0;
@@ -835,7 +845,6 @@ public class Museum
       return seniorCount;
    }
    
-   // Returns the average age of all current visitors in the museum
    public double averageAge()
    {
       int ageSum = 0;
@@ -853,7 +862,6 @@ public class Museum
       return average;
    }
    
-   // Prints the identifiers of all adults in the museum
    public void printAllAdults()
    {
       allVisitors.trimToSize();
@@ -864,7 +872,6 @@ public class Museum
       }
    }
    
-   // Prints the identifiers of all children in the museum
    public void printAllChildren()
    {
       allVisitors.trimToSize();
@@ -875,7 +882,6 @@ public class Museum
       }
    }
    
-   // Prints the identifiers of all seniors in the museum
    public void printAllSeniors()
    {
       allVisitors.trimToSize();
@@ -886,7 +892,6 @@ public class Museum
       }
    }
    
-   // Prints current visitors from lowest to highest age, sorted using selection sort
    public void printVisitorsAscendingAge()
    {
       int min;
@@ -912,7 +917,6 @@ public class Museum
       }
    }
    
-   // Prints current visitors from highest to lowest age, sorted using selection sort
    public void printVisitorsDescendingAge()
    {
       int max;
@@ -938,10 +942,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Prints all visitors at a given exhibit, given its ID
-   *  int exhibitId - ID of exhibit
-   */
    public void printVisitorsAtExhibit(int exhibitId)
    {
       int foundIndex = findExhibitIndexById(exhibitId);
@@ -963,10 +963,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Prints all visitors at a given exhibit, given its name
-   *  String exhibitName - name of exhibit
-   */
    public void printVisitorsAtExhibit(String exhibitName)
    {
       int foundIndex = findExhibitIndexByName(exhibitName);
@@ -987,10 +983,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Prints all visitors at a given artifact, given its ID
-   *  int artifactId - ID of artifact
-   */
    public void printVisitorsAtArtifact(int artifactId)
    {
       int foundIndex = findArtifactIndexById(artifactId);
@@ -1011,10 +1003,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Prints all visitors at a given artifact, given its name
-   *  String artifactName - name of artifact
-   */
    public void printVisitorsAtArtifact(String artifactName)
    {
       int foundIndex = findArtifactIndexByName(artifactName);
@@ -1035,11 +1023,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Uses sequential search to find a specific visitor, given their ID
-   *  int visitorId - ID of visitor
-   *  Returns Visitor object if found, null if not found
-   */
    public Visitor searchVisitorById(int visitorId)
    {
       int foundIndex = findVisitorIndexById(visitorId);
@@ -1055,11 +1038,6 @@ public class Museum
       }
    }
    
-   /*
-   *  Uses sequential search to find a specific visitor, given their full name
-   *  String visitorName - full name of visitor
-   *  Returns Visitor object if found, null if not found
-   */
    public Visitor searchVisitorByName(String visitorName)
    {
       int foundIndex = findVisitorIndexByName(visitorName);
@@ -2088,4 +2066,617 @@ public class Museum
       
       return spaceUsed;
    }
+   
+   
+   
+    public void printAllArtifacts(){
+        for(Artifact a: getAllArtifactsArray()){
+            System.out.println(a);
+        }
+    }
+    
+    public void printSpecificArtifact(String name){
+        System.out.println(searchArtifactByName(name));
+    }
+    
+    public void printSpecificArtifact(int id){
+        System.out.println(searchArtifactByID(id));
+    }
+    
+    public void printAllVisitorsAtArtifact(String name){
+        for(Visitor v: searchArtifactByName(name).getCurrentVisitorsArray()){
+            System.out.println(v);
+        }
+    }
+    
+    public void printAllVisitorsAtArtifact(int id){
+        for(Visitor v: searchArtifactByID(id).getCurrentVisitorsArray()){
+            System.out.println(v);
+        }
+    }
+     
+    public int numVisitorsAtArtifact(String name){
+        try{
+            return searchArtifactByName(name).getCurrentVisitors().size();
+        }catch(Exception e){
+            System.out.println("Artifact \"" + name + "\" doesn't exist.");
+            return 0;
+        }
+    }
+    
+    public int numVisitorsAtArtifact(int id){
+        try{
+            return searchArtifactByID(id).getCurrentVisitors().size();
+        }catch(Exception e){
+            System.out.println("Artifact \"" + id + "\" doesn't exist.");
+            return 0;
+        }
+    }
+    
+    public void printArtifactsCurrentlyOnFloor(){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getOnDisplay()){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsInStorage(){
+        for(Artifact a: getAllArtifactsArray()){
+            if(!a.getOnDisplay()){
+                System.out.println(a);
+            }
+        }
+    }
+     
+    public void  printArtifactsAscendingValue(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getValue() > sortedList[i+1].getValue()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getValue() < temp.getValue()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsDescendingValue(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getValue() < sortedList[i+1].getValue()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getValue() > temp.getValue()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsAscendingFloorSpace(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getFloorSpace() > sortedList[i+1].getFloorSpace()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getFloorSpace() < temp.getFloorSpace()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsDescendingFloorSpace(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getFloorSpace() < sortedList[i+1].getFloorSpace()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getFloorSpace() > temp.getFloorSpace()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsOldToRecent(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].madeBefore(sortedList[i+1].getDateMade())){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(temp.madeBefore(sortedList[j].getDateMade())){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsRecentToOld(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i+1].madeBefore(sortedList[i].getDateMade())){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].madeBefore(temp.getDateMade())){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsAscendingVisitors(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getNumCurrentVisitors() > sortedList[i+1].getNumCurrentVisitors()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getNumCurrentVisitors() < temp.getNumCurrentVisitors()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    public void  printArtifactsDescendingVisitors(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getNumCurrentVisitors() < sortedList[i+1].getNumCurrentVisitors()){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getNumCurrentVisitors() > temp.getNumCurrentVisitors()){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    
+    
+    public void printArtifactsAlpha(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getName().compareTo(sortedList[i+1].getName()) < 0){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getName().compareTo(temp.getName()) > 0){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    
+    public void printArtifactsReverseAlpha(){
+        Artifact[] sortedList = getAllArtifactsArray().clone();
+        Artifact temp;
+        
+        for(int i = 0; i < sortedList.length-1; i++){
+            if(sortedList[i].getName().compareTo(sortedList[i+1].getName()) > 0){
+                temp = sortedList[i+1];
+                for(int j = i; j >= 0; j--){
+                    if(sortedList[j].getName().compareTo(temp.getName()) < 0){
+                        sortedList[j+1]=temp;
+                    }else{
+                        sortedList[j+1]=sortedList[j];
+                        sortedList[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        for(Artifact a: sortedList){
+            System.out.println(a);
+        }
+    }
+    
+    
+    
+    public Artifact searchArtifactByName(String name){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getName().equals(name)){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    
+    public Artifact searchArtifactByID(int id){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getId() == id){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    /*
+    public void printArtifactsOfType(String type){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getType().equals(type)){
+                System.out.println(a);
+            }
+        }
+    }
+    */
+    
+    public void printArtifactsExceedingValue(double min){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getValue() > min){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsWithinValue(double min, double max){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getValue() >= min && a.getValue() <= max){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsExceedingNumVisitors(int min){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getCurrentVisitors().size() > min){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsWithinNumVisitors(int min, int max){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getCurrentVisitors().size() >= min && a.getCurrentVisitors().size() <= max){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsLessThanFloorSpace(double max){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.getFloorSpace() < max){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsMadeBefore(String date){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.madeBefore(new Date(date))){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsMadeWithin(String date1, String date2){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.madeWithin(new Date(date1), new Date(date2))){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsPurchasedBefore(String date){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.purchasedBefore(new Date(date))){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public void printArtifactsPurchasedWithin(String date1, String date2){
+        for(Artifact a: getAllArtifactsArray()){
+            if(a.purchasedWithin(new Date(date1), new Date(date2))){
+                System.out.println(a);
+            }
+        }
+    }
+    
+    public Artifact greaterValueBetweenArtifacts(int id1, int id2){
+        Artifact a = searchArtifactByID(id1);
+        Artifact b = searchArtifactByID(id2);
+        
+        if(a.getValue() < b.getValue()){
+            return b;
+        }
+        return a;
+    }
+    
+    public Artifact greaterValueBetweenArtifacts(String name1, String name2){
+        Artifact a = searchArtifactByName(name1);
+        Artifact b = searchArtifactByName(name2);
+        
+        if(a.getValue() < b.getValue()){
+            return b;
+        }
+        return a;
+    }
+    
+    public Artifact olderMadeBetweenArtifacts(int id1, int id2){
+        Artifact a = searchArtifactByID(id1);
+        Artifact b = searchArtifactByID(id2);
+        
+        if(a.madeBefore(b.getDateMade())){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact olderMadeBetweenArtifacts(String name1, String name2){
+        Artifact a = searchArtifactByName(name1);
+        Artifact b = searchArtifactByName(name2);
+        
+        if(a.madeBefore(b.getDateMade())){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact olderPurchasedBetweenArtifacts(int id1, int id2){
+        Artifact a = searchArtifactByID(id1);
+        Artifact b = searchArtifactByID(id2);
+        
+        if(a.purchasedBefore(b.getDatePurchased())){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact olderPurchasedBetweenArtifacts(String name1, String name2){
+        Artifact a = searchArtifactByName(name1);
+        Artifact b = searchArtifactByName(name2);
+        
+        if(a.purchasedBefore(b.getDatePurchased())){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact greaterNumVisitorsBetweenArtifacts(int id1, int id2){
+        Artifact a = searchArtifactByID(id1);
+        Artifact b = searchArtifactByID(id2);
+        
+        if(a.getCurrentVisitors().size() > b.getCurrentVisitors().size()){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact greaterNumVisitorsBetweenArtifacts(String name1, String name2){
+        Artifact a = searchArtifactByName(name1);
+        Artifact b = searchArtifactByName(name2);
+        
+        if(a.getCurrentVisitors().size() > b.getCurrentVisitors().size()){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact greaterFloorSpaceBetweenArtifacts(int id1, int id2){
+        Artifact a = searchArtifactByID(id1);
+        Artifact b = searchArtifactByID(id2);
+        
+        if(a.getFloorSpace() > b.getFloorSpace()){
+            return a;
+        }
+        return b;
+    }
+    
+    public Artifact greaterFloorSpaceBetweenArtifacts(String name1, String name2){
+        Artifact a = searchArtifactByName(name1);
+        Artifact b = searchArtifactByName(name2);
+        
+        if(a.getFloorSpace() > b.getFloorSpace()){
+            return a;
+        }
+        return b;
+    }
+    
+    @Override
+    public String toString(){
+        String s = "MUSEUM: " + "\nOpening Date: " + openingDate + "\nMax Display Space: " + maxDisplaySpace + "\nMax Storage Space" + maxStorageSpace;
+        
+        
+        for(Artifact a: getAllArtifactsArray()){
+            s = s + a;
+        }
+        
+        for(Exhibit e: allExhibits){
+            s = s + e;
+        }
+        
+        for(Visitor v: allVisitors){
+            s = s + v;
+        }
+        
+        return s;
+    }
+    
+    public boolean equals(Museum museum2){
+        if(museum2 != null){
+            if( this.getOpeningDate() == museum2.getOpeningDate() &&
+                this.getCurrentDate() == museum2.getCurrentDate() &&
+                this.getMaxDisplaySpace() == museum2.getMaxDisplaySpace() &&
+                this.getMaxStorageSpace() == museum2.getMaxStorageSpace() &&
+                this.getNumCurrentVisitors() == museum2.getNumCurrentVisitors() &&
+                this.getDaysOpenCount() == museum2.getDaysOpenCount()   
+            ){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    //Returns array containing the combination of exhibits occupying the
+    //greatest amount of display space without exceeding the maximum
+    public Exhibit[] findOptimalExhibitArrangement(){
+        Exhibit[] exhibits = findOptimalExhibitArrangement(getAllExhibitsArray(), 0, allExhibits.size()-1);
+        ArrayList<Exhibit> finalExhibitList = new ArrayList<>();
+        double usedSpace = 0;
+        
+        try{
+            for(Exhibit e: exhibits){
+                if(usedSpace + e.getFloorSpace() < getMaxDisplaySpace()){
+                    usedSpace += e.getFloorSpace();
+                    finalExhibitList.add(e);
+                }
+            }
+        }catch(Exception e){
+            return null;
+        }
+        
+        return finalExhibitList.toArray(new Exhibit[finalExhibitList.size()]);
+    }
+    
+    private Exhibit[] findOptimalExhibitArrangement(Exhibit[] exhibits, int startIndex, int endIndex) 
+    { 
+        Exhibit[] bestArrangement = exhibits.clone();
+        
+        if (startIndex == endIndex){ 
+            return exhibits;
+        }
+            
+        else
+        { 
+            for (int i = startIndex; i <= endIndex; i++) 
+            { 
+                exhibits = swap(exhibits,startIndex,i); 
+                
+                bestArrangement = findOptimalExhibitArrangement(exhibits, startIndex+1, endIndex); 
+                if(getFloorSpaceUsed(exhibits) > getFloorSpaceUsed(bestArrangement)){
+                    bestArrangement = exhibits;
+                }
+                
+                exhibits = swap(exhibits,startIndex,i); 
+            } 
+            
+            return bestArrangement;
+            
+        } 
+    } 
+  
+    private double getFloorSpaceUsed(Exhibit[] exhibits){
+        double usedSpace = 0;
+        
+        try{
+            for(Exhibit e: exhibits){
+                if(usedSpace + e.getFloorSpace() < getMaxDisplaySpace()){
+                    usedSpace += e.getFloorSpace();
+                }
+            }
+        }catch(Exception e){
+            return 0;
+        }
+        
+        return usedSpace;
+    }
+    
+    //Swaps exhibits at indexes i and j
+    private Exhibit[] swap(Exhibit[] exhibits, int i, int j) 
+    { 
+        Exhibit temp; 
+        exhibits = exhibits.clone();
+        temp = exhibits[i] ; 
+        exhibits[i] = exhibits[j]; 
+        exhibits[j] = temp; 
+        return exhibits; 
+    } 
+    
+    
+
 }
