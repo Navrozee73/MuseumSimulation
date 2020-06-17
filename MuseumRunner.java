@@ -209,7 +209,7 @@ public class MuseumRunner {
             System.out.println("\nMuseum Finances Menu");
             System.out.println("1) Display total lifetime revenue");
             System.out.println("2) Display daily revenue for a specific date");
-            System.out.println("3) Display daily revenue for a range of dates");
+            System.out.println("3) Display total revenue for a range of dates");
             System.out.println("4) Display the average revenue made per day");
             System.out.println("5) Back to Museum Affairs");
             try {
