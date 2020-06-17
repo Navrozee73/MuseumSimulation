@@ -197,14 +197,15 @@ public class Artifact
       currentVisitors = visitors;
    }
  
-   // Updates numCurrentVisitors to reflect array 
+   // Updates numCurrentVisitors to reflect size of the array visitors are stored 
    private void updateNumCurrentVisitors()
    {
       currentVisitors.trimToSize();
       numCurrentVisitors = currentVisitors.size();
    }
    
-   // Returns all Artifact's properties  
+   // Returns all Artifact's properties including name, id, description, value, 
+   // associated dates, floor space requirement, current exhibit, number of current visitors and all of the visitor identifiers  
    public String toString() 
    {
       String info = "";
@@ -222,7 +223,7 @@ public class Artifact
    // Returns artifact name and id
    public String identifierToString() 
    {
-      return("Name: " + name + " ID: " + id);
+      return(id + " " + name);
    }
    
    // returns all visitors' properties
@@ -247,7 +248,9 @@ public class Artifact
       return visitors;
    }
    
-   // adds a visitor to the artifact
+   // adds a visitor to the visitor ArrayList, given the Visitor object
+   // Updates the new number of current visitors
+   // Returns true if addition of Visitor is a success, false if an exception occurs
    public boolean addVisitor (Visitor newVisitor)
    {  
       try 
@@ -262,7 +265,10 @@ public class Artifact
       }
    }
    
-   // deletes the visitor from the artifact's currentVisitors
+   // given a Visitor object, locates it's position in the currentVisitors ArrayList & removes it
+   // Updates the new number of current visitors
+   // Returns true if removal of Visitor is a success, false if the Visitor cannot be located in the ArrayList
+   
    public boolean removeVisitor (Visitor targetVisitor)
    {  
       boolean found = false;
@@ -338,38 +344,41 @@ public class Artifact
       return (datePurchased.compareTo(date1) <= 0 && datePurchased.compareTo(date2) >= 0);
    }
    
-   // Compare artifact values   
+   // Compare artifact values by subtracting the explicit Artifact's value from the implicit's
+   // Returns positive value if implicit > explicit, 0 if implicit= explicit, negative value if implicit < explicit
    public double compareValue (Artifact other)
    {
       return (value - other.value);
    }
    
-   // Compare artifact names
+   // Compare artifact name with an explicit Artifact
+   // Returns positive value if implicit > explicit, 0 if implicit= explicit, negative value if implicit < explicit
    public int compareName(Artifact other)
    {
       return (name.compareTo(other.name));
    }
    
-   // Compare number of visitors between artifacts   
+   // Compare artifact number of current visitors by subtracting the explicit Artifact's number of current visitors from the implicit's
+   // Returns positive value if implicit > explicit, 0 if implicit= explicit, negative value if implicit < explicit  
    public int compareNumCurrentVisitors(Artifact other)
    {
       return (numCurrentVisitors - other.numCurrentVisitors);
    }
 
    
-   // Compare dates two artifacts were made
+   // Compare dates two artifacts were made using Date .compareTo
    public int compareDateMade(Artifact other)
    {
       return (dateMade.compareTo(other.dateMade));
    }
    
-   // Compare dates two artifacts were bought   
+   // Compare dates two artifacts were bought using Date .compareTo
    public int compareDatePurchased(Artifact other)
    {
       return (datePurchased.compareTo(other.datePurchased));
    }
 
-   // Returns whether two artifacts are the same   
+   // Returns whether the explicit Artifact has all the same properties as the implicit   
    public boolean equals(Artifact other)
    {
       boolean equals = (other != null && name.equals(other.name) && id == other.id && description.equals(other.description) 
