@@ -163,9 +163,7 @@ abstract class Visitor {
     //Identifier ToString method
     public String identifierToString (){
         String output;
-        output = "ID - " + id;
-        output = output + "\n First Name - " + firstName;
-        output = output + "\n Last Name  - " + lastName;
+        output = id + " " + firstName + " " + lastName;
         return output;
     }
 
