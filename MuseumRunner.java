@@ -1672,14 +1672,35 @@ public class MuseumRunner {
                 } else if (input == 3) // print all places a visitor has visited
                 {
 
-                    String fullName;
-                    sc.nextLine(); // flush
-                    System.out
-                            .println("Enter the full name of a visitor(separate the first and last name by a space): ");
-                    fullName = sc.nextLine();
-                    System.out.println();
-                    // museum.printVisitedArtifacts();
-                    System.out.println();
+                    int input1 = -1;
+
+                    do {
+                        input1 = -1;
+                        System.out.println("\nOptions");
+                        System.out.println("1) Search by ID");
+                        System.out.println("2) Search by name");
+                        try {
+                            input1 = sc.nextInt();
+                            if (input1 == 1) {
+                                System.out.print("ID - ");
+                                int id = sc.nextInt();
+                                System.out.println("");
+                                museum.printVisitedArtifacts(id);
+                                System.out.println("");
+                            } else if (input1 == 2) {
+                                sc.nextLine();
+                                System.out.print("Name - ");
+                                String name = sc.nextLine();
+                                System.out.println("");
+                                museum.printVisitedArtifacts(name);
+                                System.out.println("");
+                            }
+                        } catch (Exception e) {	//triggers if input for Options menu is not an integer
+                            sc.nextLine();	// flush
+                            System.out.println("Improper input. Try again.");
+                        }
+                    } while (input1 != 1 && input1 != 2);
+                  
                 } else if (input == 4) // print current num total visitors
                 {
                     int numTotal = museum.numAdults() + museum.numChildren() + museum.numSeniors();
