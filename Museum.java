@@ -248,6 +248,8 @@ public class Museum
             allVisitors.add(newVisitor);
             currentExhibit.addVisitor(newVisitor);
             currentArtifact.addVisitor(newVisitor);
+            
+            System.out.println("Visitor has been successfully added.");
          }
          else
             System.out.println("Age is not valid");
@@ -293,6 +295,8 @@ public class Museum
             numCurrentVisitors++;
             allVisitors.add(newVisitor);
             lobby.addVisitor(newVisitor);
+            
+            System.out.println("Visitor has been successfully added");
          }
          else
             System.out.println("Age is not valid");
@@ -322,6 +326,7 @@ public class Museum
             (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
             (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);
             numCurrentVisitors--; 
+            System.out.println("Visitor has been successfully removed");
          }
       }
       catch (Exception e)
@@ -349,6 +354,7 @@ public class Museum
             (foundVisitor.getCurrentArtifact()).removeVisitor(foundVisitor);
             (foundVisitor.getCurrentExhibit()).removeVisitor(foundVisitor);    
             numCurrentVisitors--; 
+            System.out.println("Visitor has been successfully removed");
          }   
       }
       catch (Exception e)
@@ -370,6 +376,7 @@ public class Museum
          Exhibit newExhibit = new Exhibit(name, EXHIBIT_BASE_ID + numExhibitsAdded, description);
          numExhibitsAdded ++;
          allExhibits.add(newExhibit);
+         System.out.println("Exhibit has been successfully added");
       }
       catch(Exception e)
       {
@@ -400,7 +407,9 @@ public class Museum
             {
                this.removeArtifact(displacedArtifacts.get(i).getId());
             }
-            allExhibits.remove(foundIndex);     
+            allExhibits.remove(foundIndex);
+            
+            System.out.println("Exhibit has been successfully removed");     
          }
       }
       catch (Exception e)
@@ -417,11 +426,25 @@ public class Museum
    public void removeExhibit(String exhibitName)
    {
       int foundIndex = findExhibitIndexByName(exhibitName);
+      Exhibit foundExhibit = allExhibits.get(foundIndex);
       
       if (foundIndex == -1)
+      {
          System.out.println("Exhibit called " + exhibitName + " cannot be found");
+      }
       else
-         allExhibits.remove(foundIndex);     
+      {  
+         // remove all artifacts from Exhibit (thus movig visitors to lobby)
+         ArrayList <Artifact> displacedArtifacts = foundExhibit.getArtifactList();
+         displacedArtifacts.trimToSize();
+         for (int i=0;i < displacedArtifacts.size(); i++)
+         {
+            this.removeArtifact(displacedArtifacts.get(i).getId());
+         }
+         allExhibits.remove(foundIndex);
+            
+         System.out.println("Exhibit has been successfully removed");     
+      }   
    }
    
    /*
@@ -453,6 +476,7 @@ public class Museum
                allArtifacts.add(newArtifact);
                (allExhibits.get(foundIndex)).addArtifact(newArtifact);
                numArtifactsAdded++;
+               System.out.println("Artifact has been successfully added");
             }
             else
             {
@@ -495,6 +519,8 @@ public class Museum
          
          // remove artifact from exhibit
          foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
+         
+         System.out.println("Artifact has been successfully removed");
       }
    }
    
@@ -525,6 +551,8 @@ public class Museum
          
          // remove artifact from exhibit
          foundArtifact.getExhibitLocation().removeArtifact(foundArtifact);
+         
+         System.out.println("Artifact has been successfully removed");
       }
    }
    
@@ -583,7 +611,7 @@ public class Museum
                   toExhibit.addVisitor(movingVisitor);
                }
             }
-           
+            
             return true;
          }
          else
