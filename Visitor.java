@@ -22,11 +22,12 @@ abstract class Visitor {
 
     //Main constructor
     public Visitor (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact, ArrayList <Exhibit> visitedExhibits, ArrayList <Artifact> visitedArtifacts){
+        //Check if ID is of correct length
         if (id >= 100000 && (id+"").length() == 6)
             this.id = id;
         else
             throw new InputMismatchException();
-        
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -36,12 +37,13 @@ abstract class Visitor {
         this.visitedArtifacts = visitedArtifacts;
     }
 
+    //Alternate constructor without visited arrayLists
     public Visitor (int id, String firstName, String lastName, int age, Exhibit currentExhibit, Artifact currentArtifact){
         if (id >= 100000 && (id+"").length() == 6)
             this.id = id;
         else
             throw new InputMismatchException();
-        
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -50,7 +52,7 @@ abstract class Visitor {
         visitedExhibits = new ArrayList();
         visitedArtifacts = new ArrayList();
     }
-    
+
     //Accessors
     public int getId (){
         return id;
@@ -175,12 +177,12 @@ abstract class Visitor {
         boolean isUnique = true;
         //Store newArtifact's exhibit as newExhibit
         Exhibit newExhibit = newArtifact.getExhibitLocation();
-        
+
         //Check if current exhibit is already visited or if visitor is already there
         if (newExhibit.equals(currentExhibit)){
             isUnique = false;
         }
-        
+
         for (int i = 0; i < visitedExhibits.size(); i++){
             if (visitedExhibits.get(i).equals(newExhibit)){
                 //If found in array, set boolean to false
@@ -190,9 +192,9 @@ abstract class Visitor {
         //If boolean is true, meaning this exhibit is unique, add exhibit to visited exhibit array and set new exhibit
         if (isUnique){
             // If the visitor is not in the lobby, store their initial exhibit into the visited exhibits array
-            if ((currentExhibit.getName()).equals("Lobby") == false)
+            if (!(currentExhibit.getName()).equals("Lobby"))
                 visitedExhibits.add(currentExhibit);
-            
+
             currentExhibit = newExhibit;
         }
 
@@ -203,39 +205,41 @@ abstract class Visitor {
         if (newArtifact.equals(currentArtifact)){
             isUnique = false;
         }
-        
+
         for (int i = 0; i < visitedArtifacts.size(); i++){
             //If found in array, set boolean to false
             if (visitedArtifacts.get(i) == newArtifact){
                 isUnique = false;
             }
         }
+
         //If boolean is true, meaning this artifact is unique, add artifact to visited artifact array and set new artifact
-        if (isUnique){
+        if (isUnique) {
             // If the visitor is not in the lobby, store their initial artifact in the visited artifacts array
             if (currentArtifact != null)
-               visitedArtifacts.add(currentArtifact);
-               
+                visitedArtifacts.add(currentArtifact);
+
+            //Set current artifact the new artifact
             currentArtifact = newArtifact;
         }
-        
         //Return boolean to see if Museum needs to add Visitor needs to artifact/exhibit current visitors
         return isUnique;
     }
-    
+
+    //Moves visitor to lobby
     public boolean moveToLobby(Exhibit lobby)
     {
         // If the visitor is not already in the lobby
-        if (currentExhibit.getName().equals("Lobby") == false)
+        if (!currentExhibit.getName().equals("Lobby"))
         {
             // add visitor's initial exhibit to history and move them to the lobby
             visitedExhibits.add(currentExhibit);
             currentExhibit = lobby;
-            
+
             // add visitor's initial artifact to history and note that they are not at any artifact
             visitedArtifacts.add(currentArtifact);
             currentArtifact = null;
-            
+
             return true;
         }
         // If the visitor is already in the lobby, return false
