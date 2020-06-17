@@ -1709,17 +1709,17 @@ public class MuseumRunner {
                 } else if (input == 5) // print current num child visitors
                 {
                     System.out.println(
-                            "There are a total of " + museum.numChildren() + " current visitors at the museum");
+                            "There are a total of " + museum.numChildren() + " child visitors at the museum");
                     System.out.println();
                 } else if (input == 6) // print current num adult visitors
                 {
                     System.out
-                            .println("There are a total of " + museum.numAdults() + " current visitors at the museum");
+                            .println("There are a total of " + museum.numAdults() + " adult visitors at the museum");
                     System.out.println();
                 } else if (input == 7) // print current num senior visitors
                 {
                     System.out
-                            .println("There are a total of " + museum.numSeniors() + " current visitors at the museum");
+                            .println("There are a total of " + museum.numSeniors() + " senior visitors at the museum");
                     System.out.println();
                 } else if (input == 8) // print avg age of all visitors
                 {
