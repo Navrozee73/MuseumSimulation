@@ -1,7 +1,7 @@
 /*
    File: Date.java
-   Description: 
-   
+   Description: A date consists of a day, month, year, and the 
+                information of whether or not it is before common era or after 
    
    User: Navroze
    Date: 08/08/2020
@@ -17,9 +17,6 @@
                   compareTo(Date)
                   isOlder(Date)
                   progressDate(int)
-
-                 
-      
                   
 */
 import java.util.*;

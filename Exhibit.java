@@ -1,6 +1,8 @@
 /*
    File: Exhibit.java
-   Description: 
+   Description: An exhibit has a name and id and description and
+                hosts visitors and artifacts, inheriting a value, 
+                floor space, onDisplay from the artifacts added
    
    
    User: Navroze

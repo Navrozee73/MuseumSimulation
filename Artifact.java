@@ -1,6 +1,8 @@
 /*
    File: Artifact.java
-   Description: 
+   Description: An Artifact has its own unique id, name, description, date made, date bought, value, 
+                floorSpace requirement and information whether it is on display
+                in a particular Exhibitlocation. It also hosts visitors
    
    
    User: Navroze
