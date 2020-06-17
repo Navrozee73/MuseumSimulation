@@ -761,7 +761,7 @@ public class Museum
    }
    
    /*
-   *  Prints a specific visitor's identifier, given their ID
+   *  Prints a specific visitor's identifier and current location, given their ID
    *  givenId - ID of visitor being printed
    */
    public void printSpecificVisitor(int givenId)
@@ -771,11 +771,14 @@ public class Museum
       if (foundIndex == -1)
          System.out.println("Visitor with ID " + givenId + " cannot be found.");
       else
+      {
          System.out.println((allVisitors.get(foundIndex)).identifierToString());
+         System.out.println("Current location: \n" + allVisitors.get(foundIndex).getCurrentArtifact().identifierToString());
+      }
    }
    
    /*
-   *  Prints a specific visitor's identifier, given their full name
+   *  Prints a specific visitor's identifier and current location, given their full name
    *  givenName - full name of visitor being printed
    */
    public void printSpecificVisitor(String givenName)
@@ -785,7 +788,10 @@ public class Museum
       if (foundIndex == -1)
          System.out.println("Visitor with ID " + givenName + " cannot be found");
       else
+      {
          System.out.println((allVisitors.get(foundIndex)).identifierToString());
+         System.out.println("Current location: \n" + allVisitors.get(foundIndex).getCurrentArtifact().identifierToString());
+      }
    }
    
    /*
