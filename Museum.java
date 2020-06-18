@@ -757,7 +757,7 @@ public class Museum
    }
    
    /*
-   *  Prints a specific visitor's identifier and location, given their ID
+   *  Prints a specific visitor's identifier and current location, given their ID
    *  givenId - ID of visitor being printed
    */
    public void printSpecificVisitor(int givenId)
@@ -3014,7 +3014,6 @@ public class Museum
        } catch (Exception e) {
            return 0;
        }
-
        return usedSpace;
    }
 
