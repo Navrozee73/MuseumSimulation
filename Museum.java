@@ -908,34 +908,58 @@ public class Museum
    // Prints the identifiers of all adults in the museum
    public void printAllAdults()
    {
+      boolean atLeastOne = false;
+      
       allVisitors.trimToSize();
       for (int i = 0; i < allVisitors.size(); i ++)
       {
          if (allVisitors.get(i) instanceof Adult)
+         {
             System.out.println((allVisitors.get(i)).identifierToString());
+            atLeastOne = true;
+         }
       }
+      
+      if (!atLeastOne)
+         System.out.println("There are no adult visitors currently in the museum");
    }
    
    // Prints the identifiers of all children in the museum
    public void printAllChildren()
    {
+      boolean atLeastOne = false;
+      
       allVisitors.trimToSize();
       for (int i = 0; i < allVisitors.size(); i ++)
       {
          if (allVisitors.get(i) instanceof Child)
+         {
             System.out.println((allVisitors.get(i)).identifierToString());
+            atLeastOne = true;
+         }
       }
+      
+      if (!atLeastOne)
+         System.out.println("There are no child visitors currently in the museum");
    }
    
    // Prints the identifiers of all seniors in the museum
    public void printAllSeniors()
    {
+      boolean atLeastOne = false;
+      
       allVisitors.trimToSize();
       for (int i = 0; i < allVisitors.size(); i ++)
       {
          if (allVisitors.get(i) instanceof Senior)
+         {
             System.out.println((allVisitors.get(i)).identifierToString());
+            atLeastOne = true;
+         }
       }
+      
+      if (!atLeastOne)
+         System.out.println("There are no senior visitors currently in the museum");
    }
    
    // Prints current visitors from lowest to highest age, sorted using selection sort
