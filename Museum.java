@@ -3,11 +3,7 @@
    Authors:          Jerry & William
    Creation Date:    2020-6-5
    Course:           ICS4U1-02
-   Purpose:          This class represents a museum and manages all its operations.
-   
-   June 13th:     daily operations, museumFinance, museumOptimization in MuseumRunner
-                  added check for artifact + private methods 
-   June 14th-15th: comments           
+   Purpose:          This class represents a museum and manages all its operations.         
 */
 
 import java.util.ArrayList;
@@ -756,7 +752,7 @@ public class Museum
       allVisitors.trimToSize();
       for(int i = 0; i < allVisitors.size(); i ++)
       {
-         System.out.println((allVisitors.get(i)).identifierToString());
+         System.out.println((allVisitors.get(i)));
       }
    }
    
@@ -772,7 +768,7 @@ public class Museum
          System.out.println("Visitor with ID " + givenId + " cannot be found.");
       else
       {
-         System.out.println((allVisitors.get(foundIndex)).identifierToString());
+         System.out.println((allVisitors.get(foundIndex)));
          System.out.println("Current location: \n" + allVisitors.get(foundIndex).getCurrentArtifact().identifierToString());
       }
    }
@@ -789,7 +785,7 @@ public class Museum
          System.out.println("Visitor with ID " + givenName + " cannot be found");
       else
       {
-         System.out.println((allVisitors.get(foundIndex)).identifierToString());
+         System.out.println((allVisitors.get(foundIndex)));
          System.out.println("Current location: \n" + allVisitors.get(foundIndex).getCurrentArtifact().identifierToString());
       }
    }
@@ -1367,7 +1363,7 @@ public class Museum
       allExhibits.trimToSize();
       for (int i = 1; i < allExhibits.size(); i ++)
       {
-         System.out.println((allExhibits.get(i)).identifierToString());
+         System.out.println((allExhibits.get(i)));
       }
    }
    
@@ -1442,7 +1438,7 @@ public class Museum
       if (foundIndex == -1)
          System.out.println("Exhibit with ID " + exhibitId + " cannot be found");
       else
-         System.out.println((allExhibits.get(foundIndex)).identifierToString());
+         System.out.println((allExhibits.get(foundIndex)));
    }
    
    /*
@@ -1456,7 +1452,7 @@ public class Museum
       if (foundIndex == -1)
          System.out.println("Exhibit called " + exhibitName + " cannot be found");
       else
-         System.out.println((allExhibits.get(foundIndex)).identifierToString());
+         System.out.println((allExhibits.get(foundIndex)));
    }
    
    /*
@@ -2445,7 +2441,7 @@ public class Museum
 
    public void printSpecificArtifact(String name) {
        try{
-           System.out.println(searchArtifactByName(name).identifierToString());
+           System.out.println(searchArtifactByName(name));
        }catch(Exception e){
            System.out.println("Error printing artifact.");
        }
@@ -2453,7 +2449,7 @@ public class Museum
 
    public void printSpecificArtifact(int id) {
        try{
-           System.out.println(searchArtifactByID(id).identifierToString());
+           System.out.println(searchArtifactByID(id));
        }catch(Exception e){
            System.out.println("Error printing artifact.");
        }
@@ -2963,62 +2959,64 @@ public class Museum
        return false;
    }
 
+   //Returns array containing the combination of exhibits occupying the
+   //greatest amount of space without exceeding the maximum
    public Exhibit[] findOptimalExhibitArrangement(double maxSpace) {
-        Exhibit[] exhibits = findOptimalExhibitArrangement(getAllExhibitsArray(), 0, allExhibits.size() - 1, maxSpace).clone();
-        ArrayList<Exhibit> finalExhibitList = new ArrayList<>();
-        double usedSpace = 0;
+       Exhibit[] exhibits = findOptimalExhibitArrangement(getAllExhibitsArray(), 0, allExhibits.size() - 1, maxSpace);
+       ArrayList<Exhibit> finalExhibitList = new ArrayList<>();
+       double usedSpace = 0;
 
-        try {
-            for (Exhibit e : exhibits) {
-                if (usedSpace + e.getFloorSpace() <= maxSpace) {
-                    usedSpace += e.getFloorSpace();
-                    finalExhibitList.add(e);
-                }
-            }
-        } catch (Exception e) {
-            return null;
-        }
+       try {
+           for (Exhibit e : exhibits) {
+               if (usedSpace + e.getFloorSpace() <= maxSpace) {
+                   usedSpace += e.getFloorSpace();
+                   finalExhibitList.add(e);
+               }
+           }
+       } catch (Exception e) {
+           return null;
+       }
 
-        return finalExhibitList.toArray(new Exhibit[finalExhibitList.size()]);
-    }
+       return finalExhibitList.toArray(new Exhibit[finalExhibitList.size()]);
+   }
 
-    private Exhibit[] findOptimalExhibitArrangement(Exhibit[] exhibits, int startIndex, int endIndex, double maxSpace) {
-        Exhibit[] bestArrangement = exhibits.clone();
+   private Exhibit[] findOptimalExhibitArrangement(Exhibit[] exhibits, int startIndex, int endIndex, double maxSpace) {
+       Exhibit[] bestArrangement = exhibits.clone();
 
-        if (startIndex == endIndex) {
-            return exhibits;
-        } else {
-            for (int i = startIndex; i <= endIndex; i++) {
-                exhibits = swap(exhibits, startIndex, i);
+       if (startIndex == endIndex) {
+           return exhibits;
+       } else {
+           for (int i = startIndex; i <= endIndex; i++) {
+               exhibits = swap(exhibits, startIndex, i);
 
-                bestArrangement = findOptimalExhibitArrangement(exhibits, startIndex + 1, endIndex, maxSpace);
-                if (getFloorSpaceUsed(exhibits, maxSpace) > getFloorSpaceUsed(bestArrangement, maxSpace)) {
-                    bestArrangement = exhibits;
-                }
+               bestArrangement = findOptimalExhibitArrangement(exhibits, startIndex + 1, endIndex, maxSpace);
+               if (getFloorSpaceUsed(exhibits, maxSpace) > getFloorSpaceUsed(bestArrangement, maxSpace)) {
+                   bestArrangement = exhibits;
+               }
 
-                exhibits = swap(exhibits, startIndex, i);
-            }
+               exhibits = swap(exhibits, startIndex, i);
+           }
 
-            return bestArrangement;
+           return bestArrangement;
 
-        }
-    }
+       }
+   }
 
-    public static double getFloorSpaceUsed(Exhibit[] exhibits, double maxSpace) {
-        double usedSpace = 0;
+   private double getFloorSpaceUsed(Exhibit[] exhibits, double maxSpace) {
+       double usedSpace = 0;
 
-        try {
-            for (Exhibit e : exhibits) {
-                if (usedSpace + e.getFloorSpace() <= maxSpace) {
-                    usedSpace += e.getFloorSpace();
-                }
-            }
-        } catch (Exception e) {
-            return 0;
-        }
+       try {
+           for (Exhibit e : exhibits) {
+               if (usedSpace + e.getFloorSpace() <= maxSpace) {
+                   usedSpace += e.getFloorSpace();
+               }
+           }
+       } catch (Exception e) {
+           return 0;
+       }
 
-        return usedSpace;
-    }
+       return usedSpace;
+   }
 
    //Swaps exhibits at indexes i and j
    private Exhibit[] swap(Exhibit[] exhibits, int i, int j) {
